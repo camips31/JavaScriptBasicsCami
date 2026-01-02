@@ -1,0 +1,8 @@
+[build]
+  # No se necesita comando de build para archivos estáticos
+  publish = "."
+
+[[redirects]]
+  from = "/"
+  to = "/JavaScriptCami.html"
+  status = 200
