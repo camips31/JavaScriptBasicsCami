@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03 - Strings y Template Strings</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="../../basicos.html" class="back">← Volver al menú</a>
+    
+    <h1>03 - Strings (Cadenas de Texto)</h1>
+
+    <div class="code-section">
+        <h2>📌 ¿Qué es un STRING?</h2>
+        <p>Un string (cadena) es un tipo de dato que representa texto. Se puede crear con comillas simples (''), comillas dobles ("") o backticks (``)</p>
+    </div>
+
+    <div class="code-section">
+        <h2>🔷 Formas de crear strings</h2>
+        <ul>
+            <li><strong>Comillas simples:</strong> 'Hola mundo'</li>
+            <li><strong>Comillas dobles:</strong> "Hola mundo"</li>
+            <li><strong>Template strings (backticks):</strong> `Hola mundo` - ¡La forma moderna!</li>
+        </ul>
+    </div>
+
+    <div class="code-section">
+        <h2>✨ Template Strings (Template Literals)</h2>
+        <p>Los template strings (con backticks `) son una característica de ES6 que permite:</p>
+        <ul>
+            <li><strong>Interpolación de variables:</strong> ${variable}</li>
+            <li><strong>Múltiples líneas:</strong> sin necesidad de \n</li>
+            <li><strong>Expresiones:</strong> ${2 + 2}</li>
+            <li><strong>Llamar funciones:</strong> ${miFuncion()}</li>
+        </ul>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `
+                <div class="ejemplo-header">
+                    <span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span>
+                    <span class="ejemplo-titulo">${titulo}</span>
+                </div>
+                <div class="ejemplo-contenido"></div>
+            `;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrar(texto, tipo = 'normal') {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.className = 'linea-' + tipo;
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+            console.log(texto);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.className = 'codigo-ejemplo';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            mostrar('➜ ' + texto, 'resultado');
+        }
+
+        // Estilos
+        const style = document.createElement('style');
+        style.textContent = `
+            .ejemplo-box {
+                background: white;
+                border: 2px solid #f7df1e;
+                border-radius: 8px;
+                margin: 20px 0;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .ejemplo-header {
+                background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);
+                padding: 15px 20px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .ejemplo-numero {
+                background: #333;
+                color: #f7df1e;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 0.9em;
+            }
+            .ejemplo-titulo {
+                color: #333;
+                font-size: 1.1em;
+            }
+            .ejemplo-contenido {
+                padding: 20px;
+                background: #f9f9f9;
+            }
+            .codigo-ejemplo {
+                background: #282c34;
+                color: #61dafb;
+                padding: 12px 15px;
+                border-radius: 5px;
+                font-family: 'Courier New', monospace;
+                margin: 8px 0;
+                border-left: 4px solid #f7df1e;
+            }
+            .linea-normal {
+                color: #666;
+                padding: 5px 0;
+                font-family: 'Segoe UI', sans-serif;
+            }
+            .linea-resultado {
+                color: #2ecc71;
+                padding: 8px 15px;
+                background: #e8f8f5;
+                border-left: 4px solid #2ecc71;
+                margin: 5px 0;
+                border-radius: 3px;
+                font-weight: 500;
+                font-family: 'Courier New', monospace;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ============================================
+        // EJEMPLO 1: Crear strings
+        // ============================================
+        iniciarEjemplo("Crear strings");
+        
+        mostrarCodigo("const str1 = 'Comillas simples';");
+        mostrarCodigo('const str2 = "Comillas dobles";');
+        mostrarCodigo('const str3 = `Backticks`;');
+        
+        const str1 = 'Comillas simples';
+        const str2 = "Comillas dobles";
+        const str3 = `Backticks`;
+        
+        mostrarResultado('str1: ' + str1);
+        mostrarResultado('str2: ' + str2);
+        mostrarResultado('str3: ' + str3);
+
+        // ============================================
+        // EJEMPLO 2: Template Strings
+        // ============================================
+        iniciarEjemplo("Template Strings - La forma moderna");
+        
+        mostrarCodigo('const nombre = "Carlos";');
+        mostrarCodigo('const edad = 30;');
+        mostrarCodigo('const mensaje = `Hola, soy ${nombre} y tengo ${edad} años`;');
+        
+        const nombre = "Carlos";
+        const edad = 30;
+        const mensaje = `Hola, soy ${nombre} y tengo ${edad} años`;
+        
+        mostrarResultado(mensaje);
+        mostrar('');
+        mostrar('✅ Mucho más limpio que la concatenación');
+
+        // ============================================
+        // EJEMPLO 3: Concatenación tradicional
+        // ============================================
+        iniciarEjemplo("Concatenación tradicional (evitar)");
+        
+        mostrarCodigo('const saludo = "Hola " + nombre + ", tienes " + edad + " años";');
+        const saludo = "Hola " + nombre + ", tienes " + edad + " años";
+        
+        mostrarResultado(saludo);
+        mostrar('');
+        mostrar('⚠️ Forma antigua - mejor usar template strings');
+
+        // ============================================
+        // EJEMPLO 4: Expresiones en template strings
+        // ============================================
+        iniciarEjemplo("Expresiones en template strings");
+        
+        mostrarCodigo('const precio = 100;');
+        mostrarCodigo('const mensaje2 = `El precio con IVA es: ${precio * 1.21}€`;');
+        
+        const precio = 100;
+        const mensaje2 = `El precio con IVA es: ${precio * 1.21}€`;
+        
+        mostrarResultado(mensaje2);
+        mostrar('');
+        mostrar('✅ Puedes ejecutar expresiones dentro de ${}');
+
+        // ============================================
+        // EJEMPLO 5: Strings multilínea
+        // ============================================
+        iniciarEjemplo("Strings multilínea");
+        
+        mostrarCodigo('const texto = `Línea 1');
+        mostrarCodigo('Línea 2');
+        mostrarCodigo('Línea 3`;');
+        
+        const texto = `Línea 1
+Línea 2
+Línea 3`;
+        
+        mostrarResultado(texto);
+        mostrar('');
+        mostrar('✅ Template strings respetan saltos de línea');
+
+        // ============================================
+        // EJEMPLO 6: Métodos de strings
+        // ============================================
+        iniciarEjemplo("Métodos útiles de strings");
+        
+        mostrarCodigo('const palabra = "JavaScript";');
+        const palabra = "JavaScript";
+        
+        mostrarCodigo('palabra.length');
+        mostrarResultado('Longitud: ' + palabra.length);
+        
+        mostrarCodigo('palabra.toUpperCase()');
+        mostrarResultado('Mayúsculas: ' + palabra.toUpperCase());
+        
+        mostrarCodigo('palabra.toLowerCase()');
+        mostrarResultado('Minúsculas: ' + palabra.toLowerCase());
+        
+        mostrarCodigo('palabra.includes("Script")');
+        mostrarResultado('Contiene "Script": ' + palabra.includes("Script"));
+
+        // ============================================
+        // EJEMPLO 7: slice y substring
+        // ============================================
+        iniciarEjemplo("Extraer partes de strings");
+        
+        mostrarCodigo('const frase = "Hola Mundo";');
+        const frase = "Hola Mundo";
+        
+        mostrarCodigo('frase.slice(0, 4)');
+        mostrarResultado('slice(0, 4): ' + frase.slice(0, 4));
+        
+        mostrarCodigo('frase.slice(5)');
+        mostrarResultado('slice(5): ' + frase.slice(5));
+        
+        mostrarCodigo('frase.substring(5, 10)');
+        mostrarResultado('substring(5, 10): ' + frase.substring(5, 10));
+
+        // ============================================
+        // EJEMPLO 8: replace y split
+        // ============================================
+        iniciarEjemplo("Reemplazar y dividir");
+        
+        mostrarCodigo('const texto2 = "Me gusta Java";');
+        mostrarCodigo('texto2.replace("Java", "JavaScript")');
+        
+        const texto2 = "Me gusta Java";
+        mostrarResultado('Replace: ' + texto2.replace("Java", "JavaScript"));
+        
+        mostrar('');
+        mostrarCodigo('const csv = "manzana,banana,naranja";');
+        mostrarCodigo('csv.split(",")');
+        
+        const csv = "manzana,banana,naranja";
+        mostrarResultado('Split: ' + csv.split(",").join(', '));
+
+        // ============================================
+        // EJEMPLO 9: trim
+        // ============================================
+        iniciarEjemplo("Eliminar espacios");
+        
+        mostrarCodigo('const conEspacios = "   Hola   ";');
+        const conEspacios = "   Hola   ";
+        
+        mostrarResultado('Original: "' + conEspacios + '"');
+        mostrarCodigo('conEspacios.trim()');
+        mostrarResultado('Trim: "' + conEspacios.trim() + '"');
+
+        // ============================================
+        // EJEMPLO 10: Caso práctico
+        // ============================================
+        iniciarEjemplo("Caso práctico - Tarjeta de presentación");
+        
+        mostrarCodigo('const usuario = "Ana García";');
+        mostrarCodigo('const profesion = "Desarrolladora";');
+        mostrarCodigo('const email = "ana@email.com";');
+        
+        const usuario = "Ana García";
+        const profesion = "Desarrolladora";
+        const email = "ana@email.com";
+        
+        const tarjeta = `
+╔════════════════════════════╗
+║  ${usuario.toUpperCase().padEnd(24)} ║
+║  ${profesion.padEnd(24)} ║
+║  📧 ${email.padEnd(20)} ║
+╚════════════════════════════╝
+        `;
+        
+        mostrarResultado(tarjeta);
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ Usa <strong>template strings</strong> (``) para todo</li>
+            <li>✅ Interpolación con <code>${variable}</code></li>
+            <li>✅ Strings multilínea sin \n</li>
+            <li>⚠️ Evita concatenación con +</li>
+        </ul>
+    </div>
+</body>
+</html>

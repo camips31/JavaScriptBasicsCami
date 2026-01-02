@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>13 - Manejo de Errores</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="../../basicos.html" class="back">← Volver al menú</a>
+    <h1>13 - Manejo de Errores</h1>
+    <div class="code-section">
+        <h2>📌 Try-Catch</h2>
+        <p>El manejo de errores permite controlar los errores sin detener la aplicación.</p>
+    </div>
+    <div class="code-section">
+        <h2>🔧 Sintaxis Básica</h2>
+        <pre><code>try {
+    // Código que puede fallar
+    const resultado = funcionPeligrosa();
+} catch (error) {
+    // Manejar el error
+    console.error("Error:", error.message);
+} finally {
+    // Código que siempre se ejecuta
+    console.log("Limpieza");
+}</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>⚠️ Lanzar Errores</h2>
+        <pre><code>function dividir(a, b) {
+    if (b === 0) {
+        throw new Error("No se puede dividir por cero");
+    }
+    return a / b;
+}</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ <code>try</code> - Intenta ejecutar código</li>
+            <li>✅ <code>catch</code> - Captura errores</li>
+            <li>✅ <code>finally</code> - Siempre se ejecuta</li>
+            <li>✅ <code>throw</code> - Lanza un error personalizado</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>15 - Destructuración</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="../../basicos.html" class="back">← Volver al menú</a>
+    <h1>15 - Destructuración</h1>
+    <div class="code-section">
+        <h2>📌 Destructuring</h2>
+        <p>Extraer valores de arrays y objetos de forma concisa.</p>
+    </div>
+    <div class="code-section">
+        <h2>📦 Destructuración de Arrays</h2>
+        <pre><code>const colores = ["rojo", "verde", "azul"];
+
+// Forma tradicional
+const primero = colores[0];
+const segundo = colores[1];
+
+// Con destructuración
+const [color1, color2, color3] = colores;
+console.log(color1); // "rojo"</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>🔑 Destructuración de Objetos</h2>
+        <pre><code>const persona = {
+    nombre: "Ana",
+    edad: 25,
+    ciudad: "Madrid"
+};
+
+// Con destructuración
+const {nombre, edad} = persona;
+console.log(nombre); // "Ana"
+console.log(edad); // 25</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>✨ Valores por Defecto</h2>
+        <pre><code>const {nombre, edad, pais = "España"} = persona;
+console.log(pais); // "España" (valor por defecto)</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ Arrays: <code>const [a, b] = array</code></li>
+            <li>✅ Objetos: <code>const {x, y} = objeto</code></li>
+            <li>✅ Valores por defecto disponibles</li>
+        </ul>
+    </div>
+</body>
+</html>

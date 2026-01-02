@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>26 - Date</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>26 - Objeto Date</h1>
+    <div class="code-section">
+        <h2>📌 Fechas en JavaScript</h2>
+        <p>El objeto <code>Date</code> permite trabajar con fechas y horas.</p>
+    </div>
+    <div class="code-section">
+        <h2>🔧 Crear Fechas</h2>
+        <pre><code>// Fecha actual
+const ahora = new Date();
+
+// Fecha específica (año, mes-1, día)
+const navidad = new Date(2024, 11, 25); // 25 de diciembre 2024
+
+// Desde string
+const fecha = new Date("2024-12-25");
+
+// Desde timestamp (milisegundos desde 1970)
+const fecha = new Date(1609459200000);</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>📅 Métodos Útiles</h2>
+        <pre><code>const fecha = new Date();
+
+// Obtener componentes
+fecha.getFullYear(); // 2024
+fecha.getMonth(); // 0-11 (0 = enero)
+fecha.getDate(); // 1-31
+fecha.getDay(); // 0-6 (0 = domingo)
+fecha.getHours(); // 0-23
+fecha.getMinutes(); // 0-59
+fecha.getSeconds(); // 0-59
+
+// Establecer componentes
+fecha.setFullYear(2025);
+fecha.setMonth(11); // Diciembre
+fecha.setDate(25);
+
+// Timestamp
+fecha.getTime(); // Milisegundos desde 1970
+Date.now(); // Timestamp actual</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>🌍 Formatear Fechas</h2>
+        <pre><code>const fecha = new Date();
+
+fecha.toDateString(); // "Mon Dec 25 2024"
+fecha.toLocaleDateString(); // "25/12/2024"
+fecha.toLocaleTimeString(); // "10:30:00"
+fecha.toISOString(); // "2024-12-25T10:30:00.000Z"</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ <code>new Date()</code> - Crear fecha</li>
+            <li>✅ <code>get/setFullYear/Month/Date/Hours</code></li>
+            <li>✅ <code>toLocaleDateString()</code> - Formatear</li>
+            <li>✅ <code>Date.now()</code> - Timestamp</li>
+        </ul>
+    </div>
+</body>
+</html>

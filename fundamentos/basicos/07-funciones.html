@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07 - Funciones</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="../../basicos.html" class="back">← Volver al menú</a>
+    
+    <h1>07 - Funciones en JavaScript</h1>
+
+    <div class="code-section">
+        <h2>📌 ¿Qué es una función?</h2>
+        <p>Una función es un bloque de código reutilizable que realiza una tarea específica.</p>
+        <p>Las funciones nos permiten organizar el código y evitar repeticiones.</p>
+    </div>
+
+    <div class="code-section">
+        <h2>🔧 Sintaxis básica</h2>
+        <pre><code>function nombreFuncion(parametro1, parametro2) {
+    // código a ejecutar
+    return resultado;
+}</code></pre>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `
+                <div class="ejemplo-header">
+                    <span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span>
+                    <span class="ejemplo-titulo">${titulo}</span>
+                </div>
+                <div class="ejemplo-contenido"></div>
+            `;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrar(texto, tipo = 'normal') {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.className = 'linea-' + tipo;
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+            console.log(texto);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.className = 'codigo-ejemplo';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            mostrar('➜ ' + texto, 'resultado');
+        }
+
+        // Estilos
+        const style = document.createElement('style');
+        style.textContent = `
+            .ejemplo-box {
+                background: white;
+                border: 2px solid #f7df1e;
+                border-radius: 8px;
+                margin: 20px 0;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .ejemplo-header {
+                background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);
+                padding: 15px 20px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .ejemplo-numero {
+                background: #333;
+                color: #f7df1e;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 0.9em;
+            }
+            .ejemplo-titulo {
+                color: #333;
+                font-size: 1.1em;
+            }
+            .ejemplo-contenido {
+                padding: 20px;
+                background: #f9f9f9;
+            }
+            .codigo-ejemplo {
+                background: #282c34;
+                color: #61dafb;
+                padding: 12px 15px;
+                border-radius: 5px;
+                font-family: 'Courier New', monospace;
+                margin: 8px 0;
+                border-left: 4px solid #f7df1e;
+            }
+            .linea-normal {
+                color: #666;
+                padding: 5px 0;
+                font-family: 'Segoe UI', sans-serif;
+            }
+            .linea-resultado {
+                color: #2ecc71;
+                padding: 8px 15px;
+                background: #e8f8f5;
+                border-left: 4px solid #2ecc71;
+                margin: 5px 0;
+                border-radius: 3px;
+                font-weight: 500;
+                font-family: 'Courier New', monospace;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ============================================
+        // EJEMPLO 1: Función básica sin parámetros
+        // ============================================
+        iniciarEjemplo("Función básica sin parámetros");
+        
+        mostrarCodigo('function saludar() {');
+        mostrarCodigo('    return "¡Hola Mundo!";');
+        mostrarCodigo('}');
+        
+        function saludar() {
+            return "¡Hola Mundo!";
+        }
+        
+        mostrar('');
+        mostrarCodigo('saludar()');
+        mostrarResultado(saludar());
+
+        // ============================================
+        // EJEMPLO 2: Función con parámetros
+        // ============================================
+        iniciarEjemplo("Función con parámetros");
+        
+        mostrarCodigo('function saludarPersona(nombre) {');
+        mostrarCodigo('    return "Hola " + nombre + "!";');
+        mostrarCodigo('}');
+        
+        function saludarPersona(nombre) {
+            return "Hola " + nombre + "!";
+        }
+        
+        mostrar('');
+        mostrarCodigo('saludarPersona("Ana")');
+        mostrarResultado(saludarPersona("Ana"));
+        
+        mostrarCodigo('saludarPersona("Carlos")');
+        mostrarResultado(saludarPersona("Carlos"));
+
+        // ============================================
+        // EJEMPLO 3: Función con múltiples parámetros
+        // ============================================
+        iniciarEjemplo("Múltiples parámetros");
+        
+        mostrarCodigo('function sumar(a, b) {');
+        mostrarCodigo('    return a + b;');
+        mostrarCodigo('}');
+        
+        function sumar(a, b) {
+            return a + b;
+        }
+        
+        mostrar('');
+        mostrarCodigo('sumar(5, 3)');
+        mostrarResultado('Resultado: ' + sumar(5, 3));
+        
+        mostrarCodigo('sumar(10, 20)');
+        mostrarResultado('Resultado: ' + sumar(10, 20));
+
+        // ============================================
+        // EJEMPLO 4: Función con parámetros por defecto
+        // ============================================
+        iniciarEjemplo("Parámetros con valores por defecto");
+        
+        mostrarCodigo('function saludarIdioma(nombre, idioma = "español") {');
+        mostrarCodigo('    if (idioma === "español") return "Hola " + nombre;');
+        mostrarCodigo('    if (idioma === "inglés") return "Hello " + nombre;');
+        mostrarCodigo('    return "Hi " + nombre;');
+        mostrarCodigo('}');
+        
+        function saludarIdioma(nombre, idioma = "español") {
+            if (idioma === "español") return "Hola " + nombre;
+            if (idioma === "inglés") return "Hello " + nombre;
+            return "Hi " + nombre;
+        }
+        
+        mostrar('');
+        mostrarCodigo('saludarIdioma("María")');
+        mostrarResultado(saludarIdioma("María"));
+        
+        mostrarCodigo('saludarIdioma("John", "inglés")');
+        mostrarResultado(saludarIdioma("John", "inglés"));
+
+        // ============================================
+        // EJEMPLO 5: Función que no retorna
+        // ============================================
+        iniciarEjemplo("Función sin return");
+        
+        mostrarCodigo('function mostrarMensaje(mensaje) {');
+        mostrarCodigo('    console.log(mensaje);');
+        mostrarCodigo('    // no hay return');
+        mostrarCodigo('}');
+        
+        function mostrarMensaje(mensaje) {
+            console.log(mensaje);
+        }
+        
+        mostrar('');
+        mostrarCodigo('const resultado = mostrarMensaje("Hola");');
+        const resultadoEjemplo5 = mostrarMensaje("Hola");
+        mostrarResultado('Retorna: ' + resultadoEjemplo5);
+        mostrar('💡 Sin return, la función retorna undefined');
+
+        // ============================================
+        // EJEMPLO 6: Expresión de función
+        // ============================================
+        iniciarEjemplo("Expresión de función (Function Expression)");
+        
+        mostrarCodigo('const multiplicar = function(a, b) {');
+        mostrarCodigo('    return a * b;');
+        mostrarCodigo('};');
+        
+        const multiplicar = function(a, b) {
+            return a * b;
+        };
+        
+        mostrar('');
+        mostrarCodigo('multiplicar(4, 5)');
+        mostrarResultado('Resultado: ' + multiplicar(4, 5));
+        
+        mostrar('');
+        mostrar('💡 La función se asigna a una variable');
+
+        // ============================================
+        // EJEMPLO 7: Alcance (scope)
+        // ============================================
+        iniciarEjemplo("Alcance de variables (scope)");
+        
+        mostrarCodigo('let global = "Soy global";');
+        let global = "Soy global";
+        
+        mostrarCodigo('function testScope() {');
+        mostrarCodigo('    let local = "Soy local";');
+        mostrarCodigo('    return global + " - " + local;');
+        mostrarCodigo('}');
+        
+        function testScope() {
+            let local = "Soy local";
+            return global + " - " + local;
+        }
+        
+        mostrar('');
+        mostrarCodigo('testScope()');
+        mostrarResultado(testScope());
+        
+        mostrar('');
+        mostrar('💡 Variables locales solo existen dentro de la función');
+
+        // ============================================
+        // EJEMPLO 8: Función recursiva
+        // ============================================
+        iniciarEjemplo("Función recursiva - Factorial");
+        
+        mostrarCodigo('function factorial(n) {');
+        mostrarCodigo('    if (n === 0 || n === 1) return 1;');
+        mostrarCodigo('    return n * factorial(n - 1);');
+        mostrarCodigo('}');
+        
+        function factorial(n) {
+            if (n === 0 || n === 1) return 1;
+            return n * factorial(n - 1);
+        }
+        
+        mostrar('');
+        mostrarCodigo('factorial(5)');
+        mostrarResultado('5! = ' + factorial(5));
+        
+        mostrarCodigo('factorial(3)');
+        mostrarResultado('3! = ' + factorial(3));
+
+        // ============================================
+        // EJEMPLO 9: Caso práctico - Calculadora
+        // ============================================
+        iniciarEjemplo("Caso práctico - Mini calculadora");
+        
+        mostrarCodigo('function calcular(num1, num2, operacion) {');
+        mostrarCodigo('    if (operacion === "suma") return num1 + num2;');
+        mostrarCodigo('    if (operacion === "resta") return num1 - num2;');
+        mostrarCodigo('    if (operacion === "multiplicacion") return num1 * num2;');
+        mostrarCodigo('    if (operacion === "division") return num1 / num2;');
+        mostrarCodigo('    return "Operación inválida";');
+        mostrarCodigo('}');
+        
+        function calcular(num1, num2, operacion) {
+            if (operacion === "suma") return num1 + num2;
+            if (operacion === "resta") return num1 - num2;
+            if (operacion === "multiplicacion") return num1 * num2;
+            if (operacion === "division") return num1 / num2;
+            return "Operación inválida";
+        }
+        
+        mostrar('');
+        mostrarCodigo('calcular(10, 5, "suma")');
+        mostrarResultado('10 + 5 = ' + calcular(10, 5, "suma"));
+        
+        mostrarCodigo('calcular(10, 5, "resta")');
+        mostrarResultado('10 - 5 = ' + calcular(10, 5, "resta"));
+        
+        mostrarCodigo('calcular(10, 5, "multiplicacion")');
+        mostrarResultado('10 × 5 = ' + calcular(10, 5, "multiplicacion"));
+        
+        mostrarCodigo('calcular(10, 5, "division")');
+        mostrarResultado('10 ÷ 5 = ' + calcular(10, 5, "division"));
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ Funciones organizan y reutilizan código</li>
+            <li>✅ <code>function nombre(params) { return valor; }</code></li>
+            <li>✅ Pueden tener parámetros con valores por defecto</li>
+            <li>✅ <code>return</code> devuelve un valor (opcional)</li>
+            <li>✅ Variables dentro de funciones son locales (scope)</li>
+        </ul>
+    </div>
+</body>
+</html>

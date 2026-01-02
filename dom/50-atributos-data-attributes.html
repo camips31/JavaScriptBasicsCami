@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>50 - Atributos y Data Attributes</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>50 - Atributos y Data Attributes</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué son los atributos?</h2>
+        <p>Propiedades adicionales de los elementos HTML (id, class, src, href, etc.).</p>
+    </div>
+
+    <!-- Elementos de prueba -->
+    <img id="imagen" src="https://via.placeholder.com/150" alt="Imagen de prueba" data-usuario="123" data-rol="admin">
+    <input type="text" id="campo" value="Hola" placeholder="Escribe algo" disabled>
+    <a href="https://google.com" id="enlace" target="_blank">Google</a>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.ejemplo-numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1
+        iniciarEjemplo("getAttribute() - Obtener atributo");
+        mostrarCodigo('const img = document.getElementById("imagen");');
+        mostrarCodigo('img.getAttribute("src");');
+        mostrarCodigo('img.getAttribute("alt");');
+        const img = document.getElementById('imagen');
+        mostrarResultado('src: ' + img.getAttribute('src'));
+        mostrarResultado('alt: ' + img.getAttribute('alt'));
+
+        // EJEMPLO 2
+        iniciarEjemplo("setAttribute() - Establecer atributo");
+        mostrarCodigo('const enlace = document.getElementById("enlace");');
+        mostrarCodigo('enlace.setAttribute("title", "Ir a Google");');
+        const enlace = document.getElementById('enlace');
+        enlace.setAttribute('title', 'Ir a Google');
+        mostrarResultado('title añadido: ' + enlace.getAttribute('title'));
+
+        // EJEMPLO 3
+        iniciarEjemplo("hasAttribute() - Verificar si existe");
+        mostrarCodigo('const campo = document.getElementById("campo");');
+        mostrarCodigo('campo.hasAttribute("disabled"); // true');
+        mostrarCodigo('campo.hasAttribute("required"); // false');
+        const campo = document.getElementById('campo');
+        mostrarResultado('tiene disabled: ' + campo.hasAttribute('disabled'));
+        mostrarResultado('tiene required: ' + campo.hasAttribute('required'));
+
+        // EJEMPLO 4
+        iniciarEjemplo("removeAttribute() - Eliminar atributo");
+        mostrarCodigo('campo.removeAttribute("disabled");');
+        campo.removeAttribute('disabled');
+        mostrarResultado('disabled eliminado');
+        mostrarResultado('tiene disabled: ' + campo.hasAttribute('disabled'));
+
+        // EJEMPLO 5
+        iniciarEjemplo("Acceso directo a propiedades");
+        mostrarCodigo('// Acceso directo (preferido)');
+        mostrarCodigo('img.src = "nueva-imagen.jpg";');
+        mostrarCodigo('img.alt = "Nueva descripción";');
+        mostrarCodigo('enlace.href = "https://github.com";');
+        mostrar('');
+        mostrar('✅ Más rápido y directo');
+        mostrarResultado('img.id: ' + img.id);
+        mostrarResultado('enlace.href: ' + enlace.href);
+
+        // EJEMPLO 6
+        iniciarEjemplo("Data Attributes - Leer");
+        mostrarCodigo('// HTML: <img data-usuario="123" data-rol="admin">');
+        mostrarCodigo('img.dataset.usuario;  // "123"');
+        mostrarCodigo('img.dataset.rol;      // "admin"');
+        mostrarResultado('dataset.usuario: ' + img.dataset.usuario);
+        mostrarResultado('dataset.rol: ' + img.dataset.rol);
+
+        // EJEMPLO 7
+        iniciarEjemplo("Data Attributes - Escribir");
+        mostrarCodigo('img.dataset.nivel = "5";');
+        mostrarCodigo('img.dataset.estadoActivo = "true";');
+        img.dataset.nivel = '5';
+        img.dataset.estadoActivo = 'true';
+        mostrarResultado('dataset.nivel: ' + img.dataset.nivel);
+        mostrarResultado('dataset.estadoActivo: ' + img.dataset.estadoActivo);
+        mostrar('');
+        mostrar('💡 estadoActivo → data-estado-activo (camelCase a kebab-case)');
+
+        // EJEMPLO 8
+        iniciarEjemplo("Atributos booleanos");
+        mostrarCodigo('// disabled, checked, selected, readonly');
+        mostrarCodigo('campo.disabled = true;  // Activa');
+        mostrarCodigo('campo.disabled = false; // Desactiva');
+        campo.disabled = true;
+        mostrarResultado('campo.disabled: ' + campo.disabled);
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Métodos de atributos</h2>
+        <ul>
+            <li><code>getAttribute(nombre)</code> - Obtener valor</li>
+            <li><code>setAttribute(nombre, valor)</code> - Establecer valor</li>
+            <li><code>hasAttribute(nombre)</code> - Verificar existencia</li>
+            <li><code>removeAttribute(nombre)</code> - Eliminar atributo</li>
+            <li><code>element.dataset</code> - Acceder a data-* attributes</li>
+        </ul>
+    </div>
+
+    <div class="code-section">
+        <h2>✅ Buenas prácticas</h2>
+        <ul>
+            <li>✅ Usar propiedades directas cuando sea posible: <code>img.src</code></li>
+            <li>✅ Data attributes para almacenar datos personalizados</li>
+            <li>✅ <code>dataset</code> convierte kebab-case ↔ camelCase automáticamente</li>
+            <li>⚠️ Atributos vs Propiedades no siempre son iguales</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>34 - Event Loop y Asincronía</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>34 - Event Loop y Asincronía</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué es el Event Loop?</h2>
+        <p>El Event Loop es el mecanismo que permite a JavaScript ejecutar código asíncrono de forma no bloqueante.</p>
+    </div>
+
+    <div class="code-section">
+        <h2>🔧 Componentes</h2>
+        <ul>
+            <li><strong>Call Stack:</strong> Pila de ejecución (funciones)</li>
+            <li><strong>Task Queue (Macrotasks):</strong> Cola de tareas (setTimeout, eventos)</li>
+            <li><strong>Microtask Queue:</strong> Cola de microtareas (Promises)</li>
+            <li><strong>Web APIs:</strong> setTimeout, fetch, DOM events</li>
+        </ul>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.ejemplo-numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1
+        iniciarEjemplo("Orden de ejecución básico");
+        mostrarCodigo('console.log("1");');
+        mostrarCodigo('setTimeout(() => console.log("2"), 0);');
+        mostrarCodigo('console.log("3");');
+        mostrar('');
+        mostrar('Salida: 1 → 3 → 2');
+        mostrar('💡 setTimeout va al Task Queue, se ejecuta después');
+
+        // EJEMPLO 2
+        iniciarEjemplo("Microtasks vs Macrotasks");
+        mostrarCodigo('console.log("1");');
+        mostrarCodigo('setTimeout(() => console.log("setTimeout"), 0);');
+        mostrarCodigo('Promise.resolve().then(() => console.log("Promise"));');
+        mostrarCodigo('console.log("2");');
+        mostrar('');
+        mostrar('Salida: 1 → 2 → Promise → setTimeout');
+        mostrar('💡 Microtasks (Promises) tienen prioridad');
+
+        // EJEMPLO 3
+        iniciarEjemplo("Demostración práctica");
+        mostrarResultado("Inicio");
+        setTimeout(() => mostrarResultado("Macrotask (setTimeout)"), 0);
+        Promise.resolve().then(() => mostrarResultado("Microtask (Promise)"));
+        mostrarResultado("Fin");
+
+        // EJEMPLO 4
+        iniciarEjemplo("Código bloqueante vs no bloqueante");
+        mostrarCodigo('// Bloqueante (evitar):');
+        mostrarCodigo('for(let i=0; i<1000000000; i++) {} // Bloquea todo');
+        mostrarCodigo('');
+        mostrarCodigo('// No bloqueante (preferir):');
+        mostrarCodigo('setTimeout(() => { /* código */ }, 0);');
+        mostrar('');
+        mostrar('✅ El código asíncrono no bloquea el Event Loop');
+
+        // EJEMPLO 5
+        iniciarEjemplo("Orden complejo");
+        mostrarCodigo('console.log("A");');
+        mostrarCodigo('setTimeout(() => console.log("B"), 0);');
+        mostrarCodigo('Promise.resolve().then(() => {');
+        mostrarCodigo('    console.log("C");');
+        mostrarCodigo('    setTimeout(() => console.log("D"), 0);');
+        mostrarCodigo('});');
+        mostrarCodigo('console.log("E");');
+        mostrar('');
+        mostrar('Salida: A → E → C → B → D');
+        mostrar('💡 Call Stack → Microtasks → Macrotasks');
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ JavaScript es single-threaded (un solo hilo)</li>
+            <li>✅ Event Loop permite asincronía</li>
+            <li>✅ Microtasks (Promises) > Macrotasks (setTimeout)</li>
+            <li>✅ Código síncrono se ejecuta primero</li>
+        </ul>
+    </div>
+</body>
+</html>

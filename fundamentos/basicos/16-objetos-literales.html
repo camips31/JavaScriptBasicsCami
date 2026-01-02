@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>16 - Objetos Literales</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="../../basicos.html" class="back">← Volver al menú</a>
+    <h1>16 - Objetos Literales Mejorados</h1>
+    <div class="code-section">
+        <h2>📌 Enhanced Object Literals</h2>
+        <p>ES6+ introdujo mejoras en la sintaxis de objetos literales.</p>
+    </div>
+    <div class="code-section">
+        <h2>✨ Shorthand Properties</h2>
+        <pre><code>const nombre = "Ana";
+const edad = 25;
+
+// Forma tradicional
+const persona1 = {nombre: nombre, edad: edad};
+
+// Shorthand (cuando la variable y la propiedad tienen el mismo nombre)
+const persona2 = {nombre, edad};
+console.log(persona2); // {nombre: "Ana", edad: 25}</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>📝 Métodos Abreviados</h2>
+        <pre><code>// Forma tradicional
+const objeto1 = {
+    saludar: function() {
+        return "Hola";
+    }
+};
+
+// Forma abreviada
+const objeto2 = {
+    saludar() {
+        return "Hola";
+    }
+};</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>🔑 Computed Property Names</h2>
+        <pre><code>const propiedad = "color";
+const objeto = {
+    [propiedad]: "rojo",
+    ["edad" + "Usuario"]: 25
+};
+console.log(objeto); // {color: "rojo", edadUsuario: 25}</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ Shorthand: <code>{nombre, edad}</code></li>
+            <li>✅ Métodos: <code>{metodo() {}}</code></li>
+            <li>✅ Propiedades computadas: <code>{[key]: value}</code></li>
+        </ul>
+    </div>
+</body>
+</html>

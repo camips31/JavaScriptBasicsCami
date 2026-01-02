@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08 - Arreglos (Arrays)</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="../../basicos.html" class="back">← Volver al menú</a>
+    
+    <h1>08 - Arreglos (Arrays)</h1>
+
+    <div class="code-section">
+        <h2>📌 ¿Qué es un array?</h2>
+        <p>Un array es una estructura que permite almacenar múltiples valores en una sola variable.</p>
+        <p>Los elementos se acceden por su índice (posición), comenzando desde 0.</p>
+    </div>
+
+    <div class="code-section">
+        <h2>🔧 Sintaxis básica</h2>
+        <pre><code>const frutas = ["manzana", "banana", "naranja"];
+frutas[0]  // "manzana"
+frutas[1]  // "banana"</code></pre>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `
+                <div class="ejemplo-header">
+                    <span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span>
+                    <span class="ejemplo-titulo">${titulo}</span>
+                </div>
+                <div class="ejemplo-contenido"></div>
+            `;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrar(texto, tipo = 'normal') {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.className = 'linea-' + tipo;
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+            console.log(texto);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.className = 'codigo-ejemplo';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            mostrar('➜ ' + texto, 'resultado');
+        }
+
+        // Estilos
+        const style = document.createElement('style');
+        style.textContent = `
+            .ejemplo-box {
+                background: white;
+                border: 2px solid #f7df1e;
+                border-radius: 8px;
+                margin: 20px 0;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .ejemplo-header {
+                background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);
+                padding: 15px 20px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .ejemplo-numero {
+                background: #333;
+                color: #f7df1e;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 0.9em;
+            }
+            .ejemplo-titulo {
+                color: #333;
+                font-size: 1.1em;
+            }
+            .ejemplo-contenido {
+                padding: 20px;
+                background: #f9f9f9;
+            }
+            .codigo-ejemplo {
+                background: #282c34;
+                color: #61dafb;
+                padding: 12px 15px;
+                border-radius: 5px;
+                font-family: 'Courier New', monospace;
+                margin: 8px 0;
+                border-left: 4px solid #f7df1e;
+            }
+            .linea-normal {
+                color: #666;
+                padding: 5px 0;
+                font-family: 'Segoe UI', sans-serif;
+            }
+            .linea-resultado {
+                color: #2ecc71;
+                padding: 8px 15px;
+                background: #e8f8f5;
+                border-left: 4px solid #2ecc71;
+                margin: 5px 0;
+                border-radius: 3px;
+                font-weight: 500;
+                font-family: 'Courier New', monospace;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ============================================
+        // EJEMPLO 1: Crear y acceder a arrays
+        // ============================================
+        iniciarEjemplo("Crear y acceder a elementos");
+        
+        mostrarCodigo('const frutas = ["manzana", "banana", "naranja"];');
+        const frutas = ["manzana", "banana", "naranja"];
+        
+        mostrar('');
+        mostrarCodigo('frutas[0]');
+        mostrarResultado('Primer elemento: ' + frutas[0]);
+        
+        mostrarCodigo('frutas[1]');
+        mostrarResultado('Segundo elemento: ' + frutas[1]);
+        
+        mostrarCodigo('frutas[2]');
+        mostrarResultado('Tercer elemento: ' + frutas[2]);
+        
+        mostrar('');
+        mostrar('💡 Los índices empiezan en 0');
+
+        // ============================================
+        // EJEMPLO 2: Longitud del array
+        // ============================================
+        iniciarEjemplo("Propiedad length");
+        
+        mostrarCodigo('const numeros = [10, 20, 30, 40, 50];');
+        const numeros = [10, 20, 30, 40, 50];
+        
+        mostrarCodigo('numeros.length');
+        mostrarResultado('Cantidad de elementos: ' + numeros.length);
+        
+        mostrar('');
+        mostrarCodigo('numeros[numeros.length - 1]');
+        mostrarResultado('Último elemento: ' + numeros[numeros.length - 1]);
+
+        // ============================================
+        // EJEMPLO 3: push - Agregar al final
+        // ============================================
+        iniciarEjemplo("push() - Agregar elementos al final");
+        
+        mostrarCodigo('const animales = ["perro", "gato"];');
+        const animales = ["perro", "gato"];
+        mostrarResultado('Array inicial: [' + animales.join(', ') + ']');
+        
+        mostrar('');
+        mostrarCodigo('animales.push("pájaro")');
+        animales.push("pájaro");
+        mostrarResultado('Después de push: [' + animales.join(', ') + ']');
+        
+        mostrarCodigo('animales.push("pez")');
+        animales.push("pez");
+        mostrarResultado('Después de otro push: [' + animales.join(', ') + ']');
+
+        // ============================================
+        // EJEMPLO 4: pop - Eliminar del final
+        // ============================================
+        iniciarEjemplo("pop() - Eliminar del final");
+        
+        mostrarCodigo('const colores = ["rojo", "verde", "azul", "amarillo"];');
+        const colores = ["rojo", "verde", "azul", "amarillo"];
+        mostrarResultado('Array inicial: [' + colores.join(', ') + ']');
+        
+        mostrar('');
+        mostrarCodigo('const eliminado = colores.pop()');
+        const eliminado = colores.pop();
+        mostrarResultado('Elemento eliminado: ' + eliminado);
+        mostrarResultado('Array después de pop: [' + colores.join(', ') + ']');
+
+        // ============================================
+        // EJEMPLO 5: unshift y shift
+        // ============================================
+        iniciarEjemplo("unshift() y shift() - Al inicio");
+        
+        mostrarCodigo('const letras = ["b", "c"];');
+        const letras = ["b", "c"];
+        mostrarResultado('Array inicial: [' + letras.join(', ') + ']');
+        
+        mostrar('');
+        mostrarCodigo('letras.unshift("a")  // Agregar al inicio');
+        letras.unshift("a");
+        mostrarResultado('Después de unshift: [' + letras.join(', ') + ']');
+        
+        mostrar('');
+        mostrarCodigo('letras.shift()  // Eliminar del inicio');
+        const primerElemento = letras.shift();
+        mostrarResultado('Elemento eliminado: ' + primerElemento);
+        mostrarResultado('Después de shift: [' + letras.join(', ') + ']');
+
+        // ============================================
+        // EJEMPLO 6: indexOf y includes
+        // ============================================
+        iniciarEjemplo("indexOf() e includes() - Buscar elementos");
+        
+        mostrarCodigo('const paises = ["México", "España", "Argentina", "Chile"];');
+        const paises = ["México", "España", "Argentina", "Chile"];
+        
+        mostrar('');
+        mostrarCodigo('paises.indexOf("Argentina")');
+        mostrarResultado('Índice de Argentina: ' + paises.indexOf("Argentina"));
+        
+        mostrarCodigo('paises.indexOf("Brasil")');
+        mostrarResultado('Índice de Brasil: ' + paises.indexOf("Brasil") + ' (no encontrado)');
+        
+        mostrar('');
+        mostrarCodigo('paises.includes("España")');
+        mostrarResultado('¿Incluye España?: ' + paises.includes("España"));
+        
+        mostrarCodigo('paises.includes("Brasil")');
+        mostrarResultado('¿Incluye Brasil?: ' + paises.includes("Brasil"));
+
+        // ============================================
+        // EJEMPLO 7: slice - Extraer porción
+        // ============================================
+        iniciarEjemplo("slice() - Extraer porción del array");
+        
+        mostrarCodigo('const dias = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];');
+        const dias = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+        
+        mostrar('');
+        mostrarCodigo('dias.slice(0, 5)  // Primeros 5');
+        mostrarResultado('Días laborales: [' + dias.slice(0, 5).join(', ') + ']');
+        
+        mostrarCodigo('dias.slice(5)  // Desde índice 5');
+        mostrarResultado('Fin de semana: [' + dias.slice(5).join(', ') + ']');
+        
+        mostrar('');
+        mostrar('💡 slice no modifica el array original');
+
+        // ============================================
+        // EJEMPLO 8: join - Convertir a string
+        // ============================================
+        iniciarEjemplo("join() - Unir elementos en string");
+        
+        mostrarCodigo('const palabras = ["Hola", "mundo", "JavaScript"];');
+        const palabras = ["Hola", "mundo", "JavaScript"];
+        
+        mostrarCodigo('palabras.join(" ")');
+        mostrarResultado(palabras.join(" "));
+        
+        mostrar('');
+        mostrarCodigo('palabras.join(" - ")');
+        mostrarResultado(palabras.join(" - "));
+        
+        mostrarCodigo('palabras.join("")');
+        mostrarResultado(palabras.join(""));
+
+        // ============================================
+        // EJEMPLO 9: Array con tipos mixtos
+        // ============================================
+        iniciarEjemplo("Arrays con diferentes tipos");
+        
+        mostrarCodigo('const mixto = ["texto", 42, true, null, {nombre: "Ana"}];');
+        const mixto = ["texto", 42, true, null, {nombre: "Ana"}];
+        
+        mostrarResultado('Elemento 0: ' + mixto[0] + ' (string)');
+        mostrarResultado('Elemento 1: ' + mixto[1] + ' (number)');
+        mostrarResultado('Elemento 2: ' + mixto[2] + ' (boolean)');
+        mostrarResultado('Elemento 3: ' + mixto[3] + ' (null)');
+        mostrarResultado('Elemento 4: ' + JSON.stringify(mixto[4]) + ' (object)');
+        
+        mostrar('');
+        mostrar('💡 Los arrays pueden contener cualquier tipo de dato');
+
+        // ============================================
+        // EJEMPLO 10: Caso práctico - Lista de tareas
+        // ============================================
+        iniciarEjemplo("Caso práctico - Lista de tareas");
+        
+        mostrarCodigo('const tareas = [];');
+        const tareas = [];
+        
+        mostrarCodigo('tareas.push("Estudiar JavaScript")');
+        tareas.push("Estudiar JavaScript");
+        mostrarCodigo('tareas.push("Hacer ejercicio")');
+        tareas.push("Hacer ejercicio");
+        mostrarCodigo('tareas.push("Leer un libro")');
+        tareas.push("Leer un libro");
+        
+        mostrar('');
+        mostrarResultado('📋 Lista de tareas:');
+        tareas.forEach((tarea, index) => {
+            mostrar((index + 1) + '. ' + tarea);
+        });
+        
+        mostrar('');
+        mostrarResultado('Total de tareas: ' + tareas.length);
+        
+        mostrar('');
+        mostrarCodigo('tareas.pop()  // Completar última tarea');
+        const tareaCompletada = tareas.pop();
+        mostrarResultado('✅ Completada: ' + tareaCompletada);
+        mostrarResultado('Tareas pendientes: ' + tareas.length);
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Resumen de métodos</h2>
+        <table>
+            <tr>
+                <th>Método</th>
+                <th>Descripción</th>
+            </tr>
+            <tr>
+                <td><code>push()</code></td>
+                <td>Agregar al final</td>
+            </tr>
+            <tr>
+                <td><code>pop()</code></td>
+                <td>Eliminar del final</td>
+            </tr>
+            <tr>
+                <td><code>unshift()</code></td>
+                <td>Agregar al inicio</td>
+            </tr>
+            <tr>
+                <td><code>shift()</code></td>
+                <td>Eliminar del inicio</td>
+            </tr>
+            <tr>
+                <td><code>indexOf()</code></td>
+                <td>Buscar índice de elemento</td>
+            </tr>
+            <tr>
+                <td><code>includes()</code></td>
+                <td>Verificar si existe elemento</td>
+            </tr>
+            <tr>
+                <td><code>slice()</code></td>
+                <td>Extraer porción</td>
+            </tr>
+            <tr>
+                <td><code>join()</code></td>
+                <td>Unir en string</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

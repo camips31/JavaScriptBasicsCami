@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>12 - Ciclos (Loops)</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="../../basicos.html" class="back">← Volver al menú</a>
+    <h1>12 - Ciclos (Loops)</h1>
+    <div class="code-section">
+        <h2>📌 ¿Qué son los ciclos?</h2>
+        <p>Los ciclos permiten repetir un bloque de código múltiples veces.</p>
+    </div>
+    <div class="code-section">
+        <h2>🔄 Tipos de Ciclos</h2>
+        <ul>
+            <li><strong>for</strong> - Repetir un número específico de veces</li>
+            <li><strong>while</strong> - Repetir mientras se cumpla una condición</li>
+            <li><strong>do-while</strong> - Ejecutar al menos una vez, luego repetir</li>
+            <li><strong>for...of</strong> - Iterar sobre elementos de un array</li>
+            <li><strong>forEach</strong> - Método de arrays para iterar</li>
+        </ul>
+    </div>
+    <div class="code-section">
+        <h2>🔧 Ejemplos de Sintaxis</h2>
+        <h3>For Loop</h3>
+        <pre><code>for (let i = 0; i < 5; i++) {
+    console.log(i);
+}
+// Imprime: 0, 1, 2, 3, 4</code></pre>
+        <h3>While Loop</h3>
+        <pre><code>let i = 0;
+while (i < 5) {
+    console.log(i);
+    i++;
+}</code></pre>
+        <h3>For...of</h3>
+        <pre><code>const frutas = ["manzana", "banana", "naranja"];
+for (const fruta of frutas) {
+    console.log(fruta);
+}</code></pre>
+        <h3>forEach</h3>
+        <pre><code>const numeros = [1, 2, 3];
+numeros.forEach(numero => {
+    console.log(numero * 2);
+});</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ <code>for</code> - Ciclo con contador</li>
+            <li>✅ <code>while</code> - Ciclo con condición</li>
+            <li>✅ <code>for...of</code> - Iterar arrays</li>
+            <li>✅ <code>forEach()</code> - Método de arrays</li>
+        </ul>
+    </div>
+</body>
+</html>

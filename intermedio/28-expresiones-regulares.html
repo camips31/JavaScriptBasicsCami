@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>28 - Expresiones Regulares</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>28 - Expresiones Regulares (RegEx)</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué son las RegEx?</h2>
+        <p>Las expresiones regulares son patrones para buscar y manipular texto.</p>
+    </div>
+
+    <div class="code-section">
+        <h2>🔧 Sintaxis Básica</h2>
+        <pre><code>// Dos formas de crear una RegEx
+const regex1 = /patron/flags;
+const regex2 = new RegExp("patron", "flags");
+
+// Flags comunes:
+// g - global (todas las coincidencias)
+// i - case insensitive (ignora mayúsculas)
+// m - multiline</code></pre>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `
+                <div class="ejemplo-header">
+                    <span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span>
+                    <span class="ejemplo-titulo">${titulo}</span>
+                </div>
+                <div class="ejemplo-contenido"></div>
+            `;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrar(texto, tipo = 'normal') {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.className = 'linea-' + tipo;
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.className = 'codigo-ejemplo';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            mostrar('➜ ' + texto, 'resultado');
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .ejemplo-box {
+                background: white;
+                border: 2px solid #f7df1e;
+                border-radius: 8px;
+                margin: 20px 0;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .ejemplo-header {
+                background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);
+                padding: 15px 20px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .ejemplo-numero {
+                background: #333;
+                color: #f7df1e;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 0.9em;
+            }
+            .ejemplo-titulo {
+                color: #333;
+                font-size: 1.1em;
+            }
+            .ejemplo-contenido {
+                padding: 20px;
+                background: #f9f9f9;
+            }
+            .codigo-ejemplo {
+                background: #282c34;
+                color: #61dafb;
+                padding: 12px 15px;
+                border-radius: 5px;
+                font-family: 'Courier New', monospace;
+                margin: 8px 0;
+                border-left: 4px solid #f7df1e;
+            }
+            .linea-normal {
+                color: #666;
+                padding: 5px 0;
+            }
+            .linea-resultado {
+                color: #2ecc71;
+                padding: 8px 15px;
+                background: #e8f8f5;
+                border-left: 4px solid #2ecc71;
+                margin: 5px 0;
+                border-radius: 3px;
+                font-weight: 500;
+                font-family: 'Courier New', monospace;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1: test() - Verificar si hay coincidencia
+        iniciarEjemplo("test() - Verificar patrón");
+        
+        mostrarCodigo('const regex = /hola/i;');
+        const regex1 = /hola/i;
+        
+        mostrarCodigo('regex.test("Hola mundo")');
+        mostrarResultado('Resultado: ' + regex1.test("Hola mundo"));
+        
+        mostrarCodigo('regex.test("Adiós mundo")');
+        mostrarResultado('Resultado: ' + regex1.test("Adiós mundo"));
+
+        // EJEMPLO 2: match() - Encontrar coincidencias
+        iniciarEjemplo("match() - Encontrar coincidencias");
+        
+        mostrarCodigo('const texto = "Mi teléfono es 123-456-7890";');
+        mostrarCodigo('const numeros = texto.match(/\\d+/g);');
+        
+        const texto = "Mi teléfono es 123-456-7890";
+        const numeros = texto.match(/\d+/g);
+        
+        mostrarResultado('Números encontrados: [' + numeros.join(', ') + ']');
+
+        // EJEMPLO 3: replace() - Reemplazar texto
+        iniciarEjemplo("replace() - Reemplazar con RegEx");
+        
+        mostrarCodigo('const frase = "Tengo 2 gatos y 3 perros";');
+        mostrarCodigo('const nueva = frase.replace(/\\d+/g, "X");');
+        
+        const frase = "Tengo 2 gatos y 3 perros";
+        const nueva = frase.replace(/\d+/g, "X");
+        
+        mostrarResultado('Original: ' + frase);
+        mostrarResultado('Reemplazado: ' + nueva);
+
+        // EJEMPLO 4: Validar email
+        iniciarEjemplo("Validar formato de email");
+        
+        mostrarCodigo('const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        const emails = ["usuario@ejemplo.com", "mal@email", "otro@correo.es"];
+        
+        mostrar('');
+        emails.forEach(email => {
+            const valido = emailRegex.test(email);
+            mostrarResultado(email + ' → ' + (valido ? '✅ Válido' : '❌ Inválido'));
+        });
+
+        // EJEMPLO 5: Validar teléfono
+        iniciarEjemplo("Validar número de teléfono");
+        
+        mostrarCodigo('const telRegex = /^\\d{3}-\\d{3}-\\d{4}$/;');
+        const telRegex = /^\d{3}-\d{3}-\d{4}$/;
+        
+        const telefonos = ["123-456-7890", "12-345-6789", "123-456-789"];
+        
+        mostrar('');
+        telefonos.forEach(tel => {
+            const valido = telRegex.test(tel);
+            mostrarResultado(tel + ' → ' + (valido ? '✅ Válido' : '❌ Inválido'));
+        });
+
+        // EJEMPLO 6: Extraer palabras
+        iniciarEjemplo("Extraer todas las palabras");
+        
+        mostrarCodigo('const texto = "Hola, ¿cómo estás? ¡Bien!";');
+        mostrarCodigo('const palabras = texto.match(/\\w+/g);');
+        
+        const texto2 = "Hola, ¿cómo estás? ¡Bien!";
+        const palabras = texto2.match(/\w+/g);
+        
+        mostrarResultado('Palabras: [' + palabras.join(', ') + ']');
+
+        // EJEMPLO 7: Buscar y capturar grupos
+        iniciarEjemplo("Grupos de captura");
+        
+        mostrarCodigo('const fecha = "2024-12-25";');
+        mostrarCodigo('const regex = /(\\d{4})-(\\d{2})-(\\d{2})/;');
+        mostrarCodigo('const match = fecha.match(regex);');
+        
+        const fecha = "2024-12-25";
+        const regexFecha = /(\d{4})-(\d{2})-(\d{2})/;
+        const matchFecha = fecha.match(regexFecha);
+        
+        mostrar('');
+        mostrarResultado('Fecha completa: ' + matchFecha[0]);
+        mostrarResultado('Año: ' + matchFecha[1]);
+        mostrarResultado('Mes: ' + matchFecha[2]);
+        mostrarResultado('Día: ' + matchFecha[3]);
+
+        // EJEMPLO 8: Limpiar espacios
+        iniciarEjemplo("Limpiar espacios múltiples");
+        
+        mostrarCodigo('const texto = "Hola    mundo   JavaScript";');
+        mostrarCodigo('const limpio = texto.replace(/\\s+/g, " ");');
+        
+        const textoEspacios = "Hola    mundo   JavaScript";
+        const limpio = textoEspacios.replace(/\s+/g, " ");
+        
+        mostrarResultado('Original: "' + textoEspacios + '"');
+        mostrarResultado('Limpio: "' + limpio + '"');
+
+        // EJEMPLO 9: Validar contraseña
+        iniciarEjemplo("Validar contraseña segura");
+        
+        mostrar('Requisitos: mínimo 8 caracteres, 1 mayúscula, 1 número');
+        mostrarCodigo('const passRegex = /^(?=.*[A-Z])(?=.*\\d).{8,}$/;');
+        
+        const passRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+        const passwords = ["abc123", "Password1", "MAYUSCULAS123", "minusculas1"];
+        
+        mostrar('');
+        passwords.forEach(pass => {
+            const valido = passRegex.test(pass);
+            mostrarResultado(pass + ' → ' + (valido ? '✅ Segura' : '❌ Débil'));
+        });
+
+        // EJEMPLO 10: Caso práctico - Censurar palabras
+        iniciarEjemplo("Caso práctico - Censurar palabras");
+        
+        mostrarCodigo('const texto = "Esto es malo y horrible";');
+        mostrarCodigo('const censurado = texto.replace(/malo|horrible/gi, "***");');
+        
+        const textoCensurar = "Esto es malo y horrible, muy malo";
+        const censurado = textoCensurar.replace(/malo|horrible/gi, "***");
+        
+        mostrarResultado('Original: ' + textoCensurar);
+        mostrarResultado('Censurado: ' + censurado);
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Caracteres Especiales</h2>
+        <table>
+            <tr><th>Símbolo</th><th>Significado</th></tr>
+            <tr><td><code>\d</code></td><td>Dígito (0-9)</td></tr>
+            <tr><td><code>\w</code></td><td>Palabra (letras, números, _)</td></tr>
+            <tr><td><code>\s</code></td><td>Espacio en blanco</td></tr>
+            <tr><td><code>.</code></td><td>Cualquier carácter</td></tr>
+            <tr><td><code>^</code></td><td>Inicio de línea</td></tr>
+            <tr><td><code>$</code></td><td>Fin de línea</td></tr>
+            <tr><td><code>+</code></td><td>Una o más veces</td></tr>
+            <tr><td><code>*</code></td><td>Cero o más veces</td></tr>
+            <tr><td><code>?</code></td><td>Cero o una vez</td></tr>
+            <tr><td><code>{n}</code></td><td>Exactamente n veces</td></tr>
+            <tr><td><code>[abc]</code></td><td>Cualquiera de a, b, c</td></tr>
+            <tr><td><code>|</code></td><td>OR (o)</td></tr>
+        </table>
+    </div>
+
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ <code>test()</code> - Verificar si coincide</li>
+            <li>✅ <code>match()</code> - Encontrar coincidencias</li>
+            <li>✅ <code>replace()</code> - Reemplazar texto</li>
+            <li>✅ Útil para validaciones y procesamiento de texto</li>
+        </ul>
+    </div>
+</body>
+</html>

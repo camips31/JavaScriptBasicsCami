@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>53 - Texto y HTML</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>53 - Manipular Texto y HTML</h1>
+    
+    <div class="code-section">
+        <h2>📌 Propiedades para contenido</h2>
+        <p>Diferentes formas de leer y modificar el contenido de elementos.</p>
+    </div>
+
+    <div id="contenedor">
+        <p id="parrafo">Este es un <strong>párrafo</strong> de prueba</p>
+        <div id="caja">Contenido inicial</div>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        const parrafo = document.getElementById('parrafo');
+        const caja = document.getElementById('caja');
+
+        // EJEMPLO 1
+        iniciarEjemplo("textContent - Solo texto");
+        mostrarCodigo('const p = document.getElementById("parrafo");');
+        mostrarCodigo('p.textContent;');
+        mostrarResultado('textContent: ' + parrafo.textContent);
+        mostrar('');
+        mostrar('💡 Ignora etiquetas HTML, solo texto plano');
+
+        // EJEMPLO 2
+        iniciarEjemplo("innerHTML - Con HTML");
+        mostrarCodigo('p.innerHTML;');
+        mostrarResultado('innerHTML: ' + parrafo.innerHTML);
+        mostrar('');
+        mostrar('💡 Incluye las etiquetas HTML');
+
+        // EJEMPLO 3
+        iniciarEjemplo("innerText vs textContent");
+        mostrarCodigo('// innerText respeta CSS (visibility, display)');
+        mostrarCodigo('// textContent ignora CSS, más rápido');
+        mostrarResultado('innerText: ' + parrafo.innerText);
+        mostrarResultado('textContent: ' + parrafo.textContent);
+        mostrar('');
+        mostrar('✅ Preferir textContent (más rápido)');
+
+        // EJEMPLO 4
+        iniciarEjemplo("Modificar textContent");
+        mostrarCodigo('caja.textContent = "Nuevo contenido de texto";');
+        caja.textContent = 'Nuevo contenido de texto';
+        mostrarResultado('Texto modificado');
+
+        // EJEMPLO 5
+        iniciarEjemplo("Modificar innerHTML");
+        mostrarCodigo('caja.innerHTML = "<strong>HTML</strong> con <em>etiquetas</em>";');
+        caja.innerHTML = '<strong>HTML</strong> con <em>etiquetas</em>';
+        mostrarResultado('HTML modificado (mira la caja arriba)');
+
+        // EJEMPLO 6
+        iniciarEjemplo("outerHTML - Incluye el elemento mismo");
+        mostrarCodigo('caja.outerHTML;');
+        mostrarResultado('outerHTML: ' + caja.outerHTML.substring(0, 50) + '...');
+        mostrar('');
+        mostrar('💡 Incluye la etiqueta del elemento');
+
+        // EJEMPLO 7
+        iniciarEjemplo("⚠️ Seguridad con innerHTML");
+        mostrarCodigo('// PELIGRO: XSS (Cross-Site Scripting)');
+        mostrarCodigo('const userInput = "<script>alert()</script>";');
+        mostrarCodigo('div.innerHTML = userInput; // ❌ Vulnerable');
+        mostrarCodigo('');
+        mostrarCodigo('// SEGURO:');
+        mostrarCodigo('div.textContent = userInput; // ✅ Escapa HTML');
+        mostrar('');
+        mostrar('⚠️ Nunca usar innerHTML con datos de usuario sin sanitizar');
+
+        // EJEMPLO 8
+        iniciarEjemplo("insertAdjacentHTML() - Insertar HTML");
+        mostrarCodigo('elemento.insertAdjacentHTML("beforebegin", html);');
+        mostrarCodigo('// Posiciones: beforebegin, afterbegin, beforeend, afterend');
+        const demo = document.createElement('div');
+        demo.id = 'demo';
+        demo.innerHTML = 'ELEMENTO';
+        demo.style.cssText = 'border: 2px solid blue; padding: 10px; margin: 10px 0;';
+        ejemplosContainer.appendChild(demo);
+        demo.insertAdjacentHTML('beforebegin', '<div style="color: red;">ANTES</div>');
+        demo.insertAdjacentHTML('afterend', '<div style="color: green;">DESPUÉS</div>');
+        mostrarResultado('HTML insertado (mira arriba)');
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Propiedades de contenido</h2>
+        <ul>
+            <li><code>textContent</code> - Solo texto (rápido, seguro)</li>
+            <li><code>innerText</code> - Texto visible (respeta CSS)</li>
+            <li><code>innerHTML</code> - HTML interno</li>
+            <li><code>outerHTML</code> - HTML completo (con elemento)</li>
+            <li><code>insertAdjacentHTML(posicion, html)</code> - Insertar HTML</li>
+        </ul>
+    </div>
+
+    <div class="code-section">
+        <h2>✅ Cuándo usar cada uno</h2>
+        <ul>
+            <li>✅ <code>textContent</code> - Para texto simple (más seguro)</li>
+            <li>✅ <code>innerHTML</code> - Para insertar HTML confiable</li>
+            <li>⚠️ Nunca <code>innerHTML</code> con input de usuario</li>
+            <li>✅ <code>insertAdjacentHTML</code> - Para insertar sin sobrescribir</li>
+        </ul>
+    </div>
+</body>
+</html>

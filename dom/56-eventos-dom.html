@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>56 - Eventos DOM</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>56 - Eventos del DOM</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué son los eventos?</h2>
+        <p>Acciones que ocurren en el navegador: clics, teclas, scroll, carga de página, etc.</p>
+    </div>
+
+    <button id="btn1">Clic aquí</button>
+    <button id="btn2">Con parámetros</button>
+    <button id="btn3">Remover evento</button>
+    <div id="padre" style="background: #f4f4f4; padding: 20px; margin: 10px 0;">
+        PADRE
+        <div id="hijo" style="background: #3498db; padding: 20px; margin: 10px; color: white;">HIJO</div>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1
+        iniciarEjemplo("addEventListener() - Método moderno");
+        mostrarCodigo('btn.addEventListener("click", function() {');
+        mostrarCodigo('    console.log("Clic!");');
+        mostrarCodigo('});');
+        const btn1 = document.getElementById('btn1');
+        btn1.addEventListener('click', function() {
+            mostrarResultado('¡Botón clickeado!');
+        });
+        mostrar('💡 Haz clic en el botón azul de arriba');
+
+        // EJEMPLO 2
+        iniciarEjemplo("Eventos con parámetros");
+        mostrarCodigo('function saludar(nombre) {');
+        mostrarCodigo('    console.log("Hola " + nombre);');
+        mostrarCodigo('}');
+        mostrarCodigo('btn.addEventListener("click", () => saludar("Ana"));');
+        const btn2 = document.getElementById('btn2');
+        btn2.addEventListener('click', () => {
+            mostrarResultado('Evento con parámetro: Hola Ana');
+        });
+
+        // EJEMPLO 3
+        iniciarEjemplo("Objeto event");
+        mostrarCodigo('btn.addEventListener("click", function(e) {');
+        mostrarCodigo('    console.log(e.type);      // "click"');
+        mostrarCodigo('    console.log(e.target);    // elemento clickeado');
+        mostrarCodigo('    console.log(e.clientX);   // posición X');
+        mostrarCodigo('});');
+        btn1.addEventListener('click', function(e) {
+            mostrarResultado(`Tipo: ${e.type}, Target: ${e.target.tagName}`);
+        });
+
+        // EJEMPLO 4
+        iniciarEjemplo("removeEventListener() - Remover evento");
+        mostrarCodigo('function handler() { console.log("click"); }');
+        mostrarCodigo('btn.addEventListener("click", handler);');
+        mostrarCodigo('btn.removeEventListener("click", handler);');
+        const btn3 = document.getElementById('btn3');
+        function handlerRemovible() {
+            mostrarResultado('Este evento se eliminará ahora');
+            btn3.removeEventListener('click', handlerRemovible);
+            mostrarResultado('Evento removido (ya no responderá)');
+        }
+        btn3.addEventListener('click', handlerRemovible);
+
+        // EJEMPLO 5
+        iniciarEjemplo("Event Bubbling (Burbuja)");
+        mostrarCodigo('// Los eventos "burbujean" hacia arriba');
+        mostrarCodigo('hijo.addEventListener("click", () => log("HIJO"));');
+        mostrarCodigo('padre.addEventListener("click", () => log("PADRE"));');
+        mostrarCodigo('// Clic en hijo → dispara HIJO, luego PADRE');
+        const padre = document.getElementById('padre');
+        const hijo = document.getElementById('hijo');
+        hijo.addEventListener('click', (e) => {
+            mostrarResultado('Evento en HIJO');
+        });
+        padre.addEventListener('click', (e) => {
+            mostrarResultado('Evento en PADRE (burbuja)');
+        });
+        mostrar('💡 Haz clic en el cuadro azul (HIJO)');
+
+        // EJEMPLO 6
+        iniciarEjemplo("stopPropagation() - Detener burbuja");
+        mostrarCodigo('hijo.addEventListener("click", function(e) {');
+        mostrarCodigo('    e.stopPropagation();  // Detiene la burbuja');
+        mostrarCodigo('    console.log("Solo hijo");');
+        mostrarCodigo('});');
+        mostrar('⚠️ stopPropagation() evita que el evento suba al padre');
+
+        // EJEMPLO 7
+        iniciarEjemplo("preventDefault() - Prevenir acción por defecto");
+        mostrarCodigo('enlace.addEventListener("click", function(e) {');
+        mostrarCodigo('    e.preventDefault();  // Evita navegación');
+        mostrarCodigo('    console.log("Navegación cancelada");');
+        mostrarCodigo('});');
+        const enlace = document.createElement('a');
+        enlace.href = 'https://google.com';
+        enlace.textContent = 'Google (no navegará)';
+        enlace.style.display = 'block';
+        enlace.addEventListener('click', function(e) {
+            e.preventDefault();
+            mostrarResultado('Navegación cancelada con preventDefault()');
+        });
+        ejemplosContainer.appendChild(enlace);
+
+        // EJEMPLO 8
+        iniciarEjemplo("Delegación de eventos");
+        mostrarCodigo('// En lugar de añadir evento a cada botón:');
+        mostrarCodigo('contenedor.addEventListener("click", function(e) {');
+        mostrarCodigo('    if(e.target.matches("button")) {');
+        mostrarCodigo('        console.log("Botón clickeado");');
+        mostrarCodigo('    }');
+        mostrarCodigo('});');
+        mostrar('✅ Un solo listener para múltiples elementos');
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Eventos comunes</h2>
+        <ul>
+            <li><strong>Mouse:</strong> click, dblclick, mouseover, mouseout, mousemove</li>
+            <li><strong>Teclado:</strong> keydown, keyup, keypress</li>
+            <li><strong>Formulario:</strong> submit, change, focus, blur, input</li>
+            <li><strong>Documento:</strong> DOMContentLoaded, load</li>
+            <li><strong>Ventana:</strong> resize, scroll</li>
+        </ul>
+    </div>
+
+    <div class="code-section">
+        <h2>📋 Propiedades del evento</h2>
+        <ul>
+            <li><code>e.type</code> - Tipo de evento</li>
+            <li><code>e.target</code> - Elemento que disparó el evento</li>
+            <li><code>e.currentTarget</code> - Elemento con el listener</li>
+            <li><code>e.preventDefault()</code> - Cancelar acción por defecto</li>
+            <li><code>e.stopPropagation()</code> - Detener propagación</li>
+        </ul>
+    </div>
+</body>
+</html>

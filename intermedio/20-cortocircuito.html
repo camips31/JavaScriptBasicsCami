@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>20 - Cortocircuito</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>20 - Evaluación de Cortocircuito</h1>
+    <div class="code-section">
+        <h2>📌 Short-Circuit Evaluation</h2>
+        <p>Los operadores lógicos pueden usarse para asignación condicional.</p>
+    </div>
+    <div class="code-section">
+        <h2>⚡ Operador OR (||)</h2>
+        <p>Retorna el primer valor truthy.</p>
+        <pre><code>const nombre = usuario || "Invitado";
+// Si usuario existe, usa usuario
+// Si no, usa "Invitado"
+
+const resultado = 0 || "default"; // "default"
+const resultado = 5 || "default"; // 5</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>⚡ Operador AND (&&)</h2>
+        <p>Retorna el último valor si todos son truthy.</p>
+        <pre><code>const usuario = {nombre: "Ana"};
+const saludo = usuario && `Hola ${usuario.nombre}`;
+// Solo ejecuta si usuario existe
+
+// Evitar errores
+const ciudad = usuario && usuario.direccion && usuario.direccion.ciudad;</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>✨ Nullish Coalescing (??)</h2>
+        <p>Retorna el valor derecho solo si el izquierdo es <code>null</code> o <code>undefined</code>.</p>
+        <pre><code>const cantidad = 0;
+const valor1 = cantidad || 10; // 10 (0 es falsy)
+const valor2 = cantidad ?? 10; // 0 (0 no es null/undefined)</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ <code>||</code> - Valores por defecto</li>
+            <li>✅ <code>&&</code> - Ejecución condicional</li>
+            <li>✅ <code>??</code> - Solo null/undefined</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>45 - Propiedades Dinámicas</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>45 - Propiedades Dinámicas de los Objetos</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué son?</h2>
+        <p>Formas de acceder, crear y manipular propiedades de objetos de manera dinámica en tiempo de ejecución.</p>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.ejemplo-numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1
+        iniciarEjemplo("Acceso dinámico con []");
+        mostrarCodigo('const obj = {nombre: "Ana", edad: 25};');
+        mostrarCodigo('const prop = "nombre";');
+        mostrarCodigo('obj[prop]; // "Ana"');
+        const obj = {nombre: "Ana", edad: 25};
+        const prop = "nombre";
+        mostrarResultado('obj[prop]: ' + obj[prop]);
+
+        // EJEMPLO 2
+        iniciarEjemplo("Propiedades computadas en objetos");
+        mostrarCodigo('const campo = "usuario";');
+        mostrarCodigo('const persona = {');
+        mostrarCodigo('    [campo]: "Ana",');
+        mostrarCodigo('    [`${campo}Id`]: 123');
+        mostrarCodigo('};');
+        const campo = "usuario";
+        const persona = {
+            [campo]: "Ana",
+            [`${campo}Id`]: 123
+        };
+        mostrarResultado('persona: ' + JSON.stringify(persona));
+
+        // EJEMPLO 3
+        iniciarEjemplo("Añadir propiedades dinámicamente");
+        mostrarCodigo('const producto = {};');
+        mostrarCodigo('const clave = "precio";');
+        mostrarCodigo('producto[clave] = 100;');
+        const producto = {};
+        const clave = "precio";
+        producto[clave] = 100;
+        mostrarResultado('producto: ' + JSON.stringify(producto));
+
+        // EJEMPLO 4
+        iniciarEjemplo("Iterar sobre propiedades");
+        mostrarCodigo('const usuario = {nombre: "Ana", edad: 25, rol: "admin"};');
+        mostrarCodigo('for (const key in usuario) {');
+        mostrarCodigo('    console.log(`${key}: ${usuario[key]}`);');
+        mostrarCodigo('}');
+        const usuario = {nombre: "Ana", edad: 25, rol: "admin"};
+        for (const key in usuario) {
+            mostrarResultado(`${key}: ${usuario[key]}`);
+        }
+
+        // EJEMPLO 5
+        iniciarEjemplo("Object.keys(), values(), entries()");
+        mostrarCodigo('const datos = {a: 1, b: 2, c: 3};');
+        mostrarCodigo('Object.keys(datos);     // ["a", "b", "c"]');
+        mostrarCodigo('Object.values(datos);   // [1, 2, 3]');
+        mostrarCodigo('Object.entries(datos);  // [["a",1], ["b",2], ["c",3]]');
+        const datos = {a: 1, b: 2, c: 3};
+        mostrarResultado('keys: ' + Object.keys(datos));
+        mostrarResultado('values: ' + Object.values(datos));
+        mostrarResultado('entries: ' + JSON.stringify(Object.entries(datos)));
+
+        // EJEMPLO 6
+        iniciarEjemplo("Caso práctico - Builder dinámico");
+        mostrarCodigo('function crearObjeto(pares) {');
+        mostrarCodigo('    const obj = {};');
+        mostrarCodigo('    pares.forEach(([key, value]) => {');
+        mostrarCodigo('        obj[key] = value;');
+        mostrarCodigo('    });');
+        mostrarCodigo('    return obj;');
+        mostrarCodigo('}');
+        function crearObjeto(pares) {
+            const obj = {};
+            pares.forEach(([key, value]) => {
+                obj[key] = value;
+            });
+            return obj;
+        }
+        const config = crearObjeto([
+            ['host', 'localhost'],
+            ['port', 3000],
+            ['debug', true]
+        ]);
+        mostrarResultado('config: ' + JSON.stringify(config));
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Métodos útiles</h2>
+        <ul>
+            <li><code>Object.keys(obj)</code> - Array de claves</li>
+            <li><code>Object.values(obj)</code> - Array de valores</li>
+            <li><code>Object.entries(obj)</code> - Array de [clave, valor]</li>
+            <li><code>Object.fromEntries()</code> - Objeto desde entries</li>
+            <li><code>Object.assign()</code> - Combinar objetos</li>
+        </ul>
+    </div>
+</body>
+</html>

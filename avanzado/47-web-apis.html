@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>47 - Web APIs</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>47 - Web APIs</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué son las Web APIs?</h2>
+        <p>Interfaces que proporciona el navegador para interactuar con el entorno web (DOM, almacenamiento, red, multimedia, etc.).</p>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.ejemplo-numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1
+        iniciarEjemplo("localStorage - Almacenamiento local");
+        mostrarCodigo('localStorage.setItem("usuario", "Ana");');
+        mostrarCodigo('const user = localStorage.getItem("usuario");');
+        mostrarCodigo('localStorage.removeItem("usuario");');
+        localStorage.setItem("usuario", "Ana");
+        mostrarResultado('Guardado: ' + localStorage.getItem("usuario"));
+        localStorage.removeItem("usuario");
+        mostrarResultado('Después de eliminar: ' + localStorage.getItem("usuario"));
+
+        // EJEMPLO 2
+        iniciarEjemplo("fetch() - Peticiones HTTP");
+        mostrarCodigo('fetch("https://jsonplaceholder.typicode.com/users/1")');
+        mostrarCodigo('    .then(res => res.json())');
+        mostrarCodigo('    .then(data => console.log(data));');
+        fetch("https://jsonplaceholder.typicode.com/users/1")
+            .then(res => res.json())
+            .then(data => mostrarResultado('Usuario: ' + data.name))
+            .catch(err => mostrarResultado('Error: ' + err));
+
+        // EJEMPLO 3
+        iniciarEjemplo("Geolocation API");
+        mostrarCodigo('navigator.geolocation.getCurrentPosition(');
+        mostrarCodigo('    pos => console.log(pos.coords.latitude),');
+        mostrarCodigo('    err => console.error(err)');
+        mostrarCodigo(');');
+        if (navigator.geolocation) {
+            mostrarResultado('✅ Geolocation API disponible');
+        } else {
+            mostrarResultado('❌ Geolocation no soportada');
+        }
+
+        // EJEMPLO 4
+        iniciarEjemplo("Notification API");
+        mostrarCodigo('if (Notification.permission === "granted") {');
+        mostrarCodigo('    new Notification("¡Hola!", {body: "Mensaje"});');
+        mostrarCodigo('}');
+        mostrarResultado('Permiso: ' + Notification.permission);
+
+        // EJEMPLO 5
+        iniciarEjemplo("Clipboard API");
+        mostrarCodigo('navigator.clipboard.writeText("Texto copiado");');
+        mostrarCodigo('navigator.clipboard.readText().then(text => {...});');
+        mostrarResultado('✅ Clipboard API disponible');
+
+        // EJEMPLO 6
+        iniciarEjemplo("IntersectionObserver");
+        mostrarCodigo('const observer = new IntersectionObserver(entries => {');
+        mostrarCodigo('    entries.forEach(entry => {');
+        mostrarCodigo('        if (entry.isIntersecting) {');
+        mostrarCodigo('            console.log("Elemento visible");');
+        mostrarCodigo('        }');
+        mostrarCodigo('    });');
+        mostrarCodigo('});');
+        mostrarCodigo('observer.observe(elemento);');
+        mostrarResultado('💡 Útil para lazy loading');
+
+        // EJEMPLO 7
+        iniciarEjemplo("URL API");
+        mostrarCodigo('const url = new URL("https://example.com/ruta?id=123");');
+        mostrarCodigo('url.pathname; // "/ruta"');
+        mostrarCodigo('url.searchParams.get("id"); // "123"');
+        const url = new URL("https://example.com/ruta?id=123");
+        mostrarResultado('pathname: ' + url.pathname);
+        mostrarResultado('searchParams id: ' + url.searchParams.get("id"));
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Web APIs principales</h2>
+        <ul>
+            <li><strong>Storage:</strong> localStorage, sessionStorage</li>
+            <li><strong>Fetch API:</strong> Peticiones HTTP</li>
+            <li><strong>Geolocation:</strong> Ubicación del usuario</li>
+            <li><strong>Notifications:</strong> Notificaciones del sistema</li>
+            <li><strong>Canvas/WebGL:</strong> Gráficos</li>
+            <li><strong>Web Workers:</strong> Hilos en background</li>
+            <li><strong>Service Workers:</strong> PWAs</li>
+            <li><strong>WebSockets:</strong> Comunicación bidireccional</li>
+            <li><strong>Clipboard API:</strong> Portapapeles</li>
+            <li><strong>Observers:</strong> IntersectionObserver, MutationObserver, ResizeObserver</li>
+        </ul>
+    </div>
+
+    <div class="code-section">
+        <h2>🔗 Recursos</h2>
+        <ul>
+            <li>📚 <a href="https://developer.mozilla.org/es/docs/Web/API" target="_blank">MDN Web APIs</a></li>
+            <li>📚 <a href="https://caniuse.com/" target="_blank">Can I Use</a> - Compatibilidad</li>
+        </ul>
+    </div>
+</body>
+</html>

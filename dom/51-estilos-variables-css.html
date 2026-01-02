@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>51 - Estilos CSS y Variables</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+    <style>
+        .caja-demo {
+            width: 200px;
+            height: 100px;
+            background: lightblue;
+            margin: 10px 0;
+            padding: 10px;
+            transition: all 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>51 - Estilos CSS y Variables CSS</h1>
+    
+    <div class="code-section">
+        <h2>📌 Manipular estilos desde JavaScript</h2>
+        <p>Podemos modificar estilos inline, clases y variables CSS.</p>
+    </div>
+
+    <div class="caja-demo" id="caja1">Caja de prueba</div>
+    <div class="caja-demo" id="caja2">Caja 2</div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.ejemplo-numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        const caja1 = document.getElementById('caja1');
+        const caja2 = document.getElementById('caja2');
+
+        // EJEMPLO 1
+        iniciarEjemplo("style - Establecer estilos inline");
+        mostrarCodigo('const caja = document.getElementById("caja1");');
+        mostrarCodigo('caja.style.backgroundColor = "coral";');
+        mostrarCodigo('caja.style.color = "white";');
+        mostrarCodigo('caja.style.fontSize = "20px";');
+        caja1.style.backgroundColor = 'coral';
+        caja1.style.color = 'white';
+        caja1.style.fontSize = '20px';
+        mostrarResultado('Estilos aplicados a caja1');
+
+        // EJEMPLO 2
+        iniciarEjemplo("Leer estilos computados");
+        mostrarCodigo('const estilos = getComputedStyle(caja);');
+        mostrarCodigo('estilos.backgroundColor;');
+        mostrarCodigo('estilos.width;');
+        const estilos = getComputedStyle(caja1);
+        mostrarResultado('backgroundColor: ' + estilos.backgroundColor);
+        mostrarResultado('width: ' + estilos.width);
+
+        // EJEMPLO 3
+        iniciarEjemplo("cssText - Múltiples estilos a la vez");
+        mostrarCodigo('caja.style.cssText = "background: yellow; padding: 20px; border: 2px solid red;";');
+        caja2.style.cssText = 'background: yellow; padding: 20px; border: 2px solid red;';
+        mostrarResultado('Múltiples estilos aplicados a caja2');
+
+        // EJEMPLO 4
+        iniciarEjemplo("setProperty() y removeProperty()");
+        mostrarCodigo('caja.style.setProperty("border-radius", "10px");');
+        mostrarCodigo('caja.style.setProperty("transform", "rotate(5deg)");');
+        mostrarCodigo('caja.style.removeProperty("background");');
+        caja2.style.setProperty('border-radius', '10px');
+        caja2.style.setProperty('transform', 'rotate(5deg)');
+        mostrarResultado('Propiedades establecidas con setProperty()');
+
+        // EJEMPLO 5
+        iniciarEjemplo("Variables CSS - Leer");
+        mostrarCodigo('// CSS: :root { --color-principal: #f7df1e; }');
+        mostrarCodigo('const root = document.documentElement;');
+        mostrarCodigo('getComputedStyle(root).getPropertyValue("--color-principal");');
+        document.documentElement.style.setProperty('--mi-color', '#3498db');
+        const miColor = getComputedStyle(document.documentElement).getPropertyValue('--mi-color');
+        mostrarResultado('Variable --mi-color: ' + miColor);
+
+        // EJEMPLO 6
+        iniciarEjemplo("Variables CSS - Escribir");
+        mostrarCodigo('const root = document.documentElement;');
+        mostrarCodigo('root.style.setProperty("--color-tema", "#e74c3c");');
+        document.documentElement.style.setProperty('--color-tema', '#e74c3c');
+        mostrarResultado('Variable --color-tema creada');
+
+        // EJEMPLO 7
+        iniciarEjemplo("Caso práctico - Tema oscuro");
+        mostrarCodigo('function cambiarTema(oscuro) {');
+        mostrarCodigo('    const root = document.documentElement;');
+        mostrarCodigo('    if (oscuro) {');
+        mostrarCodigo('        root.style.setProperty("--bg-color", "#333");');
+        mostrarCodigo('        root.style.setProperty("--text-color", "#fff");');
+        mostrarCodigo('    }');
+        mostrarCodigo('}');
+        mostrarResultado('💡 Cambiar variables CSS para temas dinámicos');
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Propiedades style</h2>
+        <ul>
+            <li><code>element.style.propiedad</code> - Establecer estilo (camelCase)</li>
+            <li><code>element.style.cssText</code> - Establecer múltiples estilos</li>
+            <li><code>element.style.setProperty(prop, valor)</code> - Establecer propiedad</li>
+            <li><code>element.style.removeProperty(prop)</code> - Eliminar propiedad</li>
+            <li><code>getComputedStyle(element)</code> - Obtener estilos finales</li>
+        </ul>
+    </div>
+
+    <div class="code-section">
+        <h2>✅ Buenas prácticas</h2>
+        <ul>
+            <li>✅ CSS en kebab-case → JavaScript en camelCase: <code>background-color</code> → <code>backgroundColor</code></li>
+            <li>✅ Usar clases CSS para estilos, no inline</li>
+            <li>✅ Variables CSS para temas dinámicos</li>
+            <li>⚠️ <code>style</code> solo lee inline, usa <code>getComputedStyle()</code> para todos</li>
+        </ul>
+    </div>
+</body>
+</html>

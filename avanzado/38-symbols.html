@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>38 - Symbols</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>38 - Symbols</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué es Symbol?</h2>
+        <p>Es un tipo primitivo único e inmutable. Cada Symbol es único, incluso si tienen la misma descripción.</p>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.ejemplo-numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1
+        iniciarEjemplo("Crear Symbols");
+        mostrarCodigo('const sym1 = Symbol();');
+        mostrarCodigo('const sym2 = Symbol("descripcion");');
+        mostrarCodigo('const sym3 = Symbol("descripcion");');
+        const sym1 = Symbol();
+        const sym2 = Symbol("descripcion");
+        const sym3 = Symbol("descripcion");
+        mostrarResultado('sym2 === sym3: ' + (sym2 === sym3));
+        mostrar('💡 Cada Symbol es único');
+
+        // EJEMPLO 2
+        iniciarEjemplo("Símbolos como claves de objetos");
+        mostrarCodigo('const id = Symbol("id");');
+        mostrarCodigo('const usuario = {');
+        mostrarCodigo('    nombre: "Ana",');
+        mostrarCodigo('    [id]: 12345');
+        mostrarCodigo('};');
+        const id = Symbol("id");
+        const usuario = {
+            nombre: "Ana",
+            [id]: 12345
+        };
+        mostrarResultado('usuario[id]: ' + usuario[id]);
+        mostrarResultado('Object.keys(usuario): ' + Object.keys(usuario));
+        mostrar('💡 Los Symbols no aparecen en Object.keys()');
+
+        // EJEMPLO 3
+        iniciarEjemplo("Symbol.for() - Registro global");
+        mostrarCodigo('const sym1 = Symbol.for("app.id");');
+        mostrarCodigo('const sym2 = Symbol.for("app.id");');
+        mostrarCodigo('console.log(sym1 === sym2); // true');
+        const symFor1 = Symbol.for("app.id");
+        const symFor2 = Symbol.for("app.id");
+        mostrarResultado('sym1 === sym2: ' + (symFor1 === symFor2));
+        mostrar('💡 Symbol.for() crea o reutiliza un símbolo global');
+
+        // EJEMPLO 4
+        iniciarEjemplo("Symbol.keyFor() - Obtener clave");
+        mostrarCodigo('const sym = Symbol.for("miClave");');
+        mostrarCodigo('Symbol.keyFor(sym); // "miClave"');
+        const symKey = Symbol.for("miClave");
+        mostrarResultado('Clave: ' + Symbol.keyFor(symKey));
+
+        // EJEMPLO 5
+        iniciarEjemplo("Well-known Symbols - Symbol.iterator");
+        mostrarCodigo('const obj = {');
+        mostrarCodigo('    datos: [1, 2, 3],');
+        mostrarCodigo('    [Symbol.iterator]() {');
+        mostrarCodigo('        let index = 0;');
+        mostrarCodigo('        return {');
+        mostrarCodigo('            next: () => ({');
+        mostrarCodigo('                value: this.datos[index++],');
+        mostrarCodigo('                done: index > this.datos.length');
+        mostrarCodigo('            })');
+        mostrarCodigo('        };');
+        mostrarCodigo('    }');
+        mostrarCodigo('};');
+        const obj = {
+            datos: [1, 2, 3],
+            [Symbol.iterator]() {
+                let index = 0;
+                return {
+                    next: () => ({
+                        value: this.datos[index++],
+                        done: index > this.datos.length
+                    })
+                };
+            }
+        };
+        mostrarResultado('for...of funciona: ' + [...obj]);
+
+        // EJEMPLO 6
+        iniciarEjemplo("Caso práctico - Propiedades privadas");
+        mostrarCodigo('const _privado = Symbol("privado");');
+        mostrarCodigo('class Cuenta {');
+        mostrarCodigo('    constructor() {');
+        mostrarCodigo('        this[_privado] = 1000;');
+        mostrarCodigo('    }');
+        mostrarCodigo('    getSaldo() { return this[_privado]; }');
+        mostrarCodigo('}');
+        const _privado = Symbol("privado");
+        class Cuenta {
+            constructor() {
+                this[_privado] = 1000;
+            }
+            getSaldo() { return this[_privado]; }
+        }
+        const cuenta = new Cuenta();
+        mostrarResultado('Saldo: ' + cuenta.getSaldo());
+        mostrarResultado('Keys visibles: ' + Object.keys(cuenta));
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Well-known Symbols</h2>
+        <ul>
+            <li><code>Symbol.iterator</code> - Define iterador</li>
+            <li><code>Symbol.toStringTag</code> - Personaliza toString()</li>
+            <li><code>Symbol.hasInstance</code> - Personaliza instanceof</li>
+            <li><code>Symbol.toPrimitive</code> - Conversión a primitivo</li>
+        </ul>
+    </div>
+</body>
+</html>

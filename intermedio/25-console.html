@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>25 - Console Avanzado</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>25 - Métodos de Console</h1>
+    <div class="code-section">
+        <h2>📌 Console API</h2>
+        <p>Console tiene más métodos además de <code>console.log()</code>.</p>
+    </div>
+    <div class="code-section">
+        <h2>🔧 Métodos Útiles</h2>
+        <pre><code>// Mensaje normal
+console.log("Mensaje normal");
+
+// Advertencia (amarillo)
+console.warn("¡Advertencia!");
+
+// Error (rojo)
+console.error("¡Error!");
+
+// Información (azul)
+console.info("Información");
+
+// Tabla
+const usuarios = [
+    {nombre: "Ana", edad: 25},
+    {nombre: "Juan", edad: 30}
+];
+console.table(usuarios);
+
+// Agrupar mensajes
+console.group("Grupo de logs");
+console.log("Mensaje 1");
+console.log("Mensaje 2");
+console.groupEnd();
+
+// Limpiar consola
+console.clear();
+
+// Medir tiempo
+console.time("proceso");
+// ... código ...
+console.timeEnd("proceso"); // Muestra tiempo transcurrido
+
+// Contador
+console.count("clicks"); // clicks: 1
+console.count("clicks"); // clicks: 2</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ <code>console.log/warn/error/info</code></li>
+            <li>✅ <code>console.table()</code> - Tablas</li>
+            <li>✅ <code>console.time()</code> - Medir rendimiento</li>
+            <li>✅ <code>console.group()</code> - Agrupar</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>31 - JSON</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>31 - JSON (JavaScript Object Notation)</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué es JSON?</h2>
+        <p>JSON es un formato de texto para intercambiar datos. Es fácil de leer para humanos y fácil de parsear para máquinas.</p>
+    </div>
+
+    <div class="code-section">
+        <h2>🔧 Sintaxis JSON</h2>
+        <pre><code>{
+    "nombre": "Ana",
+    "edad": 25,
+    "activo": true,
+    "hobbies": ["leer", "correr"],
+    "direccion": {
+        "ciudad": "Madrid",
+        "pais": "España"
+    }
+}</code></pre>
+    </div>
+
+    <div class="code-section">
+        <h2>⚙️ Métodos Principales</h2>
+        <ul>
+            <li><code>JSON.stringify()</code> - Convierte objeto JavaScript a string JSON</li>
+            <li><code>JSON.parse()</code> - Convierte string JSON a objeto JavaScript</li>
+        </ul>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px 15px; border-radius: 5px; font-family: Courier New, monospace; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New, monospace';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.ejemplo-numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1
+        iniciarEjemplo("JSON.stringify() - Objeto a String");
+        const persona = {nombre: "Ana", edad: 25, ciudad: "Madrid"};
+        mostrarCodigo('const persona = {nombre: "Ana", edad: 25, ciudad: "Madrid"};');
+        mostrarCodigo('const json = JSON.stringify(persona);');
+        const json = JSON.stringify(persona);
+        mostrarResultado('JSON: ' + json);
+        mostrarResultado('Tipo: ' + typeof json);
+
+        // EJEMPLO 2
+        iniciarEjemplo("JSON.parse() - String a Objeto");
+        mostrarCodigo('const jsonString = \'{"nombre":"Juan","edad":30}\';');
+        mostrarCodigo('const objeto = JSON.parse(jsonString);');
+        const jsonString = '{"nombre":"Juan","edad":30}';
+        const objeto = JSON.parse(jsonString);
+        mostrarResultado('Objeto: ' + JSON.stringify(objeto));
+        mostrarResultado('nombre: ' + objeto.nombre);
+        mostrarResultado('edad: ' + objeto.edad);
+
+        // EJEMPLO 3
+        iniciarEjemplo("JSON con arrays");
+        const datos = {usuarios: ["Ana", "Juan", "Pedro"], total: 3};
+        mostrarCodigo('const datos = {usuarios: ["Ana", "Juan", "Pedro"], total: 3};');
+        mostrarCodigo('JSON.stringify(datos);');
+        mostrarResultado(JSON.stringify(datos));
+
+        // EJEMPLO 4
+        iniciarEjemplo("JSON.stringify con formato");
+        mostrarCodigo('JSON.stringify(persona, null, 2);');
+        mostrarResultado('JSON formateado:');
+        const jsonFormateado = JSON.stringify(persona, null, 2);
+        mostrar(jsonFormateado);
+
+        // EJEMPLO 5
+        iniciarEjemplo("Caso práctico - LocalStorage");
+        mostrarCodigo('const usuario = {nombre: "María", rol: "admin"};');
+        mostrarCodigo('localStorage.setItem("usuario", JSON.stringify(usuario));');
+        mostrarCodigo('const recuperado = JSON.parse(localStorage.getItem("usuario"));');
+        const usuario = {nombre: "María", rol: "admin"};
+        localStorage.setItem("usuario", JSON.stringify(usuario));
+        const recuperado = JSON.parse(localStorage.getItem("usuario"));
+        mostrarResultado('Usuario guardado y recuperado: ' + recuperado.nombre);
+
+        // EJEMPLO 6
+        iniciarEjemplo("Copiar objetos con JSON");
+        mostrarCodigo('const original = {a: 1, b: 2};');
+        mostrarCodigo('const copia = JSON.parse(JSON.stringify(original));');
+        const original = {a: 1, b: 2};
+        const copia = JSON.parse(JSON.stringify(original));
+        copia.a = 999;
+        mostrarResultado('Original: ' + JSON.stringify(original));
+        mostrarResultado('Copia modificada: ' + JSON.stringify(copia));
+        mostrar('');
+        mostrar('💡 Son objetos independientes');
+    </script>
+
+    <div class="code-section">
+        <h2>⚠️ Limitaciones</h2>
+        <ul>
+            <li>❌ No soporta <code>undefined</code> (se ignora)</li>
+            <li>❌ No soporta funciones</li>
+            <li>❌ No soporta <code>Symbol</code></li>
+            <li>❌ Las fechas se convierten a strings</li>
+            <li>✅ Solo soporta: strings, numbers, booleans, null, arrays, objetos</li>
+        </ul>
+    </div>
+
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ <code>JSON.stringify(obj)</code> - Objeto → String</li>
+            <li>✅ <code>JSON.parse(string)</code> - String → Objeto</li>
+            <li>✅ Usado para APIs, almacenamiento, transmisión de datos</li>
+        </ul>
+    </div>
+</body>
+</html>

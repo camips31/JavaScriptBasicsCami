@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09 - Objetos</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="../../basicos.html" class="back">‚Üê Volver al men√∫</a>
+    
+    <h1>09 - Objetos en JavaScript</h1>
+
+    <div class="code-section">
+        <h2>Ì≥å ¬øQu√© es un objeto?</h2>
+        <p>Un objeto es una colecci√≥n de propiedades (pares clave-valor).</p>
+        <p>Los objetos permiten agrupar datos relacionados y funciones.</p>
+    </div>
+
+    <div class="code-section">
+        <h2>Ì¥ß Sintaxis b√°sica</h2>
+        <pre><code>const persona = {
+    nombre: "Ana",
+    edad: 25,
+    ciudad: "Madrid"
+};</code></pre>
+    </div>
+
+    <h2>Ì≤ª Ejemplos Pr√°cticos</h2>
+    
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = \`
+                <div class="ejemplo-header">
+                    <span class="ejemplo-numero">Ì≥å EJEMPLO \${ejemploNumero}</span>
+                    <span class="ejemplo-titulo">\${titulo}</span>
+                </div>
+                <div class="ejemplo-contenido"></div>
+            \`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrar(texto, tipo = 'normal') {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.className = 'linea-' + tipo;
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+            console.log(texto);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.className = 'codigo-ejemplo';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            mostrar('‚ûú ' + texto, 'resultado');
+        }
+
+        // Estilos
+        const style = document.createElement('style');
+        style.textContent = \`
+            .ejemplo-box {
+                background: white;
+                border: 2px solid #f7df1e;
+                border-radius: 8px;
+                margin: 20px 0;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .ejemplo-header {
+                background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);
+                padding: 15px 20px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .ejemplo-numero {
+                background: #333;
+                color: #f7df1e;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 0.9em;
+            }
+            .ejemplo-titulo {
+                color: #333;
+                font-size: 1.1em;
+            }
+            .ejemplo-contenido {
+                padding: 20px;
+                background: #f9f9f9;
+            }
+            .codigo-ejemplo {
+                background: #282c34;
+                color: #61dafb;
+                padding: 12px 15px;
+                border-radius: 5px;
+                font-family: 'Courier New', monospace;
+                margin: 8px 0;
+                border-left: 4px solid #f7df1e;
+            }
+            .linea-normal {
+                color: #666;
+                padding: 5px 0;
+                font-family: 'Segoe UI', sans-serif;
+            }
+            .linea-resultado {
+                color: #2ecc71;
+                padding: 8px 15px;
+                background: #e8f8f5;
+                border-left: 4px solid #2ecc71;
+                margin: 5px 0;
+                border-radius: 3px;
+                font-weight: 500;
+                font-family: 'Courier New', monospace;
+            }
+        \`;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1
+        iniciarEjemplo("Crear y acceder a propiedades");
+        
+        mostrarCodigo('const persona = {');
+        mostrarCodigo('    nombre: "Ana",');
+        mostrarCodigo('    edad: 25,');
+        mostrarCodigo('    ciudad: "Madrid"');
+        mostrarCodigo('};');
+        
+        const persona = {
+            nombre: "Ana",
+            edad: 25,
+            ciudad: "Madrid"
+        };
+        
+        mostrar('');
+        mostrarCodigo('persona.nombre');
+        mostrarResultado('Nombre: ' + persona.nombre);
+        
+        mostrarCodigo('persona["edad"]');
+        mostrarResultado('Edad: ' + persona["edad"]);
+
+        // EJEMPLO 2
+        iniciarEjemplo("Agregar y modificar propiedades");
+        
+        mostrarCodigo('const coche = {marca: "Toyota", a√±o: 2020};');
+        const coche = {marca: "Toyota", a√±o: 2020};
+        mostrarResultado('Objeto inicial: ' + JSON.stringify(coche));
+        
+        mostrar('');
+        mostrarCodigo('coche.modelo = "Corolla"');
+        coche.modelo = "Corolla";
+        mostrarResultado('Despu√©s de agregar: ' + JSON.stringify(coche));
+        
+        mostrarCodigo('coche.a√±o = 2023');
+        coche.a√±o = 2023;
+        mostrarResultado('Despu√©s de modificar: ' + JSON.stringify(coche));
+
+        // EJEMPLO 3
+        iniciarEjemplo("M√©todos en objetos");
+        
+        mostrarCodigo('const calculadora = {');
+        mostrarCodigo('    sumar: function(a, b) { return a + b; },');
+        mostrarCodigo('    restar: function(a, b) { return a - b; }');
+        mostrarCodigo('};');
+        
+        const calculadora = {
+            sumar: function(a, b) { return a + b; },
+            restar: function(a, b) { return a - b; }
+        };
+        
+        mostrar('');
+        mostrarCodigo('calculadora.sumar(5, 3)');
+        mostrarResultado('5 + 3 = ' + calculadora.sumar(5, 3));
+        
+        mostrarCodigo('calculadora.restar(10, 4)');
+        mostrarResultado('10 - 4 = ' + calculadora.restar(10, 4));
+
+        // EJEMPLO 4
+        iniciarEjemplo("Object.keys() - Obtener claves");
+        
+        mostrarCodigo('const libro = {titulo: "1984", autor: "Orwell", a√±o: 1949};');
+        const libro = {titulo: "1984", autor: "Orwell", a√±o: 1949};
+        
+        mostrarCodigo('Object.keys(libro)');
+        mostrarResultado('Claves: [' + Object.keys(libro).join(', ') + ']');
+
+        // EJEMPLO 5
+        iniciarEjemplo("Object.values() - Obtener valores");
+        
+        mostrarCodigo('const puntuaciones = {matematicas: 90, ingles: 85, ciencias: 92};');
+        const puntuaciones = {matematicas: 90, ingles: 85, ciencias: 92};
+        
+        mostrarCodigo('Object.values(puntuaciones)');
+        mostrarResultado('Valores: [' + Object.values(puntuaciones).join(', ') + ']');
+
+        // EJEMPLO 6
+        iniciarEjemplo("Objetos anidados");
+        
+        mostrarCodigo('const usuario = {');
+        mostrarCodigo('    nombre: "Carlos",');
+        mostrarCodigo('    direccion: {');
+        mostrarCodigo('        calle: "Av Principal",');
+        mostrarCodigo('        numero: 123');
+        mostrarCodigo('    }');
+        mostrarCodigo('};');
+        
+        const usuario = {
+            nombre: "Carlos",
+            direccion: {
+                calle: "Av Principal",
+                numero: 123
+            }
+        };
+        
+        mostrar('');
+        mostrarCodigo('usuario.direccion.calle');
+        mostrarResultado('Calle: ' + usuario.direccion.calle);
+
+        // EJEMPLO 7
+        iniciarEjemplo("Caso pr√°ctico - Ficha de estudiante");
+        
+        mostrarCodigo('const estudiante = {');
+        mostrarCodigo('    nombre: "Mar√≠a",');
+        mostrarCodigo('    edad: 20,');
+        mostrarCodigo('    carrera: "Ingenier√≠a",');
+        mostrarCodigo('    promedio: 8.5');
+        mostrarCodigo('};');
+        
+        const estudiante = {
+            nombre: "Mar√≠a",
+            edad: 20,
+            carrera: "Ingenier√≠a",
+            promedio: 8.5
+        };
+        
+        mostrar('');
+        mostrarResultado('Ì≥ö Ficha del Estudiante:');
+        mostrar('Nombre: ' + estudiante.nombre);
+        mostrar('Edad: ' + estudiante.edad + ' a√±os');
+        mostrar('Carrera: ' + estudiante.carrera);
+        mostrar('Promedio: ' + estudiante.promedio);
+    </script>
+
+    <div class="code-section">
+        <h2>Ì≥ã Resumen</h2>
+        <ul>
+            <li>‚úÖ Objetos almacenan pares clave-valor</li>
+            <li>‚úÖ Acceso: <code>objeto.propiedad</code> o <code>objeto["propiedad"]</code></li>
+            <li>‚úÖ <code>Object.keys()</code> y <code>Object.values()</code></li>
+            <li>‚úÖ Pueden contener m√©todos (funciones)</li>
+        </ul>
+    </div>
+</body>
+</html>

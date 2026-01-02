@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>49 - Selectores DOM</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>49 - Selectores del DOM</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué son los selectores?</h2>
+        <p>Métodos para buscar y seleccionar elementos del DOM.</p>
+    </div>
+
+    <!-- Elementos de prueba -->
+    <div id="contenedor">
+        <p class="texto importante">Párrafo 1</p>
+        <p class="texto">Párrafo 2</p>
+        <span class="texto">Span</span>
+        <div data-rol="admin">Admin</div>
+    </div>
+    <ul id="lista">
+        <li>Item 1</li>
+        <li class="destacado">Item 2</li>
+        <li>Item 3</li>
+    </ul>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.ejemplo-numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1
+        iniciarEjemplo("getElementById() - Por ID");
+        mostrarCodigo('const contenedor = document.getElementById("contenedor");');
+        const contenedor = document.getElementById('contenedor');
+        mostrarResultado('Encontrado: ' + (contenedor ? 'SÍ' : 'NO'));
+        mostrarResultado('tagName: ' + contenedor.tagName);
+
+        // EJEMPLO 2
+        iniciarEjemplo("getElementsByClassName() - Por clase");
+        mostrarCodigo('const textos = document.getElementsByClassName("texto");');
+        const textos = document.getElementsByClassName('texto');
+        mostrarResultado('Elementos encontrados: ' + textos.length);
+        mostrar('');
+        mostrar('⚠️ Retorna HTMLCollection (array-like, NO array)');
+
+        // EJEMPLO 3
+        iniciarEjemplo("getElementsByTagName() - Por etiqueta");
+        mostrarCodigo('const parrafos = document.getElementsByTagName("p");');
+        const parrafos = document.getElementsByTagName('p');
+        mostrarResultado('Párrafos encontrados: ' + parrafos.length);
+        Array.from(parrafos).forEach((p, i) => {
+            mostrarResultado(`Párrafo ${i + 1}: ${p.textContent}`);
+        });
+
+        // EJEMPLO 4
+        iniciarEjemplo("querySelector() - Primer elemento");
+        mostrarCodigo('const primero = document.querySelector(".texto");');
+        mostrarCodigo('// Acepta cualquier selector CSS');
+        const primero = document.querySelector('.texto');
+        mostrarResultado('Primer .texto: ' + primero.textContent);
+
+        // EJEMPLO 5
+        iniciarEjemplo("querySelectorAll() - Todos los elementos");
+        mostrarCodigo('const todos = document.querySelectorAll(".texto");');
+        const todos = document.querySelectorAll('.texto');
+        mostrarResultado('Elementos .texto: ' + todos.length);
+        todos.forEach((el, i) => {
+            mostrarResultado(`${i + 1}. ${el.tagName}: ${el.textContent}`);
+        });
+        mostrar('');
+        mostrar('✅ Retorna NodeList (puede usar forEach)');
+
+        // EJEMPLO 6
+        iniciarEjemplo("Selectores CSS avanzados");
+        mostrarCodigo('// Selector de atributo');
+        mostrarCodigo('document.querySelector("[data-rol]");');
+        mostrarCodigo('// Múltiples clases');
+        mostrarCodigo('document.querySelector(".texto.importante");');
+        mostrarCodigo('// Descendientes');
+        mostrarCodigo('document.querySelectorAll("#lista li");');
+        const admin = document.querySelector('[data-rol]');
+        mostrarResultado('[data-rol]: ' + admin.textContent);
+        const importante = document.querySelector('.texto.importante');
+        mostrarResultado('.texto.importante: ' + importante.textContent);
+        const items = document.querySelectorAll('#lista li');
+        mostrarResultado('#lista li: ' + items.length + ' elementos');
+
+        // EJEMPLO 7
+        iniciarEjemplo("closest() - Ancestro más cercano");
+        mostrarCodigo('const item = document.querySelector(".destacado");');
+        mostrarCodigo('const lista = item.closest("ul");');
+        const item = document.querySelector('.destacado');
+        const lista = item.closest('ul');
+        mostrarResultado('Ancestro ul#' + lista.id);
+
+        // EJEMPLO 8
+        iniciarEjemplo("matches() - Verificar si coincide");
+        mostrarCodigo('const elem = document.querySelector(".destacado");');
+        mostrarCodigo('elem.matches(".destacado"); // true');
+        mostrarCodigo('elem.matches("p"); // false');
+        const elem = document.querySelector('.destacado');
+        mostrarResultado('matches(".destacado"): ' + elem.matches('.destacado'));
+        mostrarResultado('matches("p"): ' + elem.matches('p'));
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Comparación de métodos</h2>
+        <table style="width:100%; border-collapse: collapse;">
+            <tr style="background: #f7df1e;">
+                <th style="padding: 10px; border: 1px solid #ddd;">Método</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Retorna</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Selector</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Live</th>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;"><code>getElementById()</code></td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Elemento</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">ID</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">-</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;"><code>getElementsByClassName()</code></td>
+                <td style="padding: 10px; border: 1px solid #ddd;">HTMLCollection</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Clase</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">✅ Sí</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;"><code>getElementsByTagName()</code></td>
+                <td style="padding: 10px; border: 1px solid #ddd;">HTMLCollection</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Etiqueta</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">✅ Sí</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;"><code>querySelector()</code></td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Elemento</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">CSS</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">❌ No</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;"><code>querySelectorAll()</code></td>
+                <td style="padding: 10px; border: 1px solid #ddd;">NodeList</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">CSS</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">❌ No</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="code-section">
+        <h2>✅ Recomendaciones</h2>
+        <ul>
+            <li>✅ Usar <code>querySelector()</code> y <code>querySelectorAll()</code> (modernos)</li>
+            <li>✅ <code>getElementById()</code> es el más rápido</li>
+            <li>⚠️ HTMLCollection no tiene <code>forEach()</code>, convertir con <code>Array.from()</code></li>
+            <li>✅ NodeList sí tiene <code>forEach()</code></li>
+        </ul>
+    </div>
+</body>
+</html>

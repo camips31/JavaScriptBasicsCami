@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>23 - Getters y Setters</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>23 - Getters y Setters</h1>
+    <div class="code-section">
+        <h2>📌 Accessors</h2>
+        <p>Los getters y setters permiten controlar el acceso a las propiedades.</p>
+    </div>
+    <div class="code-section">
+        <h2>🔧 Sintaxis</h2>
+        <pre><code>class Persona {
+    constructor(nombre) {
+        this._nombre = nombre;
+    }
+    
+    get nombre() {
+        return this._nombre.toUpperCase();
+    }
+    
+    set nombre(nuevoNombre) {
+        if (nuevoNombre.length > 2) {
+            this._nombre = nuevoNombre;
+        } else {
+            console.log("Nombre muy corto");
+        }
+    }
+}
+
+const persona = new Persona("ana");
+console.log(persona.nombre); // "ANA" (usa getter)
+persona.nombre = "María"; // Usa setter
+console.log(persona.nombre); // "MARÍA"</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ <code>get</code> - Leer propiedad</li>
+            <li>✅ <code>set</code> - Modificar propiedad</li>
+            <li>✅ Permiten validación y transformación</li>
+        </ul>
+    </div>
+</body>
+</html>

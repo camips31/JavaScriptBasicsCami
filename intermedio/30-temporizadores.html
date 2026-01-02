@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>30 - Temporizadores</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>30 - Temporizadores (setTimeout y setInterval)</h1>
+    
+    <div class="code-section">
+        <h2>📌 Temporizadores</h2>
+        <p>JavaScript tiene dos funciones principales para ejecutar código en el futuro.</p>
+    </div>
+
+    <div class="code-section">
+        <h2>⏱️ setTimeout</h2>
+        <p>Ejecuta código UNA VEZ después de un retraso.</p>
+        <pre><code>setTimeout(() => {
+    console.log("Ejecutado después de 2 segundos");
+}, 2000); // 2000 milisegundos = 2 segundos</code></pre>
+    </div>
+
+    <div class="code-section">
+        <h2>🔄 setInterval</h2>
+        <p>Ejecuta código REPETIDAMENTE cada cierto intervalo.</p>
+        <pre><code>setInterval(() => {
+    console.log("Se ejecuta cada 1 segundo");
+}, 1000);</code></pre>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `
+                <div class="ejemplo-header">
+                    <span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span>
+                    <span class="ejemplo-titulo">${titulo}</span>
+                </div>
+                <div class="ejemplo-contenido"></div>
+            `;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrar(texto, tipo = 'normal') {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.className = 'linea-' + tipo;
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.className = 'codigo-ejemplo';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            mostrar('➜ ' + texto, 'resultado');
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .ejemplo-box {
+                background: white;
+                border: 2px solid #f7df1e;
+                border-radius: 8px;
+                margin: 20px 0;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .ejemplo-header {
+                background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);
+                padding: 15px 20px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .ejemplo-numero {
+                background: #333;
+                color: #f7df1e;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 0.9em;
+            }
+            .ejemplo-titulo {
+                color: #333;
+                font-size: 1.1em;
+            }
+            .ejemplo-contenido {
+                padding: 20px;
+                background: #f9f9f9;
+            }
+            .codigo-ejemplo {
+                background: #282c34;
+                color: #61dafb;
+                padding: 12px 15px;
+                border-radius: 5px;
+                font-family: 'Courier New', monospace;
+                margin: 8px 0;
+                border-left: 4px solid #f7df1e;
+            }
+            .linea-normal {
+                color: #666;
+                padding: 5px 0;
+            }
+            .linea-resultado {
+                color: #2ecc71;
+                padding: 8px 15px;
+                background: #e8f8f5;
+                border-left: 4px solid #2ecc71;
+                margin: 5px 0;
+                border-radius: 3px;
+                font-weight: 500;
+                font-family: 'Courier New', monospace;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1: setTimeout básico
+        iniciarEjemplo("setTimeout básico");
+        
+        mostrarCodigo('setTimeout(() => {');
+        mostrarCodigo('    console.log("Después de 2 segundos");');
+        mostrarCodigo('}, 2000);');
+        
+        mostrarResultado('⏳ Esperando 2 segundos...');
+        setTimeout(() => {
+            mostrarResultado('✅ ¡Tiempo cumplido!');
+        }, 2000);
+
+        // EJEMPLO 2: setTimeout con parámetros
+        iniciarEjemplo("setTimeout con parámetros");
+        
+        mostrarCodigo('function saludar(nombre, edad) {');
+        mostrarCodigo('    console.log(`Hola ${nombre}, tienes ${edad} años`);');
+        mostrarCodigo('}');
+        mostrarCodigo('setTimeout(saludar, 1000, "Ana", 25);');
+        
+        function saludar(nombre, edad) {
+            mostrarResultado(`Hola ${nombre}, tienes ${edad} años`);
+        }
+        setTimeout(saludar, 1000, "Ana", 25);
+
+        // EJEMPLO 3: clearTimeout - Cancelar timeout
+        iniciarEjemplo("clearTimeout - Cancelar temporizador");
+        
+        mostrarCodigo('const timerId = setTimeout(() => {');
+        mostrarCodigo('    console.log("Esto NO se ejecutará");');
+        mostrarCodigo('}, 3000);');
+        mostrarCodigo('clearTimeout(timerId);');
+        
+        const timerId = setTimeout(() => {
+            mostrarResultado("Esto NO se ejecutará");
+        }, 3000);
+        clearTimeout(timerId);
+        mostrarResultado('✅ Temporizador cancelado con clearTimeout()');
+
+        // EJEMPLO 4: setInterval básico
+        iniciarEjemplo("setInterval - Contador");
+        
+        mostrarCodigo('let contador = 0;');
+        mostrarCodigo('const intervalId = setInterval(() => {');
+        mostrarCodigo('    contador++;');
+        mostrarCodigo('    console.log("Contador:", contador);');
+        mostrarCodigo('    if (contador === 5) clearInterval(intervalId);');
+        mostrarCodigo('}, 1000);');
+        
+        let contador = 0;
+        const intervalId = setInterval(() => {
+            contador++;
+            mostrarResultado('Contador: ' + contador);
+            if (contador === 5) {
+                clearInterval(intervalId);
+                mostrar('');
+                mostrar('💡 Intervalo detenido con clearInterval()');
+            }
+        }, 1000);
+
+        // EJEMPLO 5: Reloj simple
+        iniciarEjemplo("Caso práctico - Reloj digital");
+        
+        mostrarCodigo('setInterval(() => {');
+        mostrarCodigo('    const ahora = new Date();');
+        mostrarCodigo('    console.log(ahora.toLocaleTimeString());');
+        mostrarCodigo('}, 1000);');
+        
+        mostrarResultado('🕐 Reloj iniciado (se actualiza cada segundo):');
+        let contadorReloj = 0;
+        const relojId = setInterval(() => {
+            const ahora = new Date();
+            mostrarResultado(ahora.toLocaleTimeString());
+            contadorReloj++;
+            if (contadorReloj === 3) {
+                clearInterval(relojId);
+                mostrar('');
+                mostrar('(Reloj detenido después de 3 segundos)');
+            }
+        }, 1000);
+
+        // EJEMPLO 6: Animación con setTimeout recursivo
+        iniciarEjemplo("Animación con setTimeout recursivo");
+        
+        mostrarCodigo('function animar(paso) {');
+        mostrarCodigo('    if (paso <= 5) {');
+        mostrarCodigo('        console.log("Paso", paso);');
+        mostrarCodigo('        setTimeout(() => animar(paso + 1), 500);');
+        mostrarCodigo('    }');
+        mostrarCodigo('}');
+        
+        function animar(paso) {
+            if (paso <= 5) {
+                mostrarResultado('⚡ Paso ' + paso);
+                setTimeout(() => animar(paso + 1), 500);
+            } else {
+                mostrar('');
+                mostrar('✅ Animación completada');
+            }
+        }
+        setTimeout(() => animar(1), 3000);
+        mostrarResultado('⏳ Animación comenzará en 3 segundos...');
+    </script>
+
+    <div class="code-section">
+        <h2>⚠️ Diferencias Importantes</h2>
+        <table>
+            <tr><th>Función</th><th>Cuándo usar</th><th>Cómo detener</th></tr>
+            <tr>
+                <td><code>setTimeout</code></td>
+                <td>Ejecutar UNA VEZ después de un tiempo</td>
+                <td><code>clearTimeout(id)</code></td>
+            </tr>
+            <tr>
+                <td><code>setInterval</code></td>
+                <td>Ejecutar REPETIDAMENTE cada intervalo</td>
+                <td><code>clearInterval(id)</code></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="code-section">
+        <h2>💡 Buenas Prácticas</h2>
+        <ul>
+            <li>✅ Siempre guarda el ID del temporizador si planeas cancelarlo</li>
+            <li>✅ Usa <code>clearInterval</code> o <code>clearTimeout</code> para evitar fugas de memoria</li>
+            <li>✅ setTimeout recursivo es mejor que setInterval para animaciones</li>
+            <li>✅ Los tiempos están en milisegundos (1000ms = 1 segundo)</li>
+        </ul>
+    </div>
+
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ <code>setTimeout(fn, ms)</code> - Ejecuta una vez</li>
+            <li>✅ <code>setInterval(fn, ms)</code> - Ejecuta repetidamente</li>
+            <li>✅ <code>clearTimeout(id)</code> - Cancela setTimeout</li>
+            <li>✅ <code>clearInterval(id)</code> - Cancela setInterval</li>
+        </ul>
+    </div>
+</body>
+</html>

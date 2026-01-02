@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>19 - Rest y Spread</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>19 - Parámetros Rest y Operador Spread</h1>
+    <div class="code-section">
+        <h2>📌 Rest y Spread</h2>
+        <p>Dos operadores similares pero con usos diferentes: <code>...</code></p>
+    </div>
+    <div class="code-section">
+        <h2>📦 Rest Parameters (Parámetros Rest)</h2>
+        <p>Agrupa múltiples argumentos en un array.</p>
+        <pre><code>function sumar(...numeros) {
+    return numeros.reduce((total, num) => total + num, 0);
+}
+
+sumar(1, 2, 3); // 6
+sumar(1, 2, 3, 4, 5); // 15</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>✨ Spread Operator (Operador de Propagación)</h2>
+        <p>Expande un array en elementos individuales.</p>
+        <pre><code>// Con arrays
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+const combinado = [...arr1, ...arr2]; // [1,2,3,4,5,6]
+
+// Con objetos
+const obj1 = {a: 1, b: 2};
+const obj2 = {c: 3, d: 4};
+const combinado = {...obj1, ...obj2}; // {a:1, b:2, c:3, d:4}
+
+// Copiar array
+const copia = [...arr1];</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ Rest: Agrupa argumentos <code>(...args)</code></li>
+            <li>✅ Spread: Expande arrays/objetos <code>[...array]</code></li>
+            <li>✅ Útil para copiar y combinar estructuras</li>
+        </ul>
+    </div>
+</body>
+</html>

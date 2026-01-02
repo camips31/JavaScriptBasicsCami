@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>17 - Alert, Confirm y Prompt</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="../../basicos.html" class="back">← Volver al menú</a>
+    <h1>17 - Alert, Confirm y Prompt</h1>
+    <div class="code-section">
+        <h2>📌 Diálogos del Navegador</h2>
+        <p>JavaScript tiene 3 tipos de cuadros de diálogo para interactuar con el usuario.</p>
+    </div>
+    <div class="code-section">
+        <h2>🔔 alert()</h2>
+        <p>Muestra un mensaje al usuario.</p>
+        <pre><code>alert("¡Bienvenido!");
+// Muestra un cuadro con el mensaje</code></pre>
+        <button onclick="alert('¡Hola desde JavaScript!')">Probar alert()</button>
+    </div>
+    <div class="code-section">
+        <h2>❓ confirm()</h2>
+        <p>Pregunta al usuario (OK/Cancelar) y retorna true o false.</p>
+        <pre><code>const respuesta = confirm("¿Estás seguro?");
+if (respuesta) {
+    console.log("Usuario presionó OK");
+} else {
+    console.log("Usuario presionó Cancelar");
+}</code></pre>
+        <button onclick="const r = confirm('¿Te gusta JavaScript?'); alert(r ? 'Respondiste Sí' : 'Respondiste No')">Probar confirm()</button>
+    </div>
+    <div class="code-section">
+        <h2>✏️ prompt()</h2>
+        <p>Solicita al usuario que ingrese texto.</p>
+        <pre><code>const nombre = prompt("¿Cuál es tu nombre?");
+if (nombre) {
+    console.log("Hola, " + nombre);
+} else {
+    console.log("No ingresaste nombre");
+}</code></pre>
+        <button onclick="const n = prompt('¿Cuál es tu nombre?'); if(n) alert('Hola, ' + n)">Probar prompt()</button>
+    </div>
+    <div class="code-section">
+        <h2>⚠️ Nota Importante</h2>
+        <p>Estos métodos bloquean la ejecución del código hasta que el usuario responda. En aplicaciones modernas se prefieren modales personalizados.</p>
+    </div>
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ <code>alert(mensaje)</code> - Mostrar mensaje</li>
+            <li>✅ <code>confirm(pregunta)</code> - Confirmar (true/false)</li>
+            <li>✅ <code>prompt(pregunta)</code> - Solicitar texto</li>
+        </ul>
+    </div>
+</body>
+</html>

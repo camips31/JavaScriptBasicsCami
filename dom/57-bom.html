@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>57 - BOM (Browser Object Model)</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>57 - BOM (Browser Object Model)</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué es el BOM?</h2>
+        <p>APIs que proporciona el navegador para interactuar con la ventana, historial, ubicación, etc.</p>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1
+        iniciarEjemplo("window - Objeto global");
+        mostrarCodigo('window.innerWidth;   // Ancho ventana');
+        mostrarCodigo('window.innerHeight;  // Alto ventana');
+        mostrarCodigo('window.outerWidth;   // Ancho con bordes');
+        mostrarResultado('innerWidth: ' + window.innerWidth);
+        mostrarResultado('innerHeight: ' + window.innerHeight);
+
+        // EJEMPLO 2
+        iniciarEjemplo("window.location - URL actual");
+        mostrarCodigo('location.href;       // URL completa');
+        mostrarCodigo('location.protocol;   // http: o https:');
+        mostrarCodigo('location.hostname;   // dominio');
+        mostrarCodigo('location.pathname;   // /ruta');
+        mostrarCodigo('location.search;     // ?query=123');
+        mostrarResultado('href: ' + location.href);
+        mostrarResultado('hostname: ' + location.hostname);
+        mostrarResultado('pathname: ' + location.pathname);
+
+        // EJEMPLO 3
+        iniciarEjemplo("Navegar con location");
+        mostrarCodigo('location.href = "https://google.com";  // Navegar');
+        mostrarCodigo('location.reload();  // Recargar página');
+        mostrarCodigo('location.replace(url);  // Reemplazar (no historial)');
+        mostrar('⚠️ No ejecutamos estos para no salir de la página');
+
+        // EJEMPLO 4
+        iniciarEjemplo("window.history - Historial");
+        mostrarCodigo('history.length;     // Cantidad de páginas');
+        mostrarCodigo('history.back();     // Atrás');
+        mostrarCodigo('history.forward();  // Adelante');
+        mostrarCodigo('history.go(-2);     // Ir 2 páginas atrás');
+        mostrarResultado('history.length: ' + history.length);
+
+        // EJEMPLO 5
+        iniciarEjemplo("window.navigator - Info del navegador");
+        mostrarCodigo('navigator.userAgent;    // Navegador');
+        mostrarCodigo('navigator.language;     // Idioma');
+        mostrarCodigo('navigator.onLine;       // ¿Conectado?');
+        mostrarCodigo('navigator.platform;     // SO');
+        mostrarResultado('userAgent: ' + navigator.userAgent.substring(0, 50) + '...');
+        mostrarResultado('language: ' + navigator.language);
+        mostrarResultado('onLine: ' + navigator.onLine);
+        mostrarResultado('platform: ' + navigator.platform);
+
+        // EJEMPLO 6
+        iniciarEjemplo("window.screen - Info de pantalla");
+        mostrarCodigo('screen.width;          // Ancho total');
+        mostrarCodigo('screen.height;         // Alto total');
+        mostrarCodigo('screen.availWidth;     // Ancho disponible');
+        mostrarCodigo('screen.colorDepth;     // Bits de color');
+        mostrarResultado('width: ' + screen.width);
+        mostrarResultado('height: ' + screen.height);
+        mostrarResultado('colorDepth: ' + screen.colorDepth);
+
+        // EJEMPLO 7
+        iniciarEjemplo("Métodos window");
+        mostrarCodigo('window.open(url);           // Abrir ventana');
+        mostrarCodigo('window.close();             // Cerrar ventana');
+        mostrarCodigo('window.scrollTo(x, y);      // Scroll a posición');
+        mostrarCodigo('window.scrollBy(x, y);      // Scroll relativo');
+        mostrarCodigo('window.print();             // Imprimir página');
+        mostrar('💡 Métodos útiles para control de ventana');
+
+        // EJEMPLO 8
+        iniciarEjemplo("Eventos window");
+        mostrarCodigo('window.addEventListener("resize", () => {});');
+        mostrarCodigo('window.addEventListener("scroll", () => {});');
+        mostrarCodigo('window.addEventListener("load", () => {});');
+        mostrarCodigo('window.addEventListener("beforeunload", () => {});');
+        window.addEventListener('resize', function() {
+            mostrarResultado('Ventana redimensionada: ' + window.innerWidth);
+        }, {once: true});
+        mostrar('💡 Redimensiona la ventana para ver el evento');
+
+        // EJEMPLO 9
+        iniciarEjemplo("Temporizadores (ya visto antes)");
+        mostrarCodigo('setTimeout(() => {}, 1000);');
+        mostrarCodigo('setInterval(() => {}, 1000);');
+        mostrarCodigo('clearTimeout(id);');
+        mostrarCodigo('clearInterval(id);');
+        mostrar('✅ Los temporizadores son parte del BOM');
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Objetos principales del BOM</h2>
+        <ul>
+            <li><code>window</code> - Ventana del navegador (objeto global)</li>
+            <li><code>window.location</code> - URL actual y navegación</li>
+            <li><code>window.history</code> - Historial de navegación</li>
+            <li><code>window.navigator</code> - Información del navegador</li>
+            <li><code>window.screen</code> - Información de la pantalla</li>
+            <li><code>window.document</code> - El DOM (ya visto)</li>
+        </ul>
+    </div>
+
+    <div class="code-section">
+        <h2>📋 Propiedades window más usadas</h2>
+        <ul>
+            <li><code>innerWidth / innerHeight</code> - Tamaño del viewport</li>
+            <li><code>scrollX / scrollY</code> - Posición del scroll</li>
+            <li><code>pageXOffset / pageYOffset</code> - Alias de scroll</li>
+        </ul>
+    </div>
+
+    <div class="code-section">
+        <h2>✅ Casos de uso</h2>
+        <ul>
+            <li>✅ Detectar cambios de tamaño de ventana (responsive)</li>
+            <li>✅ Navegar programáticamente (SPAs)</li>
+            <li>✅ Detectar si usuario está online/offline</li>
+            <li>✅ Obtener información del dispositivo</li>
+            <li>✅ Control de historial (pushState para SPAs)</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02 - Constantes (const)</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="../../basicos.html" class="back">← Volver al menú</a>
+    
+    <h1>02 - Constantes (const)</h1>
+
+    <div class="code-section">
+        <h2>📌 ¿Qué es una CONSTANTE?</h2>
+        <p>Una constante es una variable cuyo valor NO puede ser reasignado una vez que se ha inicializado. Se declara con la palabra clave <code>const</code>.</p>
+    </div>
+
+    <div class="code-section">
+        <h2>🔷 Características de const</h2>
+        <ul>
+            <li><strong>No se puede reasignar:</strong> Una vez asignado un valor, no puedes cambiarlo</li>
+            <li><strong>Debe inicializarse:</strong> Debes darle un valor al declararla</li>
+            <li><strong>Alcance de bloque:</strong> Como let, respeta el alcance de bloque {}</li>
+            <li><strong>Los objetos y arrays son mutables:</strong> Aunque no puedes reasignar, SÍ puedes modificar sus propiedades/elementos</li>
+        </ul>
+    </div>
+
+    <div class="code-section">
+        <h2>✅ ¿Cuándo usar const?</h2>
+        <ul>
+            <li>Valores que nunca cambiarán (PI, configuraciones, etc.)</li>
+            <li>Referencias a objetos o arrays (aunque su contenido cambie)</li>
+            <li>Funciones (las funciones flecha generalmente se asignan a const)</li>
+            <li>Como regla general: usa const por defecto, y let solo cuando necesites reasignar</li>
+        </ul>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    
+        <div id="ejemplos"></div>
+
+<script>
+        
+        
+        // Función para mostrar en la página
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `
+                <div class="ejemplo-header">
+                    <span class="ejemplo-numero">📦 EJEMPLO \${ejemploNumero}</span>
+                    <span class="ejemplo-titulo">\${titulo}</span>
+                </div>
+                <div class="ejemplo-contenido"></div>
+            `;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrar(texto, tipo = 'normal') {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.className = 'linea-' + tipo;
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+            console.log(texto);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.className = 'codigo-ejemplo';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            mostrar('➜ ' + texto, 'resultado');
+        }
+
+        // Estilos
+        const style = document.createElement('style');
+        style.textContent = `
+            .ejemplo-box {
+                background: white;
+                border: 2px solid #f7df1e;
+                border-radius: 8px;
+                margin: 20px 0;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .ejemplo-header {
+                background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);
+                padding: 15px 20px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .ejemplo-numero {
+                background: #333;
+                color: #f7df1e;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 0.9em;
+            }
+            .ejemplo-titulo {
+                color: #333;
+                font-size: 1.1em;
+            }
+            .ejemplo-contenido {
+                padding: 20px;
+                background: #f9f9f9;
+            }
+            .codigo-ejemplo {
+                background: #282c34;
+                color: #61dafb;
+                padding: 12px 15px;
+                border-radius: 5px;
+                font-family: 'Courier New', monospace;
+                margin: 8px 0;
+                border-left: 4px solid #f7df1e;
+            }
+            .linea-normal {
+                color: #666;
+                padding: 5px 0;
+                font-family: 'Segoe UI', sans-serif;
+            }
+            .linea-resultado {
+                color: #2ecc71;
+                padding: 8px 15px;
+                background: #e8f8f5;
+                border-left: 4px solid #2ecc71;
+                margin: 5px 0;
+                border-radius: 3px;
+                font-weight: 500;
+                font-family: 'Courier New', monospace;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ============================================
+        // EJEMPLO 1: Declaración básica
+        // ============================================
+        iniciarEjemplo("Declaración básica");
+        
+        mostrarCodigo('const PI = 3.14159;');
+        mostrarCodigo('const NOMBRE_EMPRESA = "TechCorp";');
+        mostrarCodigo('const EDAD_MINIMA = 18;');
+        
+        const PI = 3.14159;
+        const NOMBRE_EMPRESA = "TechCorp";
+        const EDAD_MINIMA = 18;
+        
+        mostrarResultado('PI: ' + PI);
+        mostrarResultado('Nombre empresa: ' + NOMBRE_EMPRESA);
+        mostrarResultado('Edad mínima: ' + EDAD_MINIMA);
+        
+        mostrar('');
+        mostrar('✅ Las constantes no se pueden reasignar');
+
+        // ============================================
+        // EJEMPLO 2: Inicialización obligatoria
+        // ============================================
+        iniciarEjemplo("Inicialización obligatoria");
+        
+        mostrarCodigo('const COLOR = "azul";');
+        
+        const COLOR = "azul";
+        
+        mostrarResultado('Color: ' + COLOR);
+        mostrar('');
+        mostrar('❌ const TAMAÑO; // ERROR: Missing initializer');
+
+        // ============================================
+        // EJEMPLO 3: Alcance de bloque
+        // ============================================
+        iniciarEjemplo("Alcance de bloque");
+        
+        mostrarCodigo('const GLOBAL = "Soy global";');
+        
+        const GLOBAL = "Soy global";
+        
+        if (true) {
+            mostrarCodigo('const DENTRO_BLOQUE = "Solo existo aquí";');
+            const DENTRO_BLOQUE = "Solo existo aquí";
+            mostrarResultado('Dentro del bloque: ' + DENTRO_BLOQUE);
+            mostrarResultado('También accedo a GLOBAL: ' + GLOBAL);
+        }
+        
+        mostrarResultado('GLOBAL sigue accesible: ' + GLOBAL);
+        mostrar('');
+        mostrar('❌ DENTRO_BLOQUE fuera del bloque: ERROR');
+
+        // ============================================
+        // EJEMPLO 4: const con OBJETOS
+        // ============================================
+        iniciarEjemplo("const con OBJETOS - Importante");
+        
+        mostrarCodigo('const persona = { nombre: "Carlos", edad: 30, ciudad: "Madrid" };');
+        
+        const persona = {
+            nombre: "Carlos",
+            edad: 30,
+            ciudad: "Madrid"
+        };
+        
+        mostrarResultado('Persona original: ' + JSON.stringify(persona));
+        
+        mostrarCodigo('persona.edad = 31;');
+        mostrarCodigo('persona.profesion = "Desarrollador";');
+        
+        persona.edad = 31;
+        persona.profesion = "Desarrollador";
+        mostrarResultado('Persona modificada: ' + JSON.stringify(persona));
+        
+        mostrar('');
+        mostrar('✅ const protege la referencia, no el contenido del objeto');
+        mostrar('❌ persona = {...} // ERROR: Assignment to constant');
+
+        // ============================================
+        // EJEMPLO 5: const con ARRAYS
+        // ============================================
+        iniciarEjemplo("const con ARRAYS - Importante");
+        
+        mostrarCodigo('const frutas = ["manzana", "banana", "naranja"];');
+        
+        const frutas = ["manzana", "banana", "naranja"];
+        mostrarResultado('Frutas original: ' + JSON.stringify(frutas));
+        
+        mostrarCodigo('frutas.push("uva");');
+        mostrarCodigo('frutas[0] = "pera";');
+        
+        frutas.push("uva");
+        frutas[0] = "pera";
+        mostrarResultado('Frutas modificadas: ' + JSON.stringify(frutas));
+        
+        mostrar('');
+        mostrar('✅ const protege la referencia, no el contenido del array');
+        mostrar('❌ frutas = [...] // ERROR: Assignment to constant');
+
+        // ============================================
+        // EJEMPLO 6: Constantes comunes
+        // ============================================
+        iniciarEjemplo("Constantes matemáticas y configuración");
+        
+        mostrarCodigo('const PI_COMPLETO = 3.141592653589793;');
+        mostrarCodigo('const E = 2.718281828459045;');
+        
+        const PI_COMPLETO = 3.141592653589793;
+        const E = 2.718281828459045;
+        const GOLDEN_RATIO = 1.618033988749895;
+        
+        mostrarResultado('π: ' + PI_COMPLETO);
+        mostrarResultado('e: ' + E);
+        mostrarResultado('φ (proporción áurea): ' + GOLDEN_RATIO);
+        
+        mostrar('');
+        mostrarCodigo('const MAX_INTENTOS = 3;');
+        mostrarCodigo('const URL_API = "https://api.ejemplo.com";');
+        
+        const MAX_INTENTOS = 3;
+        const TIMEOUT_SEGUNDOS = 30;
+        const URL_API = "https://api.ejemplo.com";
+        
+        mostrarResultado('Max intentos: ' + MAX_INTENTOS);
+        mostrarResultado('Timeout: ' + TIMEOUT_SEGUNDOS + 's');
+        mostrarResultado('URL API: ' + URL_API);
+
+        // ============================================
+        // EJEMPLO 7: const vs let en la práctica
+        // ============================================
+        iniciarEjemplo("const vs let en la práctica");
+        
+        mostrarCodigo('const IMPUESTO = 0.21;');
+        mostrarCodigo('const precioBase = 100;');
+        mostrarCodigo('const precioFinal = precioBase + (precioBase * IMPUESTO);');
+        
+        const IMPUESTO = 0.21;
+        const precioBase = 100;
+        const precioFinal = precioBase + (precioBase * IMPUESTO);
+        
+        mostrarResultado('Precio base: $' + precioBase);
+        mostrarResultado('Impuesto: ' + (IMPUESTO * 100) + '%');
+        mostrarResultado('Precio final: $' + precioFinal);
+        
+        mostrar('');
+        mostrarCodigo('let contador = 0;');
+        mostrarCodigo('contador++; contador++;');
+        
+        let contador = 0;
+        contador++;
+        contador++;
+        mostrarResultado('Contador: ' + contador);
+        mostrar('');
+        mostrar('✅ Usa const cuando el valor no cambiará');
+        mostrar('✅ Usa let cuando el valor SÍ cambiará');
+
+        // ============================================
+        // EJEMPLO 8: Object.freeze
+        // ============================================
+        iniciarEjemplo("Object.freeze para inmutabilidad total");
+        
+        mostrarCodigo('const config = Object.freeze({ tema: "oscuro", idioma: "es" });');
+        
+        const config = Object.freeze({
+            tema: "oscuro",
+            idioma: "es",
+            version: "1.0"
+        });
+        
+        mostrarResultado('Config original: ' + JSON.stringify(config));
+        
+        mostrarCodigo('config.tema = "claro"; // Se ignora silenciosamente');
+        config.tema = "claro";
+        
+        mostrarResultado('Config después de intentar modificar: ' + JSON.stringify(config));
+        mostrar('');
+        mostrar('✅ Object.freeze hace el objeto completamente inmutable');
+
+        // ============================================
+        // EJEMPLO 9: Convenciones de nombres
+        // ============================================
+        iniciarEjemplo("Convenciones de nombres para constantes");
+        
+        mostrarCodigo('const MAX_USUARIOS = 100;  // MAYÚSCULAS');
+        mostrarCodigo('const usuario = { nombre: "Laura" };  // camelCase');
+        
+        const MAX_USUARIOS = 100;
+        const API_KEY = "abc123xyz";
+        const COLOR_PRIMARIO = "#007bff";
+        
+        mostrarResultado('MAX_USUARIOS: ' + MAX_USUARIOS);
+        mostrarResultado('API_KEY: ' + API_KEY);
+        mostrarResultado('COLOR_PRIMARIO: ' + COLOR_PRIMARIO);
+        
+        mostrar('');
+        
+        const usuario = { nombre: "Laura", edad: 25 };
+        const colores = ["rojo", "verde", "azul"];
+        const calcularArea = (radio) => Math.PI * radio * radio;
+        
+        mostrarResultado('usuario: ' + JSON.stringify(usuario));
+        mostrarResultado('colores: ' + JSON.stringify(colores));
+        mostrarResultado('Área (radio 5): ' + calcularArea(5).toFixed(2));
+        
+        mostrar('');
+        mostrar('💡 MAYÚSCULAS: valores fijos conocidos');
+        mostrar('💡 camelCase: referencias constantes a objetos/arrays');
+
+        // ============================================
+        // EJEMPLO 10: Casos de uso reales
+        // ============================================
+        iniciarEjemplo("Casos de uso reales");
+        
+        mostrarCodigo('const CONFIG_JUEGO = { vidasIniciales: 3, dificultad: "normal" };');
+        
+        const CONFIG_JUEGO = {
+            vidasIniciales: 3,
+            tiempoLimite: 60,
+            dificultad: "normal"
+        };
+        
+        const datosUsuario = {
+            id: 12345,
+            username: "usuario_123",
+            nivel: 5,
+            puntos: 1250
+        };
+        
+        mostrarResultado('Config juego: ' + JSON.stringify(CONFIG_JUEGO));
+        mostrarResultado('Datos usuario: ' + JSON.stringify(datosUsuario));
+        
+        mostrar('');
+        mostrarCodigo('datosUsuario.puntos += 50;');
+        datosUsuario.puntos += 50;
+        mostrarResultado('Puntos actualizados: ' + datosUsuario.puntos);
+
+        // ============================================
+        // EJEMPLO 11: const con funciones
+        // ============================================
+        iniciarEjemplo("const con funciones flecha");
+        
+        mostrarCodigo('const saludar = (nombre) => `¡Hola, ${nombre}!`;');
+        mostrarCodigo('const sumar = (a, b) => a + b;');
+        
+        const saludar = (nombre) => {
+            return `¡Hola, ${nombre}!`;
+        };
+        
+        const sumar = (a, b) => a + b;
+        
+        const multiplicar = (a, b) => {
+            const resultado = a * b;
+            return resultado;
+        };
+        
+        mostrarResultado(saludar("María"));
+        mostrarResultado('5 + 3 = ' + sumar(5, 3));
+        mostrarResultado('4 x 7 = ' + multiplicar(4, 7));
+        
+        mostrar('');
+        mostrar('✅ Las funciones flecha generalmente se asignan a const');
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Resumen: let vs const</h2>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr style="background: #f7df1e;">
+                <th style="padding: 10px; border: 1px solid #ddd;">Característica</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">let</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">const</th>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">Reasignación</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">✅ Permitida</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">❌ No permitida</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">Inicialización</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Opcional</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Obligatoria</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">Alcance</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Bloque</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Bloque</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">Modificar objeto/array</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">✅ Sí</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">✅ Sí</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">Cuándo usar</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Valores que cambiarán</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Valores que no cambiarán</td>
+            </tr>
+        </table>
+        
+        <p style="margin-top: 20px;"><strong>Regla de oro:</strong> Usa <code>const</code> por defecto. Solo usa <code>let</code> cuando sepas que necesitarás reasignar el valor.</p>
+    </div>
+
+    <div class="console-output">
+        <strong>💡 Consejo:</strong> Abre la consola del navegador (F12) para ver todos los ejemplos en acción.
+    </div>
+</body>
+</html>

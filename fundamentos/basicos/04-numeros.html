@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04 - Números y Operaciones Matemáticas</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="../../basicos.html" class="back">← Volver al menú</a>
+    
+    <h1>04 - Números en JavaScript</h1>
+
+    <div class="code-section">
+        <h2>📌 Números en JavaScript</h2>
+        <p>JavaScript solo tiene un tipo de número: <strong>Number</strong>. No diferencia entre enteros y decimales.</p>
+    </div>
+
+    <div class="code-section">
+        <h2>🔢 Tipos de números</h2>
+        <ul>
+            <li><strong>Enteros:</strong> 42, -10, 0</li>
+            <li><strong>Decimales:</strong> 3.14, -0.5, 2.0</li>
+            <li><strong>Notación científica:</strong> 1e6 (1 millón), 1e-3 (0.001)</li>
+            <li><strong>Hexadecimal:</strong> 0xFF (255)</li>
+            <li><strong>Binario:</strong> 0b1010 (10)</li>
+            <li><strong>Octal:</strong> 0o777 (511)</li>
+        </ul>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `
+                <div class="ejemplo-header">
+                    <span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span>
+                    <span class="ejemplo-titulo">${titulo}</span>
+                </div>
+                <div class="ejemplo-contenido"></div>
+            `;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrar(texto, tipo = 'normal') {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.className = 'linea-' + tipo;
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+            console.log(texto);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.className = 'codigo-ejemplo';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            mostrar('➜ ' + texto, 'resultado');
+        }
+
+        // Estilos
+        const style = document.createElement('style');
+        style.textContent = `
+            .ejemplo-box {
+                background: white;
+                border: 2px solid #f7df1e;
+                border-radius: 8px;
+                margin: 20px 0;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .ejemplo-header {
+                background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);
+                padding: 15px 20px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .ejemplo-numero {
+                background: #333;
+                color: #f7df1e;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 0.9em;
+            }
+            .ejemplo-titulo {
+                color: #333;
+                font-size: 1.1em;
+            }
+            .ejemplo-contenido {
+                padding: 20px;
+                background: #f9f9f9;
+            }
+            .codigo-ejemplo {
+                background: #282c34;
+                color: #61dafb;
+                padding: 12px 15px;
+                border-radius: 5px;
+                font-family: 'Courier New', monospace;
+                margin: 8px 0;
+                border-left: 4px solid #f7df1e;
+            }
+            .linea-normal {
+                color: #666;
+                padding: 5px 0;
+                font-family: 'Segoe UI', sans-serif;
+            }
+            .linea-resultado {
+                color: #2ecc71;
+                padding: 8px 15px;
+                background: #e8f8f5;
+                border-left: 4px solid #2ecc71;
+                margin: 5px 0;
+                border-radius: 3px;
+                font-weight: 500;
+                font-family: 'Courier New', monospace;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ============================================
+        // EJEMPLO 1: Operaciones básicas
+        // ============================================
+        iniciarEjemplo("Operaciones aritméticas básicas");
+        
+        mostrarCodigo('let suma = 10 + 5;');
+        mostrarCodigo('let resta = 10 - 5;');
+        mostrarCodigo('let multiplicacion = 10 * 5;');
+        mostrarCodigo('let division = 10 / 5;');
+        
+        let suma = 10 + 5;
+        let resta = 10 - 5;
+        let multiplicacion = 10 * 5;
+        let division = 10 / 5;
+        
+        mostrarResultado('10 + 5 = ' + suma);
+        mostrarResultado('10 - 5 = ' + resta);
+        mostrarResultado('10 * 5 = ' + multiplicacion);
+        mostrarResultado('10 / 5 = ' + division);
+
+        // ============================================
+        // EJEMPLO 2: Módulo y exponente
+        // ============================================
+        iniciarEjemplo("Módulo y exponente");
+        
+        mostrarCodigo('let modulo = 10 % 3;  // Resto de la división');
+        mostrarCodigo('let exponente = 2 ** 3;  // 2 elevado a 3');
+        
+        let modulo = 10 % 3;
+        let exponente = 2 ** 3;
+        
+        mostrarResultado('10 % 3 = ' + modulo);
+        mostrarResultado('2 ** 3 = ' + exponente);
+        
+        mostrar('');
+        mostrar('💡 El módulo es útil para números pares/impares');
+        mostrarCodigo('5 % 2 === 0  // false (impar)');
+        mostrarResultado('5 es par: ' + (5 % 2 === 0));
+        mostrarResultado('6 es par: ' + (6 % 2 === 0));
+
+        // ============================================
+        // EJEMPLO 3: Incremento y decremento
+        // ============================================
+        iniciarEjemplo("Incremento y decremento");
+        
+        mostrarCodigo('let contador = 0;');
+        let contador = 0;
+        mostrarResultado('Valor inicial: ' + contador);
+        
+        mostrar('');
+        mostrarCodigo('contador++;  // Post-incremento');
+        contador++;
+        mostrarResultado('Después de contador++: ' + contador);
+        
+        mostrarCodigo('++contador;  // Pre-incremento');
+        ++contador;
+        mostrarResultado('Después de ++contador: ' + contador);
+        
+        mostrarCodigo('contador--;  // Decremento');
+        contador--;
+        mostrarResultado('Después de contador--: ' + contador);
+
+        // ============================================
+        // EJEMPLO 4: Math object
+        // ============================================
+        iniciarEjemplo("Objeto Math - Funciones matemáticas");
+        
+        mostrarCodigo('Math.PI');
+        mostrarResultado('π = ' + Math.PI);
+        
+        mostrarCodigo('Math.round(4.7)');
+        mostrarResultado('Redondear 4.7: ' + Math.round(4.7));
+        
+        mostrarCodigo('Math.floor(4.7)');
+        mostrarResultado('Piso de 4.7: ' + Math.floor(4.7));
+        
+        mostrarCodigo('Math.ceil(4.3)');
+        mostrarResultado('Techo de 4.3: ' + Math.ceil(4.3));
+        
+        mostrarCodigo('Math.abs(-5)');
+        mostrarResultado('Valor absoluto de -5: ' + Math.abs(-5));
+
+        // ============================================
+        // EJEMPLO 5: Math.random()
+        // ============================================
+        iniciarEjemplo("Números aleatorios");
+        
+        mostrarCodigo('Math.random()  // Entre 0 y 1');
+        mostrarResultado('Aleatorio: ' + Math.random());
+        
+        mostrar('');
+        mostrarCodigo('Math.floor(Math.random() * 10)  // Entre 0 y 9');
+        mostrarResultado('Aleatorio 0-9: ' + Math.floor(Math.random() * 10));
+        
+        mostrar('');
+        mostrarCodigo('Math.floor(Math.random() * 100) + 1  // Entre 1 y 100');
+        mostrarResultado('Aleatorio 1-100: ' + (Math.floor(Math.random() * 100) + 1));
+
+        // ============================================
+        // EJEMPLO 6: Math min y max
+        // ============================================
+        iniciarEjemplo("Mínimo y máximo");
+        
+        mostrarCodigo('Math.min(5, 10, 3, 8, 1)');
+        mostrarResultado('Mínimo: ' + Math.min(5, 10, 3, 8, 1));
+        
+        mostrarCodigo('Math.max(5, 10, 3, 8, 1)');
+        mostrarResultado('Máximo: ' + Math.max(5, 10, 3, 8, 1));
+
+        // ============================================
+        // EJEMPLO 7: Math.pow y Math.sqrt
+        // ============================================
+        iniciarEjemplo("Potencia y raíz cuadrada");
+        
+        mostrarCodigo('Math.pow(2, 3)  // 2³');
+        mostrarResultado('2³ = ' + Math.pow(2, 3));
+        
+        mostrarCodigo('Math.sqrt(16)  // √16');
+        mostrarResultado('√16 = ' + Math.sqrt(16));
+        
+        mostrarCodigo('Math.sqrt(2)');
+        mostrarResultado('√2 = ' + Math.sqrt(2));
+
+        // ============================================
+        // EJEMPLO 8: Conversión a número
+        // ============================================
+        iniciarEjemplo("Convertir strings a números");
+        
+        mostrarCodigo('Number("42")');
+        mostrarResultado('Number("42"): ' + Number("42"));
+        
+        mostrarCodigo('parseInt("42.5")');
+        mostrarResultado('parseInt("42.5"): ' + parseInt("42.5"));
+        
+        mostrarCodigo('parseFloat("42.5")');
+        mostrarResultado('parseFloat("42.5"): ' + parseFloat("42.5"));
+        
+        mostrar('');
+        mostrarCodigo('Number("abc")');
+        mostrarResultado('Number("abc"): ' + Number("abc") + ' (NaN)');
+
+        // ============================================
+        // EJEMPLO 9: toFixed - Decimales
+        // ============================================
+        iniciarEjemplo("Formatear decimales");
+        
+        mostrarCodigo('const pi = 3.14159;');
+        const pi = 3.14159;
+        
+        mostrarCodigo('pi.toFixed(2)');
+        mostrarResultado('2 decimales: ' + pi.toFixed(2));
+        
+        mostrarCodigo('pi.toFixed(4)');
+        mostrarResultado('4 decimales: ' + pi.toFixed(4));
+
+        // ============================================
+        // EJEMPLO 10: Caso práctico - Calculadora
+        // ============================================
+        iniciarEjemplo("Caso práctico - Calculadora de compras");
+        
+        mostrarCodigo('const precioBase = 99.99;');
+        mostrarCodigo('const descuento = 0.15;  // 15%');
+        mostrarCodigo('const iva = 0.21;  // 21%');
+        
+        const precioBase = 99.99;
+        const descuento = 0.15;
+        const iva = 0.21;
+        
+        const precioConDescuento = precioBase * (1 - descuento);
+        const precioFinal = precioConDescuento * (1 + iva);
+        
+        mostrar('');
+        mostrarResultado('Precio base: $' + precioBase.toFixed(2));
+        mostrarResultado('Descuento 15%: -$' + (precioBase * descuento).toFixed(2));
+        mostrarResultado('Precio con descuento: $' + precioConDescuento.toFixed(2));
+        mostrarResultado('IVA 21%: +$' + (precioConDescuento * iva).toFixed(2));
+        mostrarResultado('PRECIO FINAL: $' + precioFinal.toFixed(2));
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ JavaScript solo tiene un tipo: <code>Number</code></li>
+            <li>✅ Operadores: <code>+ - * / % **</code></li>
+            <li>✅ Objeto <code>Math</code> para funciones matemáticas</li>
+            <li>✅ <code>toFixed()</code> para decimales</li>
+        </ul>
+    </div>
+</body>
+</html>

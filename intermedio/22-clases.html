@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>22 - Clases ES6</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>22 - Clases en ES6</h1>
+    <div class="code-section">
+        <h2>📌 Clases</h2>
+        <p>ES6 introdujo la sintaxis de clases, una forma más clara de trabajar con prototipos.</p>
+    </div>
+    <div class="code-section">
+        <h2>🔧 Sintaxis Básica</h2>
+        <pre><code>class Persona {
+    constructor(nombre, edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+    
+    saludar() {
+        return `Hola, soy ${this.nombre}`;
+    }
+    
+    cumplirAnios() {
+        this.edad++;
+    }
+}
+
+const ana = new Persona("Ana", 25);
+console.log(ana.saludar()); // "Hola, soy Ana"
+ana.cumplirAnios();
+console.log(ana.edad); // 26</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>🧬 Herencia</h2>
+        <pre><code>class Estudiante extends Persona {
+    constructor(nombre, edad, carrera) {
+        super(nombre, edad);
+        this.carrera = carrera;
+    }
+    
+    estudiar() {
+        return `${this.nombre} estudia ${this.carrera}`;
+    }
+}
+
+const juan = new Estudiante("Juan", 20, "Ingeniería");
+console.log(juan.saludar()); // Hereda de Persona
+console.log(juan.estudiar()); // "Juan estudia Ingeniería"</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ <code>class</code> - Definir clase</li>
+            <li>✅ <code>constructor</code> - Inicializar</li>
+            <li>✅ <code>extends</code> - Heredar</li>
+            <li>✅ <code>super</code> - Llamar al padre</li>
+        </ul>
+    </div>
+</body>
+</html>

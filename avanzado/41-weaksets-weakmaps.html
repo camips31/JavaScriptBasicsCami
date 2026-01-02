@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>41 - WeakSets y WeakMaps</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>41 - WeakSets y WeakMaps</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué son?</h2>
+        <p><strong>WeakSet:</strong> Set de objetos con referencias débiles</p>
+        <p><strong>WeakMap:</strong> Map con claves de objetos y referencias débiles</p>
+        <p>💡 Permiten que los objetos sean recolectados por el garbage collector</p>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.ejemplo-numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1
+        iniciarEjemplo("WeakSet - Solo objetos");
+        mostrarCodigo('const ws = new WeakSet();');
+        mostrarCodigo('const obj1 = {id: 1};');
+        mostrarCodigo('ws.add(obj1);');
+        mostrarCodigo('ws.has(obj1); // true');
+        const ws = new WeakSet();
+        const obj1 = {id: 1};
+        ws.add(obj1);
+        mostrarResultado('Tiene obj1: ' + ws.has(obj1));
+        mostrar('');
+        mostrar('⚠️ No acepta primitivos');
+
+        // EJEMPLO 2
+        iniciarEjemplo("WeakMap - Datos privados");
+        mostrarCodigo('const privados = new WeakMap();');
+        mostrarCodigo('class Usuario {');
+        mostrarCodigo('    constructor(nombre) {');
+        mostrarCodigo('        privados.set(this, {password: "secreto"});');
+        mostrarCodigo('        this.nombre = nombre;');
+        mostrarCodigo('    }');
+        mostrarCodigo('    getPassword() { return privados.get(this).password; }');
+        mostrarCodigo('}');
+        const privados = new WeakMap();
+        class Usuario {
+            constructor(nombre) {
+                privados.set(this, {password: "secreto"});
+                this.nombre = nombre;
+            }
+            getPassword() { return privados.get(this).password; }
+        }
+        const user = new Usuario("Ana");
+        mostrarResultado('Nombre: ' + user.nombre);
+        mostrarResultado('Password (privado): ' + user.getPassword());
+
+        // EJEMPLO 3
+        iniciarEjemplo("Diferencias con Set/Map");
+        mostrar('Set/Map:');
+        mostrar('✅ Iterables');
+        mostrar('✅ Propiedad .size');
+        mostrar('✅ Acepta cualquier tipo');
+        mostrar('⚠️ Previene garbage collection');
+        mostrar('');
+        mostrar('WeakSet/WeakMap:');
+        mostrar('⚠️ NO iterables');
+        mostrar('⚠️ NO tienen .size');
+        mostrar('⚠️ Solo objetos');
+        mostrar('✅ Permite garbage collection');
+
+        // EJEMPLO 4
+        iniciarEjemplo("Caso práctico - Cache");
+        mostrarCodigo('const cache = new WeakMap();');
+        mostrarCodigo('function procesar(obj) {');
+        mostrarCodigo('    if (cache.has(obj)) return cache.get(obj);');
+        mostrarCodigo('    const resultado = obj.valor * 2;');
+        mostrarCodigo('    cache.set(obj, resultado);');
+        mostrarCodigo('    return resultado;');
+        mostrarCodigo('}');
+        const cache = new WeakMap();
+        function procesar(obj) {
+            if (cache.has(obj)) {
+                mostrarResultado('💾 Desde cache');
+                return cache.get(obj);
+            }
+            mostrarResultado('🔄 Calculando...');
+            const resultado = obj.valor * 2;
+            cache.set(obj, resultado);
+            return resultado;
+        }
+        const dato = {valor: 10};
+        mostrarResultado('Primera llamada: ' + procesar(dato));
+        mostrarResultado('Segunda llamada: ' + procesar(dato));
+
+        // EJEMPLO 5
+        iniciarEjemplo("WeakMap - Metadata de DOM");
+        mostrarCodigo('const metadata = new WeakMap();');
+        mostrarCodigo('const elemento = document.querySelector("#mi-div");');
+        mostrarCodigo('metadata.set(elemento, {clicks: 0});');
+        mostrar('');
+        mostrar('💡 Cuando el elemento se elimine del DOM,');
+        mostrar('la metadata será recolectada automáticamente');
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Métodos</h2>
+        <h3>WeakSet:</h3>
+        <ul>
+            <li><code>add(objeto)</code></li>
+            <li><code>has(objeto)</code></li>
+            <li><code>delete(objeto)</code></li>
+        </ul>
+        <h3>WeakMap:</h3>
+        <ul>
+            <li><code>set(objeto, valor)</code></li>
+            <li><code>get(objeto)</code></li>
+            <li><code>has(objeto)</code></li>
+            <li><code>delete(objeto)</code></li>
+        </ul>
+    </div>
+</body>
+</html>

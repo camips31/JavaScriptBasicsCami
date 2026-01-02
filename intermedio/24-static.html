@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>24 - Métodos Estáticos</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>24 - Métodos Estáticos</h1>
+    <div class="code-section">
+        <h2>📌 Static Methods</h2>
+        <p>Los métodos estáticos pertenecen a la clase, no a las instancias.</p>
+    </div>
+    <div class="code-section">
+        <h2>🔧 Sintaxis</h2>
+        <pre><code>class Calculadora {
+    static sumar(a, b) {
+        return a + b;
+    }
+    
+    static restar(a, b) {
+        return a - b;
+    }
+}
+
+// No se necesita crear una instancia
+console.log(Calculadora.sumar(5, 3)); // 8
+console.log(Calculadora.restar(10, 4)); // 6
+
+// Ejemplo con Math (clase nativa con métodos estáticos)
+Math.max(1, 2, 3); // 3
+Math.random(); // número aleatorio</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>💡 Cuándo Usar</h2>
+        <ul>
+            <li>Funciones auxiliares que no dependen de instancias</li>
+            <li>Factory methods (crear objetos)</li>
+            <li>Constantes de clase</li>
+        </ul>
+    </div>
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ <code>static metodo()</code> - Método de clase</li>
+            <li>✅ Se llaman con <code>Clase.metodo()</code></li>
+            <li>✅ No tienen acceso a <code>this</code> de instancias</li>
+        </ul>
+    </div>
+</body>
+</html>

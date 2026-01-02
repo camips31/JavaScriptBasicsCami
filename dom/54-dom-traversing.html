@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>54 - DOM Traversing</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>54 - DOM Traversing (Recorriendo el DOM)</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué es DOM Traversing?</h2>
+        <p>Navegar por la estructura del DOM usando relaciones entre elementos (padres, hijos, hermanos).</p>
+    </div>
+
+    <ul id="lista">
+        <li id="item1">Item 1</li>
+        <li id="item2" class="activo">Item 2</li>
+        <li id="item3">Item 3</li>
+    </ul>
+
+    <div id="contenedor">
+        <div class="padre">
+            <p class="hijo">Párrafo 1</p>
+            <p class="hijo">Párrafo 2</p>
+            <span>Span</span>
+        </div>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        const item2 = document.getElementById('item2');
+        const padre = document.querySelector('.padre');
+
+        // EJEMPLO 1
+        iniciarEjemplo("Navegar hacia arriba - parentElement");
+        mostrarCodigo('const item = document.getElementById("item2");');
+        mostrarCodigo('item.parentElement;  // <ul>');
+        mostrarResultado('Padre: ' + item2.parentElement.tagName);
+        mostrarResultado('Abuelo: ' + item2.parentElement.parentElement.tagName);
+
+        // EJEMPLO 2
+        iniciarEjemplo("closest() - Ancestro más cercano");
+        mostrarCodigo('item.closest("ul");  // Busca ul más cercano');
+        mostrarCodigo('item.closest("body"); // Busca body');
+        mostrarResultado('closest("ul"): ' + item2.closest('ul').id);
+        mostrarResultado('closest("body"): ' + item2.closest('body').tagName);
+
+        // EJEMPLO 3
+        iniciarEjemplo("Navegar hacia abajo - children");
+        mostrarCodigo('padre.children;  // Solo elementos HTML');
+        mostrarCodigo('padre.children.length;');
+        mostrarResultado('Hijos: ' + padre.children.length);
+        Array.from(padre.children).forEach((hijo, i) => {
+            mostrarResultado(`Hijo ${i + 1}: ${hijo.tagName}`);
+        });
+
+        // EJEMPLO 4
+        iniciarEjemplo("firstElementChild / lastElementChild");
+        mostrarCodigo('padre.firstElementChild;');
+        mostrarCodigo('padre.lastElementChild;');
+        mostrarResultado('Primer hijo: ' + padre.firstElementChild.textContent);
+        mostrarResultado('Último hijo: ' + padre.lastElementChild.tagName);
+
+        // EJEMPLO 5
+        iniciarEjemplo("Hermanos - nextElementSibling");
+        mostrarCodigo('item2.nextElementSibling;  // Item 3');
+        mostrarCodigo('item2.previousElementSibling;  // Item 1');
+        mostrarResultado('Siguiente: ' + (item2.nextElementSibling ? item2.nextElementSibling.textContent : 'null'));
+        mostrarResultado('Anterior: ' + (item2.previousElementSibling ? item2.previousElementSibling.textContent : 'null'));
+
+        // EJEMPLO 6
+        iniciarEjemplo("Recorrer todos los hermanos");
+        mostrarCodigo('let hermano = item.nextElementSibling;');
+        mostrarCodigo('while(hermano) {');
+        mostrarCodigo('    console.log(hermano);');
+        mostrarCodigo('    hermano = hermano.nextElementSibling;');
+        mostrarCodigo('}');
+        let hermano = item2.nextElementSibling;
+        while(hermano) {
+            mostrarResultado('Hermano: ' + hermano.textContent);
+            hermano = hermano.nextElementSibling;
+        }
+
+        // EJEMPLO 7
+        iniciarEjemplo("Caso práctico - Encontrar elemento específico");
+        mostrarCodigo('function encontrarAncestroPorClase(elem, clase) {');
+        mostrarCodigo('    return elem.closest("." + clase);');
+        mostrarCodigo('}');
+        function encontrarAncestroPorClase(elem, clase) {
+            return elem.closest("." + clase);
+        }
+        const hijo = document.querySelector('.hijo');
+        const ancestro = encontrarAncestroPorClase(hijo, 'padre');
+        mostrarResultado('Ancestro encontrado: ' + ancestro.className);
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Propiedades de navegación</h2>
+        <h3>Hacia arriba (padres):</h3>
+        <ul>
+            <li><code>parentElement</code> - Elemento padre</li>
+            <li><code>closest(selector)</code> - Ancestro más cercano que coincida</li>
+        </ul>
+        <h3>Hacia abajo (hijos):</h3>
+        <ul>
+            <li><code>children</code> - Hijos (solo elementos)</li>
+            <li><code>firstElementChild</code> - Primer hijo</li>
+            <li><code>lastElementChild</code> - Último hijo</li>
+        </ul>
+        <h3>Horizontal (hermanos):</h3>
+        <ul>
+            <li><code>nextElementSibling</code> - Siguiente hermano</li>
+            <li><code>previousElementSibling</code> - Hermano anterior</li>
+        </ul>
+    </div>
+
+    <div class="code-section">
+        <h2>✅ Consejos</h2>
+        <ul>
+            <li>✅ Usar propiedades <code>Element</code> (ignoran nodos de texto)</li>
+            <li>✅ <code>closest()</code> es muy útil para delegación de eventos</li>
+            <li>⚠️ <code>children</code> NO incluye nodos de texto</li>
+            <li>✅ Preferir <code>querySelector()</code> cuando sea más claro</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>21 - Prototipos</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>21 - Prototipos y Herencia</h1>
+    <div class="code-section">
+        <h2>📌 Prototipos</h2>
+        <p>JavaScript usa prototipos para herencia. Cada objeto tiene un prototipo del cual hereda propiedades y métodos.</p>
+    </div>
+    <div class="code-section">
+        <h2>🔧 Crear Objetos con Prototipos</h2>
+        <pre><code>function Persona(nombre, edad) {
+    this.nombre = nombre;
+    this.edad = edad;
+}
+
+Persona.prototype.saludar = function() {
+    return `Hola, soy ${this.nombre}`;
+};
+
+const ana = new Persona("Ana", 25);
+console.log(ana.saludar()); // "Hola, soy Ana"</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ Cada objeto tiene un prototype</li>
+            <li>✅ Los métodos en prototype se comparten</li>
+            <li>✅ Base de la herencia en JavaScript</li>
+        </ul>
+    </div>
+</body>
+</html>

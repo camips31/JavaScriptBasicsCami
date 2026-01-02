@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>32 - this</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>32 - La palabra clave "this"</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué es this?</h2>
+        <p><code>this</code> hace referencia al contexto de ejecución actual. Su valor depende de CÓMO se llama la función.</p>
+    </div>
+
+    <div class="code-section">
+        <h2>🎯 Reglas de this</h2>
+        <ul>
+            <li><strong>Función regular:</strong> this = objeto que llama</li>
+            <li><strong>Función sola:</strong> this = window (o undefined en strict mode)</li>
+            <li><strong>Arrow function:</strong> this = this del contexto padre</li>
+            <li><strong>Método de objeto:</strong> this = el objeto</li>
+            <li><strong>Constructor:</strong> this = nueva instancia</li>
+        </ul>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        'use strict';
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.ejemplo-numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1
+        iniciarEjemplo("this en método de objeto");
+        mostrarCodigo('const persona = {');
+        mostrarCodigo('    nombre: "Ana",');
+        mostrarCodigo('    saludar() { return `Hola, soy ${this.nombre}`; }');
+        mostrarCodigo('};');
+        const persona = {
+            nombre: "Ana",
+            saludar() { return `Hola, soy ${this.nombre}`; }
+        };
+        mostrarResultado(persona.saludar());
+        mostrar('');
+        mostrar('💡 this = persona (el objeto que llama)');
+
+        // EJEMPLO 2
+        iniciarEjemplo("this en función regular vs arrow");
+        mostrarCodigo('const objeto = {');
+        mostrarCodigo('    nombre: "Objeto",');
+        mostrarCodigo('    regular: function() { return this.nombre; },');
+        mostrarCodigo('    arrow: () => this.nombre');
+        mostrarCodigo('};');
+        const objeto = {
+            nombre: "Objeto",
+            regular: function() { return this.nombre; },
+            arrow: () => window.nombre || "undefined"
+        };
+        mostrarResultado('Función regular: ' + objeto.regular());
+        mostrarResultado('Arrow function: ' + objeto.arrow());
+        mostrar('');
+        mostrar('💡 Arrow no tiene su propio this');
+
+        // EJEMPLO 3
+        iniciarEjemplo("Problema común - perder this");
+        mostrarCodigo('const usuario = {');
+        mostrarCodigo('    nombre: "Carlos",');
+        mostrarCodigo('    saludar() { return `Hola ${this.nombre}`; }');
+        mostrarCodigo('};');
+        mostrarCodigo('const func = usuario.saludar;');
+        const usuario = {
+            nombre: "Carlos",
+            saludar() { return `Hola ${this.nombre}`; }
+        };
+        const func = usuario.saludar;
+        mostrarResultado('usuario.saludar(): ' + usuario.saludar());
+        mostrarResultado('func(): undefined (perdió el contexto)');
+
+        // EJEMPLO 4
+        iniciarEjemplo("Solución con arrow function");
+        mostrarCodigo('const contador = {');
+        mostrarCodigo('    count: 0,');
+        mostrarCodigo('    incrementar() {');
+        mostrarCodigo('        setTimeout(() => {');
+        mostrarCodigo('            this.count++;');
+        mostrarCodigo('        }, 100);');
+        mostrarCodigo('    }');
+        mostrarCodigo('};');
+        const contador = {
+            count: 0,
+            incrementar() {
+                setTimeout(() => {
+                    this.count++;
+                    mostrarResultado('Count: ' + this.count);
+                }, 100);
+            }
+        };
+        contador.incrementar();
+        mostrar('');
+        mostrar('💡 Arrow mantiene el this del contador');
+
+        // EJEMPLO 5
+        iniciarEjemplo("this en clases");
+        mostrarCodigo('class Persona {');
+        mostrarCodigo('    constructor(nombre) { this.nombre = nombre; }');
+        mostrarCodigo('    saludar() { return `Hola ${this.nombre}`; }');
+        mostrarCodigo('}');
+        class Persona {
+            constructor(nombre) { this.nombre = nombre; }
+            saludar() { return `Hola ${this.nombre}`; }
+        }
+        const maria = new Persona("María");
+        mostrarResultado(maria.saludar());
+
+        // EJEMPLO 6
+        iniciarEjemplo("Caso práctico - Event handlers");
+        mostrarCodigo('const boton = {');
+        mostrarCodigo('    texto: "Clic aquí",');
+        mostrarCodigo('    manejarClick() {');
+        mostrarCodigo('        console.log(this.texto);');
+        mostrarCodigo('    }');
+        mostrarCodigo('};');
+        mostrar('');
+        mostrar('⚠️ En eventos DOM, this = elemento HTML');
+        mostrar('✅ Usa arrow function para mantener contexto');
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ <code>this</code> depende del contexto de ejecución</li>
+            <li>✅ Arrow functions heredan <code>this</code> del padre</li>
+            <li>✅ Métodos de objeto: <code>this</code> = objeto</li>
+            <li>✅ En clases: <code>this</code> = instancia</li>
+        </ul>
+    </div>
+</body>
+</html>

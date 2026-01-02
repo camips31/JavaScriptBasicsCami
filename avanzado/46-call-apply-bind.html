@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>46 - call, apply, bind</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>46 - call, apply, bind</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué son?</h2>
+        <p>Métodos para controlar el contexto (<code>this</code>) de una función.</p>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.ejemplo-numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1
+        iniciarEjemplo("call() - Establecer this");
+        mostrarCodigo('function saludar() {');
+        mostrarCodigo('    return `Hola ${this.nombre}`;');
+        mostrarCodigo('}');
+        mostrarCodigo('const persona = {nombre: "Ana"};');
+        mostrarCodigo('saludar.call(persona); // "Hola Ana"');
+        function saludar() {
+            return `Hola ${this.nombre}`;
+        }
+        const persona = {nombre: "Ana"};
+        mostrarResultado(saludar.call(persona));
+
+        // EJEMPLO 2
+        iniciarEjemplo("call() con argumentos");
+        mostrarCodigo('function presentar(edad, ciudad) {');
+        mostrarCodigo('    return `${this.nombre}, ${edad}, ${ciudad}`;');
+        mostrarCodigo('}');
+        mostrarCodigo('presentar.call({nombre: "Juan"}, 30, "Madrid");');
+        function presentar(edad, ciudad) {
+            return `${this.nombre}, ${edad}, ${ciudad}`;
+        }
+        mostrarResultado(presentar.call({nombre: "Juan"}, 30, "Madrid"));
+
+        // EJEMPLO 3
+        iniciarEjemplo("apply() - Argumentos como array");
+        mostrarCodigo('function sumar(a, b, c) {');
+        mostrarCodigo('    return a + b + c;');
+        mostrarCodigo('}');
+        mostrarCodigo('const nums = [1, 2, 3];');
+        mostrarCodigo('sumar.apply(null, nums); // 6');
+        function sumar(a, b, c) {
+            return a + b + c;
+        }
+        const nums = [1, 2, 3];
+        mostrarResultado('Resultado: ' + sumar.apply(null, nums));
+
+        // EJEMPLO 4
+        iniciarEjemplo("bind() - Crear nueva función");
+        mostrarCodigo('const persona1 = {nombre: "Ana"};');
+        mostrarCodigo('function decirNombre() {');
+        mostrarCodigo('    return this.nombre;');
+        mostrarCodigo('}');
+        mostrarCodigo('const func = decirNombre.bind(persona1);');
+        mostrarCodigo('func(); // "Ana"');
+        const persona1 = {nombre: "Ana"};
+        function decirNombre() {
+            return this.nombre;
+        }
+        const func = decirNombre.bind(persona1);
+        mostrarResultado('func(): ' + func());
+        mostrar('');
+        mostrar('💡 bind() NO ejecuta la función, crea una nueva');
+
+        // EJEMPLO 5
+        iniciarEjemplo("bind() con argumentos parciales");
+        mostrarCodigo('function multiplicar(a, b) {');
+        mostrarCodigo('    return a * b;');
+        mostrarCodigo('}');
+        mostrarCodigo('const doble = multiplicar.bind(null, 2);');
+        mostrarCodigo('doble(5); // 10');
+        function multiplicar(a, b) {
+            return a * b;
+        }
+        const doble = multiplicar.bind(null, 2);
+        mostrarResultado('doble(5): ' + doble(5));
+        mostrarResultado('doble(10): ' + doble(10));
+
+        // EJEMPLO 6
+        iniciarEjemplo("Caso práctico - Event handlers");
+        mostrarCodigo('class Contador {');
+        mostrarCodigo('    constructor() {');
+        mostrarCodigo('        this.count = 0;');
+        mostrarCodigo('        this.incrementar = this.incrementar.bind(this);');
+        mostrarCodigo('    }');
+        mostrarCodigo('    incrementar() { this.count++; }');
+        mostrarCodigo('}');
+        class Contador {
+            constructor() {
+                this.count = 0;
+                this.incrementar = this.incrementar.bind(this);
+            }
+            incrementar() { 
+                this.count++; 
+                mostrarResultado('Count: ' + this.count);
+            }
+        }
+        const contador = new Contador();
+        const func2 = contador.incrementar;
+        func2();
+        func2();
+        mostrar('');
+        mostrar('💡 bind() mantiene el contexto correcto');
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <table style="width:100%; border-collapse: collapse;">
+            <tr style="background: #f7df1e;">
+                <th style="padding: 10px; border: 1px solid #ddd;">Método</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Ejecuta</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Argumentos</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Retorna</th>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;"><code>call()</code></td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Sí</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Individuales</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Resultado</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;"><code>apply()</code></td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Sí</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Array</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Resultado</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;"><code>bind()</code></td>
+                <td style="padding: 10px; border: 1px solid #ddd;">No</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Individuales</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Nueva función</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

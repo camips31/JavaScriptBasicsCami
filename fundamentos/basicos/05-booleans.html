@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05 - Booleanos y Comparaciones</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="../../basicos.html" class="back">← Volver al menú</a>
+    
+    <h1>05 - Booleanos en JavaScript</h1>
+
+    <div class="code-section">
+        <h2>📌 Valores Booleanos</h2>
+        <p>Los booleanos solo tienen dos valores posibles: <code>true</code> (verdadero) o <code>false</code> (falso).</p>
+        <p>Son fundamentales para tomar decisiones en programación.</p>
+    </div>
+
+    <div class="code-section">
+        <h2>⚖️ Operadores de comparación</h2>
+        <table>
+            <tr>
+                <th>Operador</th>
+                <th>Descripción</th>
+                <th>Ejemplo</th>
+            </tr>
+            <tr>
+                <td><code>==</code></td>
+                <td>Igual (compara valor)</td>
+                <td><code>5 == "5"</code> → true</td>
+            </tr>
+            <tr>
+                <td><code>===</code></td>
+                <td>Estrictamente igual (valor y tipo)</td>
+                <td><code>5 === "5"</code> → false</td>
+            </tr>
+            <tr>
+                <td><code>!=</code></td>
+                <td>Diferente</td>
+                <td><code>5 != 3</code> → true</td>
+            </tr>
+            <tr>
+                <td><code>!==</code></td>
+                <td>Estrictamente diferente</td>
+                <td><code>5 !== "5"</code> → true</td>
+            </tr>
+            <tr>
+                <td><code>&gt;</code></td>
+                <td>Mayor que</td>
+                <td><code>5 &gt; 3</code> → true</td>
+            </tr>
+            <tr>
+                <td><code>&lt;</code></td>
+                <td>Menor que</td>
+                <td><code>5 &lt; 3</code> → false</td>
+            </tr>
+            <tr>
+                <td><code>&gt;=</code></td>
+                <td>Mayor o igual</td>
+                <td><code>5 &gt;= 5</code> → true</td>
+            </tr>
+            <tr>
+                <td><code>&lt;=</code></td>
+                <td>Menor o igual</td>
+                <td><code>3 &lt;= 5</code> → true</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `
+                <div class="ejemplo-header">
+                    <span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span>
+                    <span class="ejemplo-titulo">${titulo}</span>
+                </div>
+                <div class="ejemplo-contenido"></div>
+            `;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrar(texto, tipo = 'normal') {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.className = 'linea-' + tipo;
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+            console.log(texto);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.className = 'codigo-ejemplo';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            mostrar('➜ ' + texto, 'resultado');
+        }
+
+        // Estilos
+        const style = document.createElement('style');
+        style.textContent = `
+            .ejemplo-box {
+                background: white;
+                border: 2px solid #f7df1e;
+                border-radius: 8px;
+                margin: 20px 0;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .ejemplo-header {
+                background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);
+                padding: 15px 20px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .ejemplo-numero {
+                background: #333;
+                color: #f7df1e;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 0.9em;
+            }
+            .ejemplo-titulo {
+                color: #333;
+                font-size: 1.1em;
+            }
+            .ejemplo-contenido {
+                padding: 20px;
+                background: #f9f9f9;
+            }
+            .codigo-ejemplo {
+                background: #282c34;
+                color: #61dafb;
+                padding: 12px 15px;
+                border-radius: 5px;
+                font-family: 'Courier New', monospace;
+                margin: 8px 0;
+                border-left: 4px solid #f7df1e;
+            }
+            .linea-normal {
+                color: #666;
+                padding: 5px 0;
+                font-family: 'Segoe UI', sans-serif;
+            }
+            .linea-resultado {
+                color: #2ecc71;
+                padding: 8px 15px;
+                background: #e8f8f5;
+                border-left: 4px solid #2ecc71;
+                margin: 5px 0;
+                border-radius: 3px;
+                font-weight: 500;
+                font-family: 'Courier New', monospace;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ============================================
+        // EJEMPLO 1: Valores booleanos básicos
+        // ============================================
+        iniciarEjemplo("Declarar valores booleanos");
+        
+        mostrarCodigo('const esMayorDeEdad = true;');
+        mostrarCodigo('const estaLloviendo = false;');
+        
+        const esMayorDeEdad = true;
+        const estaLloviendo = false;
+        
+        mostrarResultado('esMayorDeEdad: ' + esMayorDeEdad);
+        mostrarResultado('estaLloviendo: ' + estaLloviendo);
+        mostrarResultado('typeof esMayorDeEdad: ' + typeof esMayorDeEdad);
+
+        // ============================================
+        // EJEMPLO 2: Comparaciones numéricas
+        // ============================================
+        iniciarEjemplo("Comparaciones numéricas");
+        
+        mostrarCodigo('10 > 5');
+        mostrarResultado('10 > 5: ' + (10 > 5));
+        
+        mostrarCodigo('10 < 5');
+        mostrarResultado('10 < 5: ' + (10 < 5));
+        
+        mostrarCodigo('10 >= 10');
+        mostrarResultado('10 >= 10: ' + (10 >= 10));
+        
+        mostrarCodigo('5 <= 3');
+        mostrarResultado('5 <= 3: ' + (5 <= 3));
+
+        // ============================================
+        // EJEMPLO 3: == vs ===
+        // ============================================
+        iniciarEjemplo("Diferencia entre == y ===");
+        
+        mostrar('⚠️ == compara solo el valor (hace conversión)');
+        mostrarCodigo('5 == "5"');
+        mostrarResultado('5 == "5": ' + (5 == "5"));
+        
+        mostrar('');
+        mostrar('✅ === compara valor Y tipo (más estricto)');
+        mostrarCodigo('5 === "5"');
+        mostrarResultado('5 === "5": ' + (5 === "5"));
+        
+        mostrar('');
+        mostrar('💡 Recomendación: SIEMPRE usa ===');
+
+        // ============================================
+        // EJEMPLO 4: Operadores lógicos
+        // ============================================
+        iniciarEjemplo("Operadores lógicos AND (&&)");
+        
+        mostrarCodigo('const edad = 25;');
+        mostrarCodigo('const tieneLicencia = true;');
+        const edad = 25;
+        const tieneLicencia = true;
+        
+        mostrar('');
+        mostrarCodigo('edad >= 18 && tieneLicencia');
+        mostrarResultado('¿Puede conducir?: ' + (edad >= 18 && tieneLicencia));
+        
+        mostrar('');
+        mostrar('💡 AND (&&) - AMBOS deben ser true');
+
+        // ============================================
+        // EJEMPLO 5: Operador OR
+        // ============================================
+        iniciarEjemplo("Operador lógico OR (||)");
+        
+        mostrarCodigo('const esFinDeSemana = true;');
+        mostrarCodigo('const esFeriado = false;');
+        const esFinDeSemana = true;
+        const esFeriado = false;
+        
+        mostrar('');
+        mostrarCodigo('esFinDeSemana || esFeriado');
+        mostrarResultado('¿Puede descansar?: ' + (esFinDeSemana || esFeriado));
+        
+        mostrar('');
+        mostrar('💡 OR (||) - AL MENOS UNO debe ser true');
+
+        // ============================================
+        // EJEMPLO 6: Operador NOT
+        // ============================================
+        iniciarEjemplo("Operador lógico NOT (!)");
+        
+        mostrarCodigo('const esDeDia = true;');
+        const esDeDia = true;
+        
+        mostrarCodigo('!esDeDia');
+        mostrarResultado('¿Es de noche?: ' + !esDeDia);
+        
+        mostrar('');
+        mostrarCodigo('const estaApagado = false;');
+        const estaApagado = false;
+        mostrarCodigo('!estaApagado');
+        mostrarResultado('¿Está encendido?: ' + !estaApagado);
+        
+        mostrar('');
+        mostrar('💡 NOT (!) - Invierte el valor booleano');
+
+        // ============================================
+        // EJEMPLO 7: Valores truthy y falsy
+        // ============================================
+        iniciarEjemplo("Valores truthy y falsy");
+        
+        mostrar('❌ Valores FALSY (se convierten a false):');
+        mostrarCodigo('Boolean(0)');
+        mostrarResultado('Boolean(0): ' + Boolean(0));
+        
+        mostrarCodigo('Boolean("")');
+        mostrarResultado('Boolean(""): ' + Boolean(""));
+        
+        mostrarCodigo('Boolean(null)');
+        mostrarResultado('Boolean(null): ' + Boolean(null));
+        
+        mostrarCodigo('Boolean(undefined)');
+        mostrarResultado('Boolean(undefined): ' + Boolean(undefined));
+        
+        mostrar('');
+        mostrar('✅ Valores TRUTHY (se convierten a true):');
+        mostrarCodigo('Boolean("Hola")');
+        mostrarResultado('Boolean("Hola"): ' + Boolean("Hola"));
+        
+        mostrarCodigo('Boolean(42)');
+        mostrarResultado('Boolean(42): ' + Boolean(42));
+
+        // ============================================
+        // EJEMPLO 8: Comparar strings
+        // ============================================
+        iniciarEjemplo("Comparar strings");
+        
+        mostrarCodigo('const nombre = "Juan";');
+        const nombre = "Juan";
+        
+        mostrarCodigo('nombre === "Juan"');
+        mostrarResultado('nombre === "Juan": ' + (nombre === "Juan"));
+        
+        mostrarCodigo('nombre === "juan"');
+        mostrarResultado('nombre === "juan": ' + (nombre === "juan"));
+        
+        mostrar('');
+        mostrar('💡 JavaScript diferencia mayúsculas y minúsculas');
+
+        // ============================================
+        // EJEMPLO 9: Caso práctico - Validación
+        // ============================================
+        iniciarEjemplo("Caso práctico - Validación de acceso");
+        
+        mostrarCodigo('const usuario = "admin";');
+        mostrarCodigo('const password = "1234";');
+        mostrarCodigo('const estaActivo = true;');
+        
+        const usuario = "admin";
+        const password = "1234";
+        const estaActivo = true;
+        
+        const credencialesCorrectas = usuario === "admin" && password === "1234";
+        const puedeAcceder = credencialesCorrectas && estaActivo;
+        
+        mostrar('');
+        mostrarResultado('Credenciales correctas: ' + credencialesCorrectas);
+        mostrarResultado('Usuario activo: ' + estaActivo);
+        mostrarResultado('✅ ACCESO PERMITIDO: ' + puedeAcceder);
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ Booleanos: <code>true</code> y <code>false</code></li>
+            <li>✅ Usa <code>===</code> en vez de <code>==</code></li>
+            <li>✅ Operadores lógicos: <code>&& (AND)</code>, <code>|| (OR)</code>, <code>! (NOT)</code></li>
+            <li>✅ Valores falsy: <code>0, "", null, undefined, false, NaN</code></li>
+        </ul>
+    </div>
+</body>
+</html>

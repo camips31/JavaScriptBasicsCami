@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>18 - Arrow Functions</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>18 - Arrow Functions (Funciones Flecha)</h1>
+    <div class="code-section">
+        <h2>📌 Arrow Functions</h2>
+        <p>ES6 introdujo una sintaxis más concisa para escribir funciones.</p>
+    </div>
+    <div class="code-section">
+        <h2>🔧 Sintaxis Básica</h2>
+        <pre><code>// Función tradicional
+function sumar(a, b) {
+    return a + b;
+}
+
+// Arrow function
+const sumar = (a, b) => {
+    return a + b;
+};
+
+// Arrow function con return implícito
+const sumar = (a, b) => a + b;</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>✨ Variaciones</h2>
+        <pre><code>// Sin parámetros
+const saludar = () => "Hola";
+
+// Un parámetro (paréntesis opcionales)
+const doble = n => n * 2;
+
+// Múltiples parámetros
+const multiplicar = (a, b) => a * b;
+
+// Con bloque de código
+const calcular = (x, y) => {
+    const resultado = x + y;
+    return resultado * 2;
+};</code></pre>
+    </div>
+    <div class="code-section">
+        <h2>⚠️ Diferencias con Funciones Tradicionales</h2>
+        <ul>
+            <li>No tienen su propio <code>this</code></li>
+            <li>No pueden ser usadas como constructores</li>
+            <li>No tienen <code>arguments</code></li>
+        </ul>
+    </div>
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ Sintaxis más corta: <code>() => {}</code></li>
+            <li>✅ Return implícito para expresiones simples</li>
+            <li>✅ Ideal para callbacks y funciones cortas</li>
+        </ul>
+    </div>
+</body>
+</html>

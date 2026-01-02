@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01 - Variables: var vs let</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="../../basicos.html" class="back">← Volver al menú</a>
+    
+    <h1>01 - Variables: var vs let</h1>
+
+    <div class="code-section">
+        <h2>📌 ¿Qué es una VARIABLE?</h2>
+        <p>Una variable es un espacio en memoria donde guardamos datos que pueden cambiar durante la ejecución del programa.</p>
+    </div>
+
+    <div class="code-section">
+        <h2>🔴 VAR (Forma antigua - ES5)</h2>
+        <h3>¿Qué es var?</h3>
+        <p>var fue la forma original de declarar variables en JavaScript. Tiene alcance de función (function scope).</p>
+        
+        <h3>Características de var:</h3>
+        <ul>
+            <li>Tiene alcance de función o global</li>
+            <li>Se puede redeclarar</li>
+            <li>Permite hoisting (se eleva al inicio)</li>
+            <li>NO respeta el alcance de bloque {}</li>
+        </ul>
+    </div>
+
+    <div class="code-section">
+        <h2>🟢 LET (Forma moderna - ES6/ES2015)</h2>
+        <h3>¿Qué es let?</h3>
+        <p>let es la forma moderna de declarar variables. Tiene alcance de bloque (block scope).</p>
+        
+        <h3>Características de let:</h3>
+        <ul>
+            <li>Tiene alcance de bloque { }</li>
+            <li>NO se puede redeclarar en el mismo scope</li>
+            <li>Aunque tiene hoisting, no se puede usar antes de declararla (temporal dead zone)</li>
+            <li>Es la forma recomendada en ES6+</li>
+        </ul>
+    </div>
+
+    <div class="code-section">
+        <h2>❌ ¿Por qué ya NO se usa var en ES6?</h2>
+        <ol>
+            <li><strong>Problemas de alcance:</strong> var no respeta bloques, causando bugs difíciles de detectar</li>
+            <li><strong>Redeclaración accidental:</strong> Con var puedes redeclarar la misma variable sin error</li>
+            <li><strong>Comportamiento confuso en loops:</strong> var en loops puede causar problemas inesperados</li>
+            <li><strong>let y const son más predecibles:</strong> Mejor control del alcance y previenen errores</li>
+        </ol>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `
+                <div class="ejemplo-header">
+                    <span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span>
+                    <span class="ejemplo-titulo">${titulo}</span>
+                </div>
+                <div class="ejemplo-contenido"></div>
+            `;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrar(texto, tipo = 'normal') {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.className = 'linea-' + tipo;
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+            console.log(texto);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.className = 'codigo-ejemplo';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            mostrar('➜ ' + texto, 'resultado');
+        }
+
+        // Estilos
+        const style = document.createElement('style');
+        style.textContent = `
+            .ejemplo-box {
+                background: white;
+                border: 2px solid #f7df1e;
+                border-radius: 8px;
+                margin: 20px 0;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .ejemplo-header {
+                background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);
+                padding: 15px 20px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .ejemplo-numero {
+                background: #333;
+                color: #f7df1e;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 0.9em;
+            }
+            .ejemplo-titulo {
+                color: #333;
+                font-size: 1.1em;
+            }
+            .ejemplo-contenido {
+                padding: 20px;
+                background: #f9f9f9;
+            }
+            .codigo-ejemplo {
+                background: #282c34;
+                color: #61dafb;
+                padding: 12px 15px;
+                border-radius: 5px;
+                font-family: 'Courier New', monospace;
+                margin: 8px 0;
+                border-left: 4px solid #f7df1e;
+            }
+            .linea-normal {
+                color: #666;
+                padding: 5px 0;
+                font-family: 'Segoe UI', sans-serif;
+            }
+            .linea-resultado {
+                color: #2ecc71;
+                padding: 8px 15px;
+                background: #e8f8f5;
+                border-left: 4px solid #2ecc71;
+                margin: 5px 0;
+                border-radius: 3px;
+                font-weight: 500;
+                font-family: 'Courier New', monospace;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ============================================
+        // EJEMPLO 1: Declaración básica
+        // ============================================
+        iniciarEjemplo("Declaración básica");
+        
+        mostrarCodigo('var nombre1 = "Juan";');
+        mostrarCodigo('let nombre2 = "María";');
+        
+        var nombre1 = "Juan";
+        let nombre2 = "María";
+        
+        mostrarResultado('var nombre1: ' + nombre1);
+        mostrarResultado('let nombre2: ' + nombre2);
+        
+        mostrar('');
+        mostrar('Cambiando valores...');
+        mostrarCodigo('nombre1 = "Pedro";');
+        mostrarCodigo('nombre2 = "Ana";');
+        
+        nombre1 = "Pedro";
+        nombre2 = "Ana";
+        mostrarResultado('Después del cambio: ' + nombre1 + ', ' + nombre2);
+
+        // ============================================
+        // EJEMPLO 2: Redeclaración (PROBLEMA con var)
+        // ============================================
+        iniciarEjemplo("Redeclaración - Problema con var");
+        
+        mostrarCodigo('var edad = 25;');
+        mostrarCodigo('var edad = 30; // ✅ var permite redeclarar');
+        
+        var edad = 25;
+        var edad = 30;
+        mostrarResultado('var edad redeclarada: ' + edad);
+        
+        mostrar('');
+        mostrar('❌ Con let NO se puede redeclarar:');
+        mostrarCodigo('let altura = 170;');
+        mostrarCodigo('// let altura = 180; // ERROR!');
+        mostrarCodigo('altura = 180; // ✅ Pero SÍ reasignar');
+        
+        let altura = 170;
+        altura = 180;
+        mostrarResultado('let altura reasignada: ' + altura);
+
+        // ============================================
+        // EJEMPLO 3: Alcance de bloque (GRAN DIFERENCIA)
+        // ============================================
+        iniciarEjemplo("Alcance de bloque - Diferencia clave");
+        
+        mostrar('Declarando dentro de un bloque if:');
+        mostrarCodigo('if (true) {');
+        mostrarCodigo('  var varVariable = "Soy var";');
+        mostrarCodigo('  let letVariable = "Soy let";');
+        mostrarCodigo('}');
+        
+        if (true) {
+            var varVariable = "Soy var";
+            let letVariable = "Soy let";
+        }
+        
+        mostrar('');
+        mostrar('Intentando acceder fuera del bloque:');
+        mostrarResultado('✅ var accesible: ' + varVariable);
+        mostrarResultado('❌ let NO accesible fuera del bloque');
+
+        // ============================================
+        // EJEMPLO 4: Loops
+        // ============================================
+        iniciarEjemplo("Loops - var vs let");
+        
+        mostrar('Loop con var:');
+        mostrarCodigo('for (var i = 0; i < 3; i++) { }');
+        for (var i = 0; i < 3; i++) { }
+        mostrarResultado('var i después del loop: ' + i + ' (¡accesible!)');
+        
+        mostrar('');
+        mostrar('Loop con let:');
+        mostrarCodigo('for (let j = 0; j < 3; j++) { }');
+        for (let j = 0; j < 3; j++) { }
+        mostrarResultado('let j NO accesible fuera (correcto ✅)');
+
+        // ============================================
+        // EJEMPLO 5: Caso práctico
+        // ============================================
+        iniciarEjemplo("Caso de uso real - Sistema de juego");
+        
+        mostrarCodigo('let usuario = "Carlos";');
+        mostrarCodigo('let puntos = 0;');
+        mostrarCodigo('let nivel = 1;');
+        
+        let usuario = "Carlos";
+        let puntos = 0;
+        let nivel = 1;
+        
+        mostrar('Estado inicial:');
+        mostrarResultado('Usuario: ' + usuario);
+        mostrarResultado('Puntos: ' + puntos);
+        mostrarResultado('Nivel: ' + nivel);
+        
+        mostrar('');
+        mostrar('Después de jugar...');
+        mostrarCodigo('puntos = 150;');
+        mostrarCodigo('nivel = 2;');
+        
+        puntos = 150;
+        nivel = 2;
+        
+        mostrarResultado('Puntos: ' + puntos);
+        mostrarResultado('Nivel: ' + nivel);
+
+        // ============================================
+        // EJEMPLO 6: Declaración múltiple
+        // ============================================
+        iniciarEjemplo("Declaración múltiple");
+        
+        mostrarCodigo('let a = 1, b = 2, c = 3;');
+        let a = 1, b = 2, c = 3;
+        mostrarResultado('a=' + a + ', b=' + b + ', c=' + c);
+        
+        mostrar('');
+        mostrarCodigo('let x, y, z;  // Declarar sin inicializar');
+        mostrarCodigo('x = 10; y = 20; z = 30;');
+        let x, y, z;
+        x = 10; y = 20; z = 30;
+        mostrarResultado('x=' + x + ', y=' + y + ', z=' + z);
+
+        // ============================================
+        // EJEMPLO 7: Hoisting
+        // ============================================
+        iniciarEjemplo("Hoisting (elevación)");
+        
+        mostrar('var se eleva pero es undefined:');
+        mostrarCodigo('console.log(colorVar); // undefined');
+        mostrarCodigo('var colorVar = "azul";');
+        mostrarResultado('typeof colorVar antes: undefined');
+        var colorVar = "azul";
+        mostrarResultado('colorVar después: ' + colorVar);
+        
+        mostrar('');
+        mostrar('let NO permite acceso antes de declarar:');
+        mostrarCodigo('// console.log(colorLet); // ❌ ERROR');
+        mostrarCodigo('let colorLet = "rojo";');
+        let colorLet = "rojo";
+        mostrarResultado('colorLet: ' + colorLet);
+
+        // ============================================
+        // EJEMPLO 8: Buenas prácticas
+        // ============================================
+        iniciarEjemplo("Buenas prácticas");
+        
+        mostrar('✅ Usar let para variables que cambian:');
+        mostrarCodigo('let contador = 0;');
+        mostrarCodigo('contador++; contador++;');
+        let contador = 0;
+        contador++; contador++;
+        mostrarResultado('Contador: ' + contador);
+        
+        mostrar('');
+        mostrar('✅ Nombres descriptivos:');
+        mostrarCodigo('let precioProducto = 99.99;');
+        mostrarCodigo('let nombreCliente = "Laura";');
+        mostrarCodigo('let estaActivo = true;');
+        
+        let precioProducto = 99.99;
+        let nombreCliente = "Laura";
+        let estaActivo = true;
+        
+        mostrarResultado('Precio: $' + precioProducto);
+        mostrarResultado('Cliente: ' + nombreCliente);
+        mostrarResultado('Activo: ' + estaActivo);
+        
+        mostrar('');
+        mostrar('❌ Evitar var en ES6+');
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr style="background: #f7df1e;">
+                <th style="padding: 10px; border: 1px solid #ddd;">Característica</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">var</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">let</th>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">Alcance</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Función/Global</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Bloque</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">Redeclaración</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">✅ Permitida</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">❌ No permitida</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">Hoisting</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Sí (undefined)</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Sí (no accesible)</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">Recomendado en ES6+</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">❌ No</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">✅ Sí</td>
+            </tr>
+        </table>
+        
+        <p style="margin-top: 20px;"><strong>Regla de oro:</strong> En ES6+ usa <code>let</code> para variables y <code>const</code> para constantes. Olvídate de <code>var</code>.</p>
+    </div>
+
+    <div class="console-output">
+        <strong>💡 Consejo:</strong> Abre la consola del navegador (F12) para ver todos los ejemplos en acción.
+    </div>
+</body>
+</html>

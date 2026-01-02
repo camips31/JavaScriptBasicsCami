@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>37 - Módulos (import/export)</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>37 - Módulos ES6 (import / export)</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué son los Módulos?</h2>
+        <p>Permiten dividir el código en archivos reutilizables y organizados.</p>
+    </div>
+
+    <h2>💻 Ejemplos de Sintaxis</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.ejemplo-numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1
+        iniciarEjemplo("Export nombrado");
+        mostrarCodigo('// utils.js');
+        mostrarCodigo('export const sumar = (a, b) => a + b;');
+        mostrarCodigo('export const restar = (a, b) => a - b;');
+        mostrarCodigo('');
+        mostrarCodigo('// main.js');
+        mostrarCodigo('import { sumar, restar } from "./utils.js";');
+
+        // EJEMPLO 2
+        iniciarEjemplo("Export default");
+        mostrarCodigo('// Usuario.js');
+        mostrarCodigo('export default class Usuario {');
+        mostrarCodigo('    constructor(nombre) { this.nombre = nombre; }');
+        mostrarCodigo('}');
+        mostrarCodigo('');
+        mostrarCodigo('// main.js');
+        mostrarCodigo('import Usuario from "./Usuario.js";');
+        mostrar('');
+        mostrar('💡 Solo puede haber un export default por archivo');
+
+        // EJEMPLO 3
+        iniciarEjemplo("Import con alias");
+        mostrarCodigo('import { sumar as suma } from "./utils.js";');
+        mostrarCodigo('suma(2, 3); // 5');
+
+        // EJEMPLO 4
+        iniciarEjemplo("Import todo como objeto");
+        mostrarCodigo('import * as utils from "./utils.js";');
+        mostrarCodigo('utils.sumar(2, 3);');
+        mostrarCodigo('utils.restar(5, 2);');
+
+        // EJEMPLO 5
+        iniciarEjemplo("Combinar export nombrado y default");
+        mostrarCodigo('// config.js');
+        mostrarCodigo('export const API_URL = "https://api.com";');
+        mostrarCodigo('export default { timeout: 5000 };');
+        mostrarCodigo('');
+        mostrarCodigo('// main.js');
+        mostrarCodigo('import config, { API_URL } from "./config.js";');
+
+        // EJEMPLO 6
+        iniciarEjemplo("Re-exportar");
+        mostrarCodigo('// index.js (archivo barril)');
+        mostrarCodigo('export { sumar, restar } from "./utils.js";');
+        mostrarCodigo('export { default as Usuario } from "./Usuario.js";');
+
+        // EJEMPLO 7
+        iniciarEjemplo("Import dinámico");
+        mostrarCodigo('async function cargarModulo() {');
+        mostrarCodigo('    const modulo = await import("./utils.js");');
+        mostrarCodigo('    modulo.sumar(2, 3);');
+        mostrarCodigo('}');
+        mostrar('');
+        mostrar('💡 Útil para cargar módulos bajo demanda');
+
+        // EJEMPLO 8
+        iniciarEjemplo("HTML con módulos");
+        mostrarCodigo('<script type="module" src="main.js"></script>');
+        mostrar('');
+        mostrar('⚠️ Requiere servidor HTTP (no file://)');
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <ul>
+            <li>✅ <code>export</code> - Exportar funciones, variables, clases</li>
+            <li>✅ <code>export default</code> - Exportación por defecto (1 por archivo)</li>
+            <li>✅ <code>import { ... } from "..."</code> - Importar nombrados</li>
+            <li>✅ <code>import nombre from "..."</code> - Importar default</li>
+            <li>✅ <code>import * as ...</code> - Importar todo</li>
+            <li>✅ <code>import("...")</code> - Import dinámico (async)</li>
+        </ul>
+    </div>
+
+    <div class="code-section">
+        <h2>⚙️ Ventajas</h2>
+        <ul>
+            <li>✅ Código organizado y modular</li>
+            <li>✅ Reutilización de código</li>
+            <li>✅ Evita contaminación del scope global</li>
+            <li>✅ Lazy loading (carga diferida)</li>
+        </ul>
+    </div>
+</body>
+</html>

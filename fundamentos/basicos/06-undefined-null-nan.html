@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06 - Undefined, Null y NaN</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="../../basicos.html" class="back">← Volver al menú</a>
+    
+    <h1>06 - Undefined, Null y NaN</h1>
+
+    <div class="code-section">
+        <h2>📌 Tres valores especiales</h2>
+        <p>JavaScript tiene tres valores especiales para representar "ausencia de valor" o "valor inválido":</p>
+        <ul>
+            <li><code>undefined</code> - Variable declarada pero sin valor asignado</li>
+            <li><code>null</code> - Ausencia intencional de valor</li>
+            <li><code>NaN</code> - "Not a Number" - Operación matemática inválida</li>
+        </ul>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `
+                <div class="ejemplo-header">
+                    <span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span>
+                    <span class="ejemplo-titulo">${titulo}</span>
+                </div>
+                <div class="ejemplo-contenido"></div>
+            `;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrar(texto, tipo = 'normal') {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.className = 'linea-' + tipo;
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+            console.log(texto);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.className = 'codigo-ejemplo';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            mostrar('➜ ' + texto, 'resultado');
+        }
+
+        // Estilos
+        const style = document.createElement('style');
+        style.textContent = `
+            .ejemplo-box {
+                background: white;
+                border: 2px solid #f7df1e;
+                border-radius: 8px;
+                margin: 20px 0;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .ejemplo-header {
+                background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);
+                padding: 15px 20px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .ejemplo-numero {
+                background: #333;
+                color: #f7df1e;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 0.9em;
+            }
+            .ejemplo-titulo {
+                color: #333;
+                font-size: 1.1em;
+            }
+            .ejemplo-contenido {
+                padding: 20px;
+                background: #f9f9f9;
+            }
+            .codigo-ejemplo {
+                background: #282c34;
+                color: #61dafb;
+                padding: 12px 15px;
+                border-radius: 5px;
+                font-family: 'Courier New', monospace;
+                margin: 8px 0;
+                border-left: 4px solid #f7df1e;
+            }
+            .linea-normal {
+                color: #666;
+                padding: 5px 0;
+                font-family: 'Segoe UI', sans-serif;
+            }
+            .linea-resultado {
+                color: #2ecc71;
+                padding: 8px 15px;
+                background: #e8f8f5;
+                border-left: 4px solid #2ecc71;
+                margin: 5px 0;
+                border-radius: 3px;
+                font-weight: 500;
+                font-family: 'Courier New', monospace;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ============================================
+        // EJEMPLO 1: Undefined básico
+        // ============================================
+        iniciarEjemplo("Undefined - Variable sin valor");
+        
+        mostrarCodigo('let variableSinValor;');
+        let variableSinValor;
+        
+        mostrarResultado('Valor: ' + variableSinValor);
+        mostrarResultado('Tipo: ' + typeof variableSinValor);
+        
+        mostrar('');
+        mostrar('💡 Undefined = JavaScript no le asignó un valor todavía');
+
+        // ============================================
+        // EJEMPLO 2: Null básico
+        // ============================================
+        iniciarEjemplo("Null - Ausencia intencional de valor");
+        
+        mostrarCodigo('let variableVacia = null;');
+        let variableVacia = null;
+        
+        mostrarResultado('Valor: ' + variableVacia);
+        mostrarResultado('Tipo: ' + typeof variableVacia);
+        
+        mostrar('');
+        mostrar('💡 Null = El programador intencionalmente dejó esto vacío');
+        mostrar('⚠️ Bug histórico: typeof null devuelve "object"');
+
+        // ============================================
+        // EJEMPLO 3: NaN básico
+        // ============================================
+        iniciarEjemplo("NaN - Not a Number");
+        
+        mostrarCodigo('const resultado = "texto" * 5;');
+        const resultado = "texto" * 5;
+        
+        mostrarResultado('Valor: ' + resultado);
+        mostrarResultado('Tipo: ' + typeof resultado);
+        mostrarResultado('Es NaN: ' + isNaN(resultado));
+        
+        mostrar('');
+        mostrar('💡 NaN aparece cuando una operación matemática falla');
+
+        // ============================================
+        // EJEMPLO 4: Comparando undefined y null
+        // ============================================
+        iniciarEjemplo("Comparar undefined y null");
+        
+        mostrarCodigo('undefined == null');
+        mostrarResultado('undefined == null: ' + (undefined == null));
+        
+        mostrarCodigo('undefined === null');
+        mostrarResultado('undefined === null: ' + (undefined === null));
+        
+        mostrar('');
+        mostrar('💡 Son iguales con == pero diferentes con ===');
+
+        // ============================================
+        // EJEMPLO 5: Detectar undefined
+        // ============================================
+        iniciarEjemplo("Detectar si una variable es undefined");
+        
+        mostrarCodigo('let x;');
+        let x;
+        
+        mostrarCodigo('x === undefined');
+        mostrarResultado('x === undefined: ' + (x === undefined));
+        
+        mostrarCodigo('typeof x === "undefined"');
+        mostrarResultado('typeof x === "undefined": ' + (typeof x === "undefined"));
+
+        // ============================================
+        // EJEMPLO 6: Detectar null
+        // ============================================
+        iniciarEjemplo("Detectar si una variable es null");
+        
+        mostrarCodigo('let usuario = null;');
+        let usuario = null;
+        
+        mostrarCodigo('usuario === null');
+        mostrarResultado('usuario === null: ' + (usuario === null));
+        
+        mostrarCodigo('!usuario');
+        mostrarResultado('!usuario: ' + !usuario);
+        
+        mostrar('');
+        mostrar('💡 null es falsy, así que !usuario es true');
+
+        // ============================================
+        // EJEMPLO 7: Operaciones con NaN
+        // ============================================
+        iniciarEjemplo("Operaciones que generan NaN");
+        
+        mostrarCodigo('Number("abc")');
+        mostrarResultado('Number("abc"): ' + Number("abc"));
+        
+        mostrarCodigo('Math.sqrt(-1)');
+        mostrarResultado('Math.sqrt(-1): ' + Math.sqrt(-1));
+        
+        mostrarCodigo('0 / 0');
+        mostrarResultado('0 / 0: ' + (0 / 0));
+        
+        mostrar('');
+        mostrar('⚠️ NaN === NaN es false! NaN no es igual a nada');
+        mostrarCodigo('NaN === NaN');
+        mostrarResultado('NaN === NaN: ' + (NaN === NaN));
+
+        // ============================================
+        // EJEMPLO 8: isNaN vs Number.isNaN
+        // ============================================
+        iniciarEjemplo("Diferencia entre isNaN y Number.isNaN");
+        
+        mostrarCodigo('isNaN("hola")');
+        mostrarResultado('isNaN("hola"): ' + isNaN("hola"));
+        
+        mostrarCodigo('Number.isNaN("hola")');
+        mostrarResultado('Number.isNaN("hola"): ' + Number.isNaN("hola"));
+        
+        mostrar('');
+        mostrar('💡 Number.isNaN es más estricto (recomendado)');
+
+        // ============================================
+        // EJEMPLO 9: Caso práctico - Validación
+        // ============================================
+        iniciarEjemplo("Caso práctico - Validación de datos");
+        
+        mostrarCodigo('let edad;');
+        mostrarCodigo('let telefono = null;');
+        mostrarCodigo('let puntos = Number("abc");');
+        
+        let edad;
+        let telefono = null;
+        let puntos = Number("abc");
+        
+        mostrar('');
+        mostrarResultado('¿Edad definida?: ' + (edad !== undefined));
+        mostrarResultado('¿Tiene teléfono?: ' + (telefono !== null));
+        mostrarResultado('¿Puntos válidos?: ' + !isNaN(puntos));
+        
+        mostrar('');
+        if (edad === undefined) {
+            mostrar('⚠️ Error: Edad no proporcionada');
+        }
+        if (telefono === null) {
+            mostrar('⚠️ Warning: Teléfono no disponible');
+        }
+        if (isNaN(puntos)) {
+            mostrar('⚠️ Error: Puntos inválidos');
+        }
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Resumen</h2>
+        <table>
+            <tr>
+                <th>Valor</th>
+                <th>Significado</th>
+                <th>Tipo</th>
+            </tr>
+            <tr>
+                <td><code>undefined</code></td>
+                <td>Variable sin valor asignado</td>
+                <td>"undefined"</td>
+            </tr>
+            <tr>
+                <td><code>null</code></td>
+                <td>Ausencia intencional de valor</td>
+                <td>"object" (bug histórico)</td>
+            </tr>
+            <tr>
+                <td><code>NaN</code></td>
+                <td>Operación matemática inválida</td>
+                <td>"number"</td>
+            </tr>
+        </table>
+        <br>
+        <ul>
+            <li>✅ Usa <code>===</code> para comparar undefined y null</li>
+            <li>✅ Usa <code>Number.isNaN()</code> para detectar NaN</li>
+            <li>✅ null, undefined y NaN son valores falsy</li>
+        </ul>
+    </div>
+</body>
+</html>

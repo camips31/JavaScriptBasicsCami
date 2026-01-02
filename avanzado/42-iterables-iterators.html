@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>42 - Iterables e Iterators</title>
+    <link rel="stylesheet" href="../fundamentos/styles.css">
+</head>
+<body>
+    <a href="../basicos.html" class="back">← Volver al menú</a>
+    <h1>42 - Iterables e Iterators</h1>
+    
+    <div class="code-section">
+        <h2>📌 ¿Qué son?</h2>
+        <p><strong>Iterable:</strong> Objeto que implementa el protocolo iterable (tiene [Symbol.iterator])</p>
+        <p><strong>Iterator:</strong> Objeto con método next() que retorna {value, done}</p>
+    </div>
+
+    <h2>💻 Ejemplos Prácticos</h2>
+    <div id="ejemplos"></div>
+
+    <script>
+        let ejemploNumero = 0;
+        const ejemplosContainer = document.getElementById('ejemplos');
+
+        function iniciarEjemplo(titulo) {
+            ejemploNumero++;
+            const div = document.createElement('div');
+            div.className = 'ejemplo-box';
+            div.id = 'ejemplo-' + ejemploNumero;
+            div.innerHTML = `<div class="ejemplo-header"><span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span><span class="ejemplo-titulo">${titulo}</span></div><div class="ejemplo-contenido"></div>`;
+            ejemplosContainer.appendChild(div);
+        }
+
+        function mostrarCodigo(codigo) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const codigoDiv = document.createElement('div');
+                codigoDiv.style.cssText = 'background: #282c34; color: #61dafb; padding: 12px; border-radius: 5px; font-family: Courier New; margin: 8px 0; border-left: 4px solid #f7df1e';
+                codigoDiv.textContent = codigo;
+                contenido.appendChild(codigoDiv);
+            }
+        }
+
+        function mostrarResultado(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #2ecc71; padding: 8px 15px; background: #e8f8f5; border-left: 4px solid #2ecc71; margin: 5px 0; border-radius: 3px; font-weight: 500; font-family: Courier New';
+                linea.textContent = '➜ ' + texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        function mostrar(texto) {
+            const ejemploActual = document.getElementById('ejemplo-' + ejemploNumero);
+            if (ejemploActual) {
+                const contenido = ejemploActual.querySelector('.ejemplo-contenido');
+                const linea = document.createElement('div');
+                linea.style.cssText = 'color: #666; padding: 5px 0';
+                linea.textContent = texto;
+                contenido.appendChild(linea);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `.ejemplo-box {background: white;border: 2px solid #f7df1e;border-radius: 8px;margin: 20px 0;overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.1);}.ejemplo-header {background: linear-gradient(135deg, #f7df1e 0%, #e5ca00 100%);padding: 15px 20px;font-weight: bold;display: flex;align-items: center;gap: 15px;}.ejemplo-numero {background: #333;color: #f7df1e;padding: 5px 15px;border-radius: 20px;font-size: 0.9em;}.ejemplo-titulo {color: #333;font-size: 1.1em;}.ejemplo-contenido {padding: 20px;background: #f9f9f9;}`;
+        document.head.appendChild(style);
+
+        // EJEMPLO 1
+        iniciarEjemplo("Usar iterator manualmente");
+        mostrarCodigo('const arr = [1, 2, 3];');
+        mostrarCodigo('const iterator = arr[Symbol.iterator]();');
+        mostrarCodigo('iterator.next(); // {value: 1, done: false}');
+        const arr = [1, 2, 3];
+        const iterator = arr[Symbol.iterator]();
+        mostrarResultado(JSON.stringify(iterator.next()));
+        mostrarResultado(JSON.stringify(iterator.next()));
+        mostrarResultado(JSON.stringify(iterator.next()));
+        mostrarResultado(JSON.stringify(iterator.next()));
+
+        // EJEMPLO 2
+        iniciarEjemplo("Crear iterable personalizado");
+        mostrarCodigo('const rango = {');
+        mostrarCodigo('    inicio: 1, fin: 5,');
+        mostrarCodigo('    [Symbol.iterator]() {');
+        mostrarCodigo('        let actual = this.inicio;');
+        mostrarCodigo('        return {');
+        mostrarCodigo('            next: () => ({');
+        mostrarCodigo('                value: actual,');
+        mostrarCodigo('                done: actual++ > this.fin');
+        mostrarCodigo('            })');
+        mostrarCodigo('        };');
+        mostrarCodigo('    }');
+        mostrarCodigo('};');
+        const rango = {
+            inicio: 1, fin: 5,
+            [Symbol.iterator]() {
+                let actual = this.inicio;
+                return {
+                    next: () => ({
+                        value: actual,
+                        done: actual++ > this.fin
+                    })
+                };
+            }
+        };
+        mostrar('');
+        for (const num of rango) {
+            mostrarResultado('Valor: ' + num);
+        }
+
+        // EJEMPLO 3
+        iniciarEjemplo("Iterable infinito");
+        mostrarCodigo('const infinitos = {');
+        mostrarCodigo('    [Symbol.iterator]() {');
+        mostrarCodigo('        let n = 0;');
+        mostrarCodigo('        return {');
+        mostrarCodigo('            next: () => ({value: n++, done: false})');
+        mostrarCodigo('        };');
+        mostrarCodigo('    }');
+        mostrarCodigo('};');
+        const infinitos = {
+            [Symbol.iterator]() {
+                let n = 0;
+                return {
+                    next: () => ({value: n++, done: false})
+                };
+            }
+        };
+        const iter = infinitos[Symbol.iterator]();
+        mostrarResultado('Valor 1: ' + iter.next().value);
+        mostrarResultado('Valor 2: ' + iter.next().value);
+        mostrarResultado('Valor 3: ' + iter.next().value);
+        mostrar('💡 Nunca termina (done siempre false)');
+
+        // EJEMPLO 4
+        iniciarEjemplo("Spread con iterables");
+        mostrarCodigo('const miRango = { /* iterable custom */ };');
+        mostrarCodigo('const arr = [...miRango];');
+        const rangoSpread = {
+            inicio: 1, fin: 4,
+            [Symbol.iterator]() {
+                let actual = this.inicio;
+                return {
+                    next: () => ({
+                        value: actual,
+                        done: actual++ > this.fin
+                    })
+                };
+            }
+        };
+        mostrarResultado('Array: ' + [...rangoSpread]);
+
+        // EJEMPLO 5
+        iniciarEjemplo("Iterables built-in");
+        mostrar('JavaScript tiene iterables incorporados:');
+        mostrar('✅ Array');
+        mostrar('✅ String');
+        mostrar('✅ Map');
+        mostrar('✅ Set');
+        mostrar('✅ NodeList (DOM)');
+        mostrar('');
+        const texto = "Hola";
+        mostrarResultado('[...texto]: ' + [...texto]);
+    </script>
+
+    <div class="code-section">
+        <h2>📋 Protocolo Iterator</h2>
+        <pre><code>{
+    next() {
+        return {
+            value: /* valor actual */,
+            done: /* true si terminó */
+        };
+    }
+}</code></pre>
+    </div>
+
+    <div class="code-section">
+        <h2>📋 Protocolo Iterable</h2>
+        <pre><code>{
+    [Symbol.iterator]() {
+        return /* iterator */;
+    }
+}</code></pre>
+    </div>
+</body>
+</html>
