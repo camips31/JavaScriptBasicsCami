@@ -11,44 +11,158 @@
     <h1>16 - Objetos Literales Mejorados</h1>
     <div class="code-section">
         <h2>📌 Enhanced Object Literals</h2>
-        <p>ES6+ introdujo mejoras en la sintaxis de objetos literales.</p>
+        <p>ES6+ introdujo mejoras en la sintaxis de objetos literales que hacen el código más limpio y conciso.</p>
     </div>
+
     <div class="code-section">
-        <h2>✨ Shorthand Properties</h2>
+        <h2>✨ Shorthand Properties (Propiedades Abreviadas)</h2>
+        <h3>¿Qué es Shorthand?</h3>
+        <p><strong>Shorthand</strong> es una forma corta de escribir propiedades cuando el nombre de la variable es igual al nombre de la propiedad.</p>
+        
+        <div style="background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 15px 0;">
+            <h4>🔑 Regla simple:</h4>
+            <p>Si tienes: <code>const nombre = "Ana";</code></p>
+            <p>En vez de escribir: <code>{nombre: nombre}</code></p>
+            <p>Puedes escribir solo: <code>{nombre}</code></p>
+        </div>
+
+        <h3>Ejemplo:</h3>
         <pre><code>const nombre = "Ana";
 const edad = 25;
+const ciudad = "Madrid";
 
-// Forma tradicional
-const persona1 = {nombre: nombre, edad: edad};
+// ❌ Forma tradicional (REPETITIVO)
+const persona1 = {
+    nombre: nombre,
+    edad: edad,
+    ciudad: ciudad
+};
 
-// Shorthand (cuando la variable y la propiedad tienen el mismo nombre)
-const persona2 = {nombre, edad};
-console.log(persona2); // {nombre: "Ana", edad: 25}</code></pre>
+// ✅ Shorthand (MODERNO Y LIMPIO)
+const persona2 = {nombre, edad, ciudad};
+
+console.log(persona2); 
+// {nombre: "Ana", edad: 25, ciudad: "Madrid"}</code></pre>
+
+        <h3>¿Para qué sirve?</h3>
+        <ul>
+            <li>✅ <strong>Evita repetición:</strong> No escribes el nombre dos veces</li>
+            <li>✅ <strong>Código más limpio:</strong> Menos caracteres, más legible</li>
+            <li>✅ <strong>Muy común en APIs:</strong> Al devolver datos en funciones</li>
+        </ul>
     </div>
     <div class="code-section">
         <h2>📝 Métodos Abreviados</h2>
-        <pre><code>// Forma tradicional
-const objeto1 = {
-    saludar: function() {
-        return "Hola";
+        <h3>¿Qué son los métodos abreviados?</h3>
+        <p>En ES6+, puedes escribir métodos (funciones dentro de objetos) de forma más corta, <strong>sin la palabra <code>function</code></strong>.</p>
+
+        <div style="background: #d4edda; padding: 15px; border-left: 4px solid #28a745; margin: 15px 0;">
+            <h4>🎯 Antes vs Ahora:</h4>
+            <p><strong>Antes (ES5):</strong> <code>saludar: function() { }</code></p>
+            <p><strong>Ahora (ES6+):</strong> <code>saludar() { }</code></p>
+        </div>
+
+        <h3>Ejemplo completo:</h3>
+        <pre><code>// ❌ Forma tradicional (ES5)
+const calculadora1 = {
+    sumar: function(a, b) {
+        return a + b;
+    },
+    restar: function(a, b) {
+        return a - b;
     }
 };
 
-// Forma abreviada
-const objeto2 = {
-    saludar() {
-        return "Hola";
+// ✅ Forma abreviada (ES6+)
+const calculadora2 = {
+    sumar(a, b) {
+        return a + b;
+    },
+    restar(a, b) {
+        return a - b;
     }
-};</code></pre>
+};
+
+console.log(calculadora2.sumar(5, 3));  // 8
+console.log(calculadora2.restar(10, 4)); // 6</code></pre>
+
+        <h3>¿Para qué sirve?</h3>
+        <ul>
+            <li>✅ <strong>Menos código:</strong> Eliminas la palabra "function"</li>
+            <li>✅ <strong>Más legible:</strong> Se ve más limpio y moderno</li>
+            <li>✅ <strong>Estándar actual:</strong> Es la forma recomendada en ES6+</li>
+        </ul>
     </div>
     <div class="code-section">
-        <h2>🔑 Computed Property Names</h2>
+        <h2>🔑 Computed Property Names (Nombres de Propiedades Computadas)</h2>
+        <h3>¿Qué son las propiedades computadas?</h3>
+        <p>Permiten crear nombres de propiedades <strong>dinámicamente</strong> usando expresiones dentro de corchetes <code>[ ]</code>.</p>
+        
+        <div style="background: #e8f4f8; padding: 15px; border-left: 4px solid #17a2b8; margin: 15px 0;">
+            <h4>💡 Concepto clave:</h4>
+            <p>El nombre de la propiedad se <strong>calcula</strong> o <strong>genera</strong> en tiempo de ejecución, no está fijo en el código.</p>
+        </div>
+
+        <h3>Ejemplo básico:</h3>
         <pre><code>const propiedad = "color";
-const objeto = {
-    [propiedad]: "rojo",
-    ["edad" + "Usuario"]: 25
+const valor = "rojo";
+
+// ✅ Usando computed property name
+const coche = {
+    marca: "Toyota",
+    [propiedad]: valor  // Se convierte en: color: "rojo"
 };
-console.log(objeto); // {color: "rojo", edadUsuario: 25}</code></pre>
+
+console.log(coche); 
+// {marca: "Toyota", color: "rojo"}</code></pre>
+
+        <h3>Ejemplo con expresiones:</h3>
+        <pre><code>const prefijo = "usuario";
+
+const datos = {
+    [prefijo + "Nombre"]: "Ana",      // usuarioNombre
+    [prefijo + "Edad"]: 25,           // usuarioEdad
+    ["fecha" + "Registro"]: "2024"   // fechaRegistro
+};
+
+console.log(datos);
+// {usuarioNombre: "Ana", usuarioEdad: 25, fechaRegistro: "2024"}</code></pre>
+
+        <h3>Caso práctico - Crear objetos dinámicamente:</h3>
+        <pre><code>function crearProducto(id, valor) {
+    return {
+        [`producto_${id}`]: valor,
+        timestamp: Date.now()
+    };
+}
+
+const item1 = crearProducto(101, "Laptop");
+console.log(item1); 
+// {producto_101: "Laptop", timestamp: 1704192000000}
+
+const item2 = crearProducto(202, "Mouse");
+console.log(item2); 
+// {producto_202: "Mouse", timestamp: 1704192001000}</code></pre>
+
+        <h3>¿Para qué sirve?</h3>
+        <ul>
+            <li>✅ <strong>Nombres dinámicos:</strong> Crear propiedades basadas en variables</li>
+            <li>✅ <strong>APIs flexibles:</strong> Generar objetos con claves variables</li>
+            <li>✅ <strong>Formularios:</strong> Crear objetos desde inputs del usuario</li>
+            <li>✅ <strong>Internacionalización:</strong> Crear traducciones dinámicas</li>
+        </ul>
+
+        <div style="background: #f8d7da; padding: 15px; border-left: 4px solid #dc3545; margin: 15px 0;">
+            <h4>⚠️ Importante:</h4>
+            <p>Sin corchetes <code>[ ]</code>, JavaScript usa el nombre literal. Con corchetes, evalúa la expresión.</p>
+            <pre><code>const key = "edad";
+
+// Sin corchetes: crea propiedad "key"
+const obj1 = {key: 25};        // {key: 25}
+
+// Con corchetes: usa el valor de key
+const obj2 = {[key]: 25};      // {edad: 25}</code></pre>
+        </div>
     </div>
     <div class="code-section">
         <h2>📋 Resumen</h2>

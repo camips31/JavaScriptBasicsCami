@@ -291,29 +291,6 @@ Línea 3`;
         mostrarResultado('Original: "' + conEspacios + '"');
         mostrarCodigo('conEspacios.trim()');
         mostrarResultado('Trim: "' + conEspacios.trim() + '"');
-
-        // ============================================
-        // EJEMPLO 10: Caso práctico
-        // ============================================
-        iniciarEjemplo("Caso práctico - Tarjeta de presentación");
-        
-        mostrarCodigo('const usuario = "Ana García";');
-        mostrarCodigo('const profesion = "Desarrolladora";');
-        mostrarCodigo('const email = "ana@email.com";');
-        
-        const usuario = "Ana García";
-        const profesion = "Desarrolladora";
-        const email = "ana@email.com";
-        
-        const tarjeta = `
-╔════════════════════════════╗
-║  ${usuario.toUpperCase().padEnd(24)} ║
-║  ${profesion.padEnd(24)} ║
-║  📧 ${email.padEnd(20)} ║
-╚════════════════════════════╝
-        `;
-        
-        mostrarResultado(tarjeta);
     </script>
 
     <div class="code-section">

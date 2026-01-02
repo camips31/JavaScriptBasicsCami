@@ -46,6 +46,48 @@
     </div>
 
     <div class="code-section">
+        <h2>❌ Diferencias clave entre var y let:</h2>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr style="background: #f7df1e;">
+                <th style="padding: 10px; border: 1px solid #ddd;">Característica</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">var</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">let</th>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;"><strong>Scope</strong></td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Alcance de función: <br> 
+                   var no respeta bloques</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Alcance de bloque: <br>
+                let solo existe dentro del {}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;"><strong>Hoisting</strong></td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Hoisting con undefined: <br> 
+                    JavaScript <strong>“sube”</strong> las<br>declaraciones al inicio del <br>código antes de ejecutarlo</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    Hoisting con TDZ (Temporal Dead Zone) <br>
+                   TDZ:Es el tiempo entre: <br>
+                   <strong>inicio del bloque { } → declaración de la variable</strong><br>
+                    Durante la TDZ:<br>
+                    ✅ La variable <strong>SÍ existe</strong> en memoria<br>
+                    ❌ <strong>NO se puede usar</strong> → genera ReferenceError
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;"><strong>Redeclaración</strong></td>
+                <td style="padding: 10px; border: 1px solid #ddd;">✅ Se puede redeclarar, puedes sobrescribir <br> variables sin darte cuenta</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">❌ No se puede redeclarar, pero si reasignnar</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;"><strong>Recomendación</strong></td>
+                <td style="padding: 10px; border: 1px solid #ddd;">❌ No recomendado</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">✅ Recomendado en ES6+</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="code-section">
         <h2>❌ ¿Por qué ya NO se usa var en ES6?</h2>
         <ol>
             <li><strong>Problemas de alcance:</strong> var no respeta bloques, causando bugs difíciles de detectar</li>

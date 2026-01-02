@@ -12,13 +12,13 @@
     <h1>09 - Objetos en JavaScript</h1>
 
     <div class="code-section">
-        <h2>��� ¿Qué es un objeto?</h2>
-        <p>Un objeto es una colección de propiedades (pares clave-valor).</p>
+        <h2>📦 ¿Qué es un objeto?</h2>
+        <p>Un objeto es una colección de propiedades (clave-valor).</p>
         <p>Los objetos permiten agrupar datos relacionados y funciones.</p>
     </div>
 
     <div class="code-section">
-        <h2>��� Sintaxis básica</h2>
+        <h2>✍️ Sintaxis básica</h2>
         <pre><code>const persona = {
     nombre: "Ana",
     edad: 25,
@@ -26,7 +26,7 @@
 };</code></pre>
     </div>
 
-    <h2>��� Ejemplos Prácticos</h2>
+    <h2>💻 Ejemplos Prácticos</h2>
     
     <div id="ejemplos"></div>
 
@@ -39,13 +39,13 @@
             const div = document.createElement('div');
             div.className = 'ejemplo-box';
             div.id = 'ejemplo-' + ejemploNumero;
-            div.innerHTML = \`
+            div.innerHTML = `
                 <div class="ejemplo-header">
-                    <span class="ejemplo-numero">��� EJEMPLO \${ejemploNumero}</span>
-                    <span class="ejemplo-titulo">\${titulo}</span>
+                    <span class="ejemplo-numero">📌 EJEMPLO ${ejemploNumero}</span>
+                    <span class="ejemplo-titulo">${titulo}</span>
                 </div>
                 <div class="ejemplo-contenido"></div>
-            \`;
+            `;
             ejemplosContainer.appendChild(div);
         }
 
@@ -78,7 +78,7 @@
 
         // Estilos
         const style = document.createElement('style');
-        style.textContent = \`
+        style.textContent = `
             .ejemplo-box {
                 background: white;
                 border: 2px solid #f7df1e;
@@ -134,7 +134,7 @@
                 font-weight: 500;
                 font-family: 'Courier New', monospace;
             }
-        \`;
+        `;
         document.head.appendChild(style);
 
         // EJEMPLO 1
@@ -254,7 +254,7 @@
         };
         
         mostrar('');
-        mostrarResultado('��� Ficha del Estudiante:');
+        mostrarResultado('👤 Ficha del Estudiante:');
         mostrar('Nombre: ' + estudiante.nombre);
         mostrar('Edad: ' + estudiante.edad + ' años');
         mostrar('Carrera: ' + estudiante.carrera);
@@ -262,7 +262,7 @@
     </script>
 
     <div class="code-section">
-        <h2>��� Resumen</h2>
+        <h2>📋 Resumen</h2>
         <ul>
             <li>✅ Objetos almacenan pares clave-valor</li>
             <li>✅ Acceso: <code>objeto.propiedad</code> o <code>objeto["propiedad"]</code></li>
