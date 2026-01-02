@@ -6,3 +6,10 @@
   from = "/"
   to = "/JavaScriptCami.html"
   status = 200
+
+# Permitir acceso a todos los archivos HTML sin extensión
+[[redirects]]
+  from = "/*"
+  to = "/:splat.html"
+  status = 200
+  force = false

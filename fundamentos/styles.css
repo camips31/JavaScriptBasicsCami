@@ -159,3 +159,231 @@ pre code {
     font-size: 1.3em;
     font-weight: bold;
 }
+
+/* Responsive Design - Media Queries */
+
+/* Tablets y dispositivos medianos (max-width: 768px) */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 15px;
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+
+    .menu {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .menu-item {
+        padding: 15px;
+    }
+
+    .menu-item strong {
+        font-size: 1em;
+    }
+
+    .section-title {
+        font-size: 1.1em;
+        padding: 12px;
+    }
+
+    .code-section {
+        padding: 15px;
+        margin: 15px 0;
+    }
+
+    pre {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
+    .back {
+        padding: 8px 15px;
+        font-size: 0.95em;
+    }
+
+    /* Tablas responsive - Scroll horizontal */
+    .code-section table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .code-section table th,
+    .code-section table td {
+        padding: 8px;
+        font-size: 0.9em;
+    }
+}
+
+/* Móviles pequeños (max-width: 480px) */
+@media screen and (max-width: 480px) {
+    body {
+        padding: 10px;
+        font-size: 15px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+        padding-bottom: 8px;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+
+    .menu {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .menu-item {
+        padding: 12px;
+    }
+
+    .menu-item strong {
+        font-size: 0.95em;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .menu-item p {
+        font-size: 0.85em;
+        margin-top: 8px;
+    }
+
+    .numero {
+        margin-right: 8px;
+        margin-bottom: 5px;
+        min-width: 28px;
+        height: 28px;
+        line-height: 28px;
+        font-size: 0.9em;
+    }
+
+    .section-title {
+        font-size: 1em;
+        padding: 10px;
+        margin: 20px 0 15px 0;
+    }
+
+    .code-section {
+        padding: 12px;
+        margin: 12px 0;
+    }
+
+    .code-section ul,
+    .code-section ol {
+        padding-left: 20px;
+    }
+
+    pre {
+        padding: 8px;
+        font-size: 0.85em;
+    }
+
+    .back {
+        padding: 8px 12px;
+        font-size: 0.9em;
+        margin-bottom: 15px;
+    }
+
+    .console-output {
+        padding: 8px;
+        font-size: 0.85em;
+    }
+
+    /* Tablas responsive - Layout en bloques para móviles */
+    .code-section table,
+    .code-section table thead,
+    .code-section table tbody,
+    .code-section table th,
+    .code-section table td,
+    .code-section table tr {
+        display: block;
+    }
+
+    .code-section table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .code-section table tr {
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .code-section table td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+        white-space: normal;
+    }
+
+    .code-section table td:before {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        content: attr(data-label);
+    }
+
+    .code-section table td:last-child {
+        border-bottom: 0;
+    }
+
+    code {
+        word-break: break-word;
+    }
+}
+
+/* Pantallas muy pequeñas (max-width: 320px) */
+@media screen and (max-width: 320px) {
+    body {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 1.3em;
+    }
+
+    h2 {
+        font-size: 1.1em;
+    }
+
+    .menu-item {
+        padding: 10px;
+    }
+
+    .section-title {
+        font-size: 0.95em;
+        padding: 8px;
+    }
+
+    .code-section {
+        padding: 10px;
+    }
+
+    pre {
+        font-size: 0.8em;
+        padding: 6px;
+    }
+}
